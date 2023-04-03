@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mechulee/classificationScreen.dart';
 import 'package:mechulee/costScreen.dart';
 import 'package:mechulee/preferenceScreen.dart';
+import 'package:mechulee/profileScreen.dart';
 import 'package:mechulee/restrictionsScreen.dart';
 import 'package:mechulee/situationScreen.dart';
 
@@ -16,43 +17,58 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: "MeChuLee",
-        home: Scaffold(
-          appBar: AppBar(
-            centerTitle: true,
-            backgroundColor: const Color(0xffffd864),
-            leading: IconButton(
-              icon: const Icon(Icons.menu, color: Colors.black),
-              onPressed: () {},
-            ),
-            title: const Text("메추리", style: TextStyle(color: Colors.black)),
-            actions: [
-              IconButton(
-                icon: Image.asset("assets/logo.png"),
-                onPressed: () {},
-              )
-            ],
-          ),
-          body: Padding(
-            padding: const EdgeInsets.all(25.0),
-            child: GridView.count(
-              crossAxisCount: 2,
-              mainAxisSpacing: 20,
-              crossAxisSpacing: 10,
-              childAspectRatio: 1 / 1,
-              children: <Widget>[
-                MyCard("비용", "돈 아껴야 돼~", "assets/money.png", 0),
-                MyCard("식단 제약", "편식 ㄱㄱ", "assets/salad.png", 1),
-                MyCard("랜덤", "운세를 보라", "assets/shuffle.png", 2),
-                MyCard("개인 선호도", "뭐가 좋니?", "assets/like.png", 3),
-                MyCard("개인 상황", "렛츠고 피크닉", "assets/sun.png", 4),
-                MyCard("음식 분류", "한식 중식 일식?", "assets/dish.png", 5),
-              ],
-            ),
-          ),
-        ));
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: "MeChuLee",
+      home: MainScreen(),
+    );
+  }
+}
+
+class MainScreen extends StatelessWidget {
+  const MainScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: const Color(0xffffd864),
+        leading: IconButton(
+          icon: const Icon(Icons.menu, color: Colors.black),
+          onPressed: () {},
+        ),
+        title: const Text("메추리", style: TextStyle(color: Colors.black)),
+        actions: [
+          IconButton(
+            icon: Image.asset("assets/logo.png"),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ProfileScreen()));
+            },
+          )
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(25.0),
+        child: GridView.count(
+          crossAxisCount: 2,
+          mainAxisSpacing: 20,
+          crossAxisSpacing: 10,
+          childAspectRatio: 1 / 1,
+          children: <Widget>[
+            MyCard("비용", "돈 아껴야 돼~", "assets/money.png", 0),
+            MyCard("식단 제약", "편식 ㄱㄱ", "assets/salad.png", 1),
+            MyCard("랜덤", "운세를 보라", "assets/shuffle.png", 2),
+            MyCard("개인 선호도", "뭐가 좋니?", "assets/like.png", 3),
+            MyCard("개인 상황", "렛츠고 피크닉", "assets/sun.png", 4),
+            MyCard("음식 분류", "한식 중식 일식?", "assets/dish.png", 5),
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -76,17 +92,17 @@ class MyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: InkWell(
-          onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => screenList[idx]));
-          },
-          child: Card(
-            color: Colors.white,
-            elevation: 4.0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
+      home: Card(
+          color: Colors.white,
+          elevation: 4.0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: InkWell(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => screenList[idx]));
+            },
             child: Padding(
               padding: const EdgeInsets.fromLTRB(18, 18, 0, 0),
               child: Column(
