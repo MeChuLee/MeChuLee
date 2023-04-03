@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'menuResult.dart';
+
 class RestrictionsScreen extends StatelessWidget {
   const RestrictionsScreen({Key? key}) : super(key: key);
 
@@ -10,6 +12,7 @@ class RestrictionsScreen extends StatelessWidget {
         title: "RestrictionsScreen",
         home: Scaffold(
           appBar: AppBar(
+            centerTitle: false,
             backgroundColor: const Color(0xffffd864),
             leading: IconButton(
               onPressed: () {
@@ -41,7 +44,8 @@ class RestrictionsScreen extends StatelessWidget {
                 Expanded(
                     child: InkWell(
                         onTap: () {
-                          //@TODO '선택' 버튼 클릭 이벤트
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => MenuResultScreen("식단 제약")));
                         },
                         child: Container(
                           height: 60,
