@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 
-class RandomScreen extends StatelessWidget {
-  const RandomScreen({Key? key}) : super(key: key);
+class MenuResultScreen extends StatelessWidget {
+  String title;
+
+  MenuResultScreen(this.title , {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: "RandomScreen",
+        title: "MenuResultScreen",
         home: Scaffold(
           appBar: AppBar(
+            centerTitle: false,
             backgroundColor: const Color(0xffffd864),
             leading: IconButton(
               onPressed: () {
@@ -17,8 +20,9 @@ class RandomScreen extends StatelessWidget {
               },
               icon: const Icon(Icons.arrow_back, color: Colors.black),
             ),
-            title: const Text("랜덤", style: TextStyle(color: Colors.black)),
+            title: Text(title, style: const TextStyle(color: Colors.black)),
           ),
-        ));
+        )
+    );
   }
 }

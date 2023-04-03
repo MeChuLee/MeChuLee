@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:mechulee/classificationScreen.dart';
 import 'package:mechulee/costScreen.dart';
 import 'package:mechulee/preferenceScreen.dart';
-import 'package:mechulee/randomScreen.dart';
 import 'package:mechulee/restrictionsScreen.dart';
 import 'package:mechulee/situationScreen.dart';
+
+import 'menuResult.dart';
 
 void main() {
   runApp(const MyApp());
@@ -63,7 +64,7 @@ class MyCard extends StatelessWidget {
   final screenList = <StatelessWidget>[
     const CostScreen(),
     const RestrictionsScreen(),
-    const RandomScreen(),
+    MenuResultScreen("랜덤"),
     const PreferenceScreen(),
     const SituationScreen(),
     const ClassificationScreen(),
