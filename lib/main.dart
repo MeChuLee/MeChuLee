@@ -46,9 +46,9 @@ class MainScreen extends StatelessWidget {
             icon: Image.asset("assets/logo.png"),
             onPressed: () {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const ProfileScreen()));
+                context,
+                MaterialPageRoute(builder: (context) => const ProfileScreen()),
+              );
             },
           )
         ],
@@ -95,43 +95,49 @@ class MyCard extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Card(
-          color: Colors.white,
-          elevation: 4.0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: InkWell(
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => screenList[idx]));
-            },
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(18, 18, 0, 0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Container(
-                      width: double.infinity,
-                      margin: const EdgeInsets.fromLTRB(0, 0, 0, 5),
-                      child: Text(
-                        title,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      )),
-                  SizedBox(
-                    width: double.infinity,
-                    child: Text(content,
-                        style: const TextStyle(
-                          fontSize: 12,
-                        )),
+        color: Colors.white,
+        elevation: 4.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: InkWell(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => screenList[idx]),
+            );
+          },
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(18, 18, 0, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Container(
+                  width: double.infinity,
+                  margin: const EdgeInsets.fromLTRB(0, 0, 0, 5),
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  Flexible(fit: FlexFit.tight, child: Image.asset(img))
-                ],
-              ),
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  child: Text(
+                    content,
+                    style: const TextStyle(
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+                Flexible(fit: FlexFit.tight, child: Image.asset(img))
+              ],
             ),
-          )),
+          ),
+        ),
+      ),
     );
   }
 }
