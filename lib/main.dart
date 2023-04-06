@@ -79,8 +79,12 @@ class MyCard extends StatelessWidget {
   final String content;
   final String img;
   final int idx;
-  final screenList = <StatelessWidget>[
+  final statefulScreenList = <StatefulWidget>[
     const CostScreen(),
+  ];
+  // stateful과 stateless를 분리
+
+  final statelessScreenList = <StatelessWidget>[
     const RestrictionsScreen(),
     MenuResultScreen("랜덤"),
     const PreferenceScreen(),
@@ -102,10 +106,14 @@ class MyCard extends StatelessWidget {
         ),
         child: InkWell(
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => screenList[idx]),
-            );
+            if(title == "비용"){
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => statefulScreenList[idx]));
+            } else {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => statelessScreenList[idx]));
+
+            }
           },
           child: Padding(
             padding: const EdgeInsets.fromLTRB(18, 18, 0, 0),
