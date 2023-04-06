@@ -5,10 +5,8 @@ import 'package:mechulee/preferenceScreen.dart';
 import 'package:mechulee/profileScreen.dart';
 import 'package:mechulee/restrictionsScreen.dart';
 import 'package:mechulee/situationScreen.dart';
-import 'menuResult.dart';
 
-// 태섭이의 첫 브랜치
-// 브랜치
+import 'menuResult.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,6 +25,8 @@ class MyApp extends StatelessWidget {
   }
 }
 
+/// 메인 화면
+/// 역할 : 화면 전환 (6가지 기준 화면, 회원 정보 화면)
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
 
@@ -62,11 +62,11 @@ class MainScreen extends StatelessWidget {
           childAspectRatio: 1 / 1,
           children: <Widget>[
             MyCard("비용", "돈 아껴야 돼~", "assets/money.png", 0),
-            MyCard("식단 제약", "편식 ㄱㄱ", "assets/salad.png", 1),
-            MyCard("랜덤", "운세를 보라", "assets/shuffle.png", 2),
-            MyCard("개인 선호도", "뭐가 좋니?", "assets/like.png", 3),
-            MyCard("개인 상황", "렛츠고 피크닉", "assets/sun.png", 4),
-            MyCard("음식 분류", "한식 중식 일식?", "assets/dish.png", 5),
+            MyCard("식단 제약", "편식 ㄱㄱ", "assets/salad.png", 0),
+            MyCard("랜덤", "운세를 보라", "assets/shuffle.png", 1),
+            MyCard("개인 선호도", "뭐가 좋니?", "assets/like.png", 2),
+            MyCard("개인 상황", "렛츠고 피크닉", "assets/sun.png", 3),
+            MyCard("음식 분류", "한식 중식 일식?", "assets/dish.png", 4),
           ],
         ),
       ),
@@ -74,16 +74,20 @@ class MainScreen extends StatelessWidget {
   }
 }
 
+/// 6가지 기준 화면 이동 카드 커스텀 화면
 class MyCard extends StatelessWidget {
+  // 카드 내부 내용
   final String title;
   final String content;
   final String img;
   final int idx;
+
+  // stateful 화면 list
   final statefulScreenList = <StatefulWidget>[
     const CostScreen(),
   ];
-  // stateful과 stateless를 분리
 
+  // stateless 화면 list
   final statelessScreenList = <StatelessWidget>[
     const RestrictionsScreen(),
     MenuResultScreen("랜덤"),
@@ -106,13 +110,20 @@ class MyCard extends StatelessWidget {
         ),
         child: InkWell(
           onTap: () {
-            if(title == "비용"){
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => statefulScreenList[idx]));
+            if (title == "비용") {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => statefulScreenList[0],
+                ),
+              );
             } else {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => statelessScreenList[idx]));
-
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => statelessScreenList[idx],
+                ),
+              );
             }
           },
           child: Padding(
