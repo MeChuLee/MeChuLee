@@ -45,11 +45,11 @@ class MyApp extends StatelessWidget {
               childAspectRatio: 1 / 1,
               children: <Widget>[
                 MyCard("비용", "돈 아껴야 돼~", "assets/money.png", 0),
-                MyCard("식단 제약", "편식 ㄱㄱ", "assets/salad.png", 1),
-                MyCard("랜덤", "운세를 보라", "assets/shuffle.png", 2),
-                MyCard("개인 선호도", "뭐가 좋니?", "assets/like.png", 3),
-                MyCard("개인 상황", "렛츠고 피크닉", "assets/sun.png", 4),
-                MyCard("음식 분류", "한식 중식 일식?", "assets/dish.png", 5),
+                MyCard("식단 제약", "편식 ㄱㄱ", "assets/salad.png", 0),
+                MyCard("랜덤", "운세를 보라", "assets/shuffle.png", 1),
+                MyCard("개인 선호도", "뭐가 좋니?", "assets/like.png", 2),
+                MyCard("개인 상황", "렛츠고 피크닉", "assets/sun.png", 3),
+                MyCard("음식 분류", "한식 중식 일식?", "assets/dish.png", 4),
               ],
             ),
           ),
@@ -62,8 +62,12 @@ class MyCard extends StatelessWidget {
   final String content;
   final String img;
   final int idx;
-  final screenList = <StatelessWidget>[
+  final statefulScreenList = <StatefulWidget>[
     const CostScreen(),
+  ];
+  // stateful과 stateless를 분리
+
+  final statelessScreenList = <StatelessWidget>[
     const RestrictionsScreen(),
     MenuResultScreen("랜덤"),
     const PreferenceScreen(),
@@ -79,8 +83,14 @@ class MyCard extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: InkWell(
           onTap: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => screenList[idx]));
+            if(title == "비용"){
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => statefulScreenList[idx]));
+            } else {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => statelessScreenList[idx]));
+
+            }
           },
           child: Card(
             color: Colors.white,
