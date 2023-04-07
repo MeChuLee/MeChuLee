@@ -1,9 +1,21 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
-class MenuResultScreen extends StatelessWidget {
+// https://totally-developer.tistory.com/79
+/// 메뉴 결과 화면
+class MenuResultScreen extends StatefulWidget {
   String title;
 
+  @override
+  MenuResultScreenState createState() => MenuResultScreenState();
+
   MenuResultScreen(this.title, {Key? key}) : super(key: key);
+}
+
+class MenuResultScreenState extends State<MenuResultScreen> {
+  bool isBack = true;
+  double angle = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +32,7 @@ class MenuResultScreen extends StatelessWidget {
             },
             icon: const Icon(Icons.arrow_back, color: Colors.black),
           ),
-          title: Text(title, style: const TextStyle(color: Colors.black)),
+          title: Text("결과", style: const TextStyle(color: Colors.black)),
         ),
         body: Column(
           children: [
@@ -47,10 +59,33 @@ class MenuResultScreen extends StatelessWidget {
                       child: SizedBox(
                         width: 100,
                         height: 300,
-                        child: Card(
-                          child: IconButton(
-                            onPressed: () {},
-                            icon: Image.asset("assets/foodExample.png"),
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              angle = (angle + pi) % (2 * pi);
+                            });
+                          },
+                          child: TweenAnimationBuilder(
+                            tween: Tween<double>(begin: 0, end: angle),
+                            duration: Duration(milliseconds: 1000),
+                            builder: (BuildContext con, double val, _) {
+                              isBack = (val >= (pi / 2)) ? false : true;
+                              return Transform(
+                                alignment: Alignment.center,
+                                transform: Matrix4.identity()
+                                  ..setEntry(3, 2, 0.001)
+                                  ..rotateY(val),
+                                child: Container(
+                                  width: 250,
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: isBack
+                                            ? AssetImage("assets/jajangmyeon.png")
+                                            : AssetImage("assets/jajangmyeonInfo.png")),
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                         ),
                       ),
@@ -82,16 +117,19 @@ class MenuResultScreen extends StatelessWidget {
               child: Column(
                 children: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      //@TODO 식당 화면
+                    },
                     iconSize: 70,
                     icon: Image.asset(
                       "assets/restaurantIcon.png",
                       fit: BoxFit.fill,
                     ),
                   ),
-                  const Text("식당 찾기",
-                      style:
-                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                  const Text(
+                    "식당 찾기",
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
                 ],
               ),
             ),
