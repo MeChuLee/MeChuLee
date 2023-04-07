@@ -8,6 +8,20 @@ import 'package:mechulee/situationScreen.dart';
 
 import 'menuResult.dart';
 
+// stateful 화면 list
+final statefulScreenList = <StatefulWidget>[
+  const CostScreen(),
+  MenuResultScreen("랜덤"),
+];
+
+// stateless 화면 list
+final statelessScreenList = <StatelessWidget>[
+  const RestrictionsScreen(),
+  const PreferenceScreen(),
+  const SituationScreen(),
+  const ClassificationScreen(),
+];
+
 void main() {
   runApp(const MyApp());
 }
@@ -36,10 +50,7 @@ class MainScreen extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: const Color(0xffffd864),
-        leading: IconButton(
-          icon: const Icon(Icons.menu, color: Colors.black),
-          onPressed: () {},
-        ),
+        iconTheme: const IconThemeData(color: Colors.black),
         title: const Text("메추리", style: TextStyle(color: Colors.black)),
         actions: [
           IconButton(
@@ -47,11 +58,155 @@ class MainScreen extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const ProfileScreen()),
+                MaterialPageRoute(
+                  builder: (context) => const ProfileScreen(),
+                ),
               );
             },
           )
         ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            UserAccountsDrawerHeader(
+              currentAccountPicture: const CircleAvatar(
+                backgroundImage: AssetImage('assets/profile.png'),
+              ),
+              accountName: const Text(
+                '나는 나야',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              accountEmail: const Text(
+                'example1234@naver.com',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              onDetailsPressed: () {},
+              decoration: const BoxDecoration(
+                color: Color(0xffffd864),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(10.0),
+                  bottomRight: Radius.circular(10.0),
+                ),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.person),
+              iconColor: const Color(0xffffd864),
+              focusColor: const Color(0xffffd864),
+              title: const Text('회원 정보'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ProfileScreen(),
+                  ),
+                );
+              },
+              trailing: const Icon(Icons.navigate_next),
+            ),
+            ListTile(
+              leading: const Icon(Icons.attach_money),
+              iconColor: const Color(0xffffd864),
+              focusColor: const Color(0xffffd864),
+              title: const Text('비용 기준 추천'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => statefulScreenList[0],
+                  ),
+                );
+              },
+              trailing: const Icon(Icons.navigate_next),
+            ),
+            ListTile(
+              leading: const Icon(Icons.sick_outlined),
+              iconColor: const Color(0xffffd864),
+              focusColor: const Color(0xffffd864),
+              title: const Text('식단 제약 기준 추천'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => statelessScreenList[0],
+                  ),
+                );
+              },
+              trailing: const Icon(Icons.navigate_next),
+            ),
+            ListTile(
+              leading: const Icon(Icons.shuffle),
+              iconColor: const Color(0xffffd864),
+              focusColor: const Color(0xffffd864),
+              title: const Text('랜덤 기준 추천'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => statefulScreenList[1],
+                  ),
+                );
+              },
+              trailing: const Icon(Icons.navigate_next),
+            ),
+            ListTile(
+              leading: const Icon(Icons.thumb_up),
+              iconColor: const Color(0xffffd864),
+              focusColor: const Color(0xffffd864),
+              title: const Text('개인 선호도 기준 추천'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => statelessScreenList[1],
+                  ),
+                );
+              },
+              trailing: const Icon(Icons.navigate_next),
+            ),
+            ListTile(
+              leading: const Icon(Icons.brightness_6),
+              iconColor: const Color(0xffffd864),
+              focusColor: const Color(0xffffd864),
+              title: const Text('개인 상황 기준 추천'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => statelessScreenList[2],
+                  ),
+                );
+              },
+              trailing: const Icon(Icons.navigate_next),
+            ),
+            ListTile(
+              leading: const Icon(Icons.list_alt_outlined),
+              iconColor: const Color(0xffffd864),
+              focusColor: const Color(0xffffd864),
+              title: const Text('음식 분류 기준 추천'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => statelessScreenList[3],
+                  ),
+                );
+              },
+              trailing: const Icon(Icons.navigate_next),
+            ),
+            ListTile(
+              leading: const Icon(Icons.settings),
+              iconColor: const Color(0xffffd864),
+              focusColor: const Color(0xffffd864),
+              title: const Text('설정'),
+              onTap: () {
+                //@TODO 햄버거 설정 버튼 클릭 이벤트
+              },
+              trailing: const Icon(Icons.navigate_next),
+            ),
+          ],
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(25.0),
@@ -60,13 +215,13 @@ class MainScreen extends StatelessWidget {
           mainAxisSpacing: 20,
           crossAxisSpacing: 10,
           childAspectRatio: 1 / 1,
-          children: <Widget>[
+          children: const <Widget>[
             MyCard("비용", "돈 아껴야 돼~", "assets/money.png", 0),
             MyCard("식단 제약", "편식 ㄱㄱ", "assets/salad.png", 0),
             MyCard("랜덤", "운세를 보라", "assets/shuffle.png", 1),
-            MyCard("개인 선호도", "뭐가 좋니?", "assets/like.png", 2),
-            MyCard("개인 상황", "렛츠고 피크닉", "assets/sun.png", 3),
-            MyCard("음식 분류", "한식 중식 일식?", "assets/dish.png", 4),
+            MyCard("개인 선호도", "뭐가 좋니?", "assets/like.png", 1),
+            MyCard("개인 상황", "렛츠고 피크닉", "assets/sun.png", 2),
+            MyCard("음식 분류", "한식 중식 일식?", "assets/dish.png", 3),
           ],
         ),
       ),
@@ -82,21 +237,7 @@ class MyCard extends StatelessWidget {
   final String img;
   final int idx;
 
-  // stateful 화면 list
-  final statefulScreenList = <StatefulWidget>[
-    const CostScreen(),
-  ];
-
-  // stateless 화면 list
-  final statelessScreenList = <StatelessWidget>[
-    const RestrictionsScreen(),
-    MenuResultScreen("랜덤"),
-    const PreferenceScreen(),
-    const SituationScreen(),
-    const ClassificationScreen(),
-  ];
-
-  MyCard(this.title, this.content, this.img, this.idx, {super.key});
+  const MyCard(this.title, this.content, this.img, this.idx, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -110,11 +251,11 @@ class MyCard extends StatelessWidget {
         ),
         child: InkWell(
           onTap: () {
-            if (title == "비용") {
+            if (title == "비용" || title == "랜덤") {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => statefulScreenList[0],
+                  builder: (context) => statefulScreenList[idx],
                 ),
               );
             } else {
