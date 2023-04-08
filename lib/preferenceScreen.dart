@@ -58,307 +58,318 @@ class PreferenceScreen extends StatelessWidget {
           ),
           body: Column(
             children: [
-              Container(
-                padding: const EdgeInsets.fromLTRB(40, 40, 30, 40),
-                alignment: Alignment.topLeft,
-                child: const Text(
-                    "성별",
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold
-                    )),
+              const SizedBox(
+                height: 20,
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: const [
+                  SizedBox(
+                    width: 40,
+                  ),
+                  Text(
+                      "성별",
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold
+                      ))
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(30, 0, 10, 20),
-                    child: OutlinedButton(
-                      onPressed: () {
-                        print("click 남성");
-                      },
-                      style: OutlinedButton.styleFrom(
-                          backgroundColor: const Color(0xffF4F4F4),
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10))
-                          ),
-                          shadowColor: Colors.black,
-                          elevation: 5
-                      ),
-                      child: const Text(
-                          "남성",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold
-                          )
-                      ),
+                  OutlinedButton(
+                    onPressed: () {
+                      print("click 남성");
+                    },
+                    style: OutlinedButton.styleFrom(
+                        backgroundColor: const Color(0xffF4F4F4),
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10))
+                        ),
+                        shadowColor: Colors.black,
+                        elevation: 5
+                    ),
+                    child: const Text(
+                        "남성",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold
+                        )
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(30, 0, 10, 20),
-                    child: OutlinedButton(
-                      onPressed: () {
-                        print("click 여성");
-                      },
-                      style: OutlinedButton.styleFrom(
-                          backgroundColor: const Color(0xffF4F4F4),
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10))
-                          ),
-                          shadowColor: Colors.black,
-                          elevation: 5
-                      ),
-                      child: const Text(
-                          "여성",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold
-                          )
-                      ),
+                  OutlinedButton(
+                    onPressed: () {
+                      print("click 여성");
+                    },
+                    style: OutlinedButton.styleFrom(
+                        backgroundColor: const Color(0xffF4F4F4),
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10))
+                        ),
+                        shadowColor: Colors.black,
+                        elevation: 5
+                    ),
+                    child: const Text(
+                        "여성",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold
+                        )
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 70,
+                  ),
+                  const SizedBox(
+                    width: 70,
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 40,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: const [
+                  SizedBox(
+                    width: 40,
+                  ),
+                  Text(
+                      "나이",
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold
+                      ))
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  OutlinedButton(
+                    onPressed: () {
+                      print("click 10대");
+                    },
+                    style: OutlinedButton.styleFrom(
+                        backgroundColor: const Color(0xffF4F4F4),
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10))
+                        ),
+                        shadowColor: Colors.black,
+                        elevation: 5
+                    ),
+                    child: const Text(
+                        "10대",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold
+                        )
+                    ),
+                  ),
+                  OutlinedButton(
+                    onPressed: () {
+                      print("click 20대");
+                    },
+                    style: OutlinedButton.styleFrom(
+                        backgroundColor: const Color(0xffF4F4F4),
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10))
+                        ),
+                        shadowColor: Colors.black,
+                        elevation: 5
+                    ),
+                    child: const Text(
+                        "20대",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold
+                        )
+                    ),
+                  ),
+                  OutlinedButton(
+                    onPressed: () {
+                      print("click 30대");
+                    },
+                    style: OutlinedButton.styleFrom(
+                        backgroundColor: const Color(0xffF4F4F4),
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10))
+                        ),
+                        shadowColor: Colors.black,
+                        elevation: 5
+                    ),
+                    child: const Text(
+                        "30대",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold
+                        )
+                    ),
+                  ),
+                  OutlinedButton(
+                    onPressed: () {
+                      print("click 40대");
+                    },
+                    style: OutlinedButton.styleFrom(
+                        backgroundColor: const Color(0xffF4F4F4),
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10))
+                        ),
+                        shadowColor: Colors.black,
+                        elevation: 5
+                    ),
+                    child: const Text(
+                        "40대",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold
+                        )
                     ),
                   ),
                 ],
               ),
-              Container(
-                padding: const EdgeInsets.fromLTRB(40, 40, 30, 40),
-                alignment: Alignment.topLeft,
-                child: const Text(
-                    "나이",
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold
-                    )),
+              const SizedBox(
+                height: 20,
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(30, 0, 10, 20),
-                    child: OutlinedButton(
-                      onPressed: () {
-                        print("click 10대");
-                      },
-                      style: OutlinedButton.styleFrom(
-                          backgroundColor: const Color(0xffF4F4F4),
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10))
-                          ),
-                          shadowColor: Colors.black,
-                          elevation: 5
-                      ),
-                      child: const Text(
-                          "10대",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold
-                          )
-                      ),
+                  OutlinedButton(
+                    onPressed: () {
+                      print("click 50대");
+                    },
+                    style: OutlinedButton.styleFrom(
+                        backgroundColor: const Color(0xffF4F4F4),
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10))
+                        ),
+                        shadowColor: Colors.black,
+                        elevation: 5
+                    ),
+                    child: const Text(
+                        "50대",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold
+                        )
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(20, 0, 10, 20),
-                    child: OutlinedButton(
-                      onPressed: () {
-                        print("click 20대");
-                      },
-                      style: OutlinedButton.styleFrom(
-                          backgroundColor: const Color(0xffF4F4F4),
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10))
-                          ),
-                          shadowColor: Colors.black,
-                          elevation: 5
-                      ),
-                      child: const Text(
-                          "20대",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold
-                          )
-                      ),
+                  OutlinedButton(
+                    onPressed: () {
+                      print("click 60대");
+                    },
+                    style: OutlinedButton.styleFrom(
+                        backgroundColor: const Color(0xffF4F4F4),
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10))
+                        ),
+                        shadowColor: Colors.black,
+                        elevation: 5
+                    ),
+                    child: const Text(
+                        "60대",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold
+                        )
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(20, 0, 10, 20),
-                    child: OutlinedButton(
-                      onPressed: () {
-                        print("click 30대");
-                      },
-                      style: OutlinedButton.styleFrom(
-                          backgroundColor: const Color(0xffF4F4F4),
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10))
-                          ),
-                          shadowColor: Colors.black,
-                          elevation: 5
-                      ),
-                      child: const Text(
-                          "30대",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold
-                          )
-                      ),
+                  OutlinedButton(
+                    onPressed: () {
+                      print("click 70대 이상");
+                    },
+                    style: OutlinedButton.styleFrom(
+                        backgroundColor: const Color(0xffF4F4F4),
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10))
+                        ),
+                        shadowColor: Colors.black,
+                        elevation: 5
+                    ),
+                    child: const Text(
+                        "70대 이상",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold
+                        )
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(20, 0, 10, 20),
-                    child: OutlinedButton(
-                      onPressed: () {
-                        print("click 40대");
-                      },
-                      style: OutlinedButton.styleFrom(
-                          backgroundColor: const Color(0xffF4F4F4),
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10))
-                          ),
-                          shadowColor: Colors.black,
-                          elevation: 5
-                      ),
-                      child: const Text(
-                          "40대",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold
-                          )
-                      ),
+                  const SizedBox(
+                    width: 38,
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 40,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: const [
+                  SizedBox(
+                    width: 40,
+                  ),
+                  Text(
+                      "선택 사항",
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold
+                      ))
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  OutlinedButton(
+                    onPressed: () {
+                      print("click 평소에 자주 먹는 음식");
+                    },
+                    style: OutlinedButton.styleFrom(
+                        backgroundColor: const Color(0xffF4F4F4),
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10))
+                        ),
+                        shadowColor: Colors.black,
+                        elevation: 5
+                    ),
+                    child: const Text(
+                        "평소에 자주 먹는 음식",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold
+                        )
+                    ),
+                  ),
+                  OutlinedButton(
+                    onPressed: () {
+                      print("click 최근 먹은 음식 제외");
+                    },
+                    style: OutlinedButton.styleFrom(
+                        backgroundColor: const Color(0xffF4F4F4),
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10))
+                        ),
+                        shadowColor: Colors.black,
+                        elevation: 5
+                    ),
+                    child: const Text(
+                        "최근 먹은 음식 제외",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold
+                        )
                     ),
                   ),
                 ],
               ),
-              Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(30, 0, 10, 20),
-                    child: OutlinedButton(
-                      onPressed: () {
-                        print("click 50대");
-                      },
-                      style: OutlinedButton.styleFrom(
-                          backgroundColor: const Color(0xffF4F4F4),
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10))
-                          ),
-                          shadowColor: Colors.black,
-                          elevation: 5
-                      ),
-                      child: const Text(
-                          "50대",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold
-                          )
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(20, 0, 10, 20),
-                    child: OutlinedButton(
-                      onPressed: () {
-                        print("click 60대");
-                      },
-                      style: OutlinedButton.styleFrom(
-                          backgroundColor: const Color(0xffF4F4F4),
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10))
-                          ),
-                          shadowColor: Colors.black,
-                          elevation: 5
-                      ),
-                      child: const Text(
-                          "60대",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold
-                          )
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(20, 0, 10, 20),
-                    child: OutlinedButton(
-                      onPressed: () {
-                        print("click 70대 이상");
-                      },
-                      style: OutlinedButton.styleFrom(
-                          backgroundColor: const Color(0xffF4F4F4),
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10))
-                          ),
-                          shadowColor: Colors.black,
-                          elevation: 5
-                      ),
-                      child: const Text(
-                          "70대 이상",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold
-                          )
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Container(
-                padding: const EdgeInsets.fromLTRB(40, 40, 30, 40),
-                alignment: Alignment.topLeft,
-                child: const Text(
-                    "옵션", // 고려해 볼 필요 있음
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold
-                    )),
-              ),
-              Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(30, 0, 10, 20),
-                    child: OutlinedButton(
-                      onPressed: () {
-
-                        print("click 평소에 자주 먹는 음식");
-                      },
-                      style: OutlinedButton.styleFrom(
-                          backgroundColor: const Color(0xffF4F4F4),
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10))
-                          ),
-                          shadowColor: Colors.black,
-                          elevation: 5
-                      ),
-                      child: const Text(
-                          "평소에 자주 먹는 음식",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold
-                          )
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(30, 0, 10, 20),
-                    child: OutlinedButton(
-                      onPressed: () {
-
-                        print("최근 먹은 음식 제외");
-                      },
-                      style: OutlinedButton.styleFrom(
-                          backgroundColor: const Color(0xffF4F4F4),
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10))
-                          ),
-                          shadowColor: Colors.black,
-                          elevation: 5
-                      ),
-                      child: const Text(
-                          "최근 먹은 음식 제외",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold
-                          )
-                      ),
-                    ),
-                  ),
-                ],
-              )
             ],
           ),
         ));
