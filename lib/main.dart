@@ -251,7 +251,7 @@ class MyCard extends StatelessWidget {
         ),
         child: InkWell(
           onTap: () {
-            if (title == "비용" || title == "식단제약" || title == "랜덤") {
+            if (title == "비용" || title == "식단 제약" || title == "랜덤") {
               Navigator.push(
                 context,
                 MaterialPageRoute(
