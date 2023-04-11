@@ -11,12 +11,12 @@ import 'menuResult.dart';
 // stateful 화면 list
 final statefulScreenList = <StatefulWidget>[
   const CostScreen(),
+  const RestrictionsScreen(),
   MenuResultScreen("랜덤"),
 ];
 
 // stateless 화면 list
 final statelessScreenList = <StatelessWidget>[
-  const RestrictionsScreen(),
   const PreferenceScreen(),
   const SituationScreen(),
   const ClassificationScreen(),
@@ -217,11 +217,11 @@ class MainScreen extends StatelessWidget {
           childAspectRatio: 1 / 1,
           children: const <Widget>[
             MyCard("비용", "돈 아껴야 돼~", "assets/money.png", 0),
-            MyCard("식단 제약", "편식 ㄱㄱ", "assets/salad.png", 0),
-            MyCard("랜덤", "운세를 보라", "assets/shuffle.png", 1),
-            MyCard("개인 선호도", "뭐가 좋니?", "assets/like.png", 1),
-            MyCard("개인 상황", "렛츠고 피크닉", "assets/sun.png", 2),
-            MyCard("음식 분류", "한식 중식 일식?", "assets/dish.png", 3),
+            MyCard("식단 제약", "편식 ㄱㄱ", "assets/salad.png", 1),
+            MyCard("랜덤", "운세를 보라", "assets/shuffle.png", 2),
+            MyCard("개인 선호도", "뭐가 좋니?", "assets/like.png", 0),
+            MyCard("개인 상황", "렛츠고 피크닉", "assets/sun.png", 1),
+            MyCard("음식 분류", "한식 중식 일식?", "assets/dish.png", 2),
           ],
         ),
       ),
@@ -251,7 +251,7 @@ class MyCard extends StatelessWidget {
         ),
         child: InkWell(
           onTap: () {
-            if (title == "비용" || title == "랜덤") {
+            if (title == "비용" || title == "식단 제약" || title == "랜덤") {
               Navigator.push(
                 context,
                 MaterialPageRoute(
