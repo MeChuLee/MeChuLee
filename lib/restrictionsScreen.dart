@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'menuResult.dart';
 
 // 여백 전부 20인데 나머지는 40으로 하기
+// 칼로리바 radius 적용하기
+
 class RestrictionsScreen extends StatefulWidget {
   const RestrictionsScreen({Key? key}) : super(key: key);
 
@@ -747,11 +749,13 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                       activeTickMarkColor: Color(0xffffd864),
                       inactiveTickMarkColor: Color(0xffEEEEEE),
                       thumbColor: Colors.amber,
+                      disabledThumbColor: Colors.amber,
                       valueIndicatorColor: Colors.amber,
-                      trackShape: RectangularSliderTrackShape(),
+                      trackShape: RoundedRectSliderTrackShape(),
                       trackHeight: 20,
+
                       thumbShape: RoundSliderThumbShape(
-                          enabledThumbRadius: 2.0, elevation: 1.0),
+                          pressedElevation: 0, disabledThumbRadius: 10 ,enabledThumbRadius: 0, elevation: 0),
                       valueIndicatorShape: PaddleSliderValueIndicatorShape(),
                     ),
                     child: Slider(
@@ -768,6 +772,15 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                       },
                     )),
               ),
+              Row(
+                children: const [
+                  SizedBox(width: 30),
+                  Text("0kal", style: TextStyle(fontSize: 18)),
+                  Spacer(),
+                  Text("1000kal", style: TextStyle(fontSize: 18)),
+                  SizedBox(width: 30),
+                ],
+              )
             ],
           ),
           bottomNavigationBar: Container(
