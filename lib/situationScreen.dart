@@ -189,7 +189,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           ],
         ),
         const SizedBox(
-          height: 20,
+          height: 0,
         ),
         Row(
           children: [
