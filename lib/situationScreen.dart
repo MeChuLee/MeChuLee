@@ -78,6 +78,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   double sliderVal3 = 30; // 식사 소요 시간 초기 값
   double sliderVal4 = 1;  // 식사 인원 수 초기 값
   bool tmp = false;
+  double buttonWidth = 70;
+  double buttonHeight = 40;
 
   @override
   Widget build(BuildContext context) {
@@ -86,18 +88,130 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         const SizedBox(
           height: 20,
         ),
+        Container(
+          width: double.infinity, // 넓이가 화면에 꽉 차도록
+          decoration: const BoxDecoration(),
+          child: Row(
+            children: const [
+              SizedBox(
+                width: 30,
+              ),
+              Text(
+                  "기분",
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 2.0
+                  ))
+            ],
+          ),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: const [
-            SizedBox(
-              width: 40,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Container(
+              color: Colors.white,
+              width: buttonWidth,
+              height: buttonHeight,
+              child: OutlinedButton(
+                onPressed: () {
+                  print("click 기쁨");
+                },
+                style: OutlinedButton.styleFrom(
+                    backgroundColor: const Color(0xffF4F4F4),
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10))
+                    ),
+                    shadowColor: Colors.black,
+                    elevation: 5
+                ),
+                child: const Text(
+                    "기쁨",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold
+                    )
+                ),
+              ),
             ),
-            Text(
-                "기분",
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold
-                ))
+            Container(
+              color: Colors.white,
+              width: buttonWidth,
+              height: buttonHeight,
+              child: OutlinedButton(
+                onPressed: () {
+                  print("click 행복");
+                },
+                style: OutlinedButton.styleFrom(
+                    backgroundColor: const Color(0xffF4F4F4),
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10))
+                    ),
+                    shadowColor: Colors.black,
+                    elevation: 5
+                ),
+                child: const Text(
+                    "행복",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold
+                    )
+                ),
+              ),
+            ),
+            Container(
+              color: Colors.white,
+              width: buttonWidth,
+              height: buttonHeight,
+              child: OutlinedButton(
+                onPressed: () {
+                  print("click 우울");
+                },
+                style: OutlinedButton.styleFrom(
+                    backgroundColor: const Color(0xffF4F4F4),
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10))
+                    ),
+                    shadowColor: Colors.black,
+                    elevation: 5
+                ),
+                child: const Text(
+                    "우울",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold
+                    )
+                ),
+              ),
+            ),
+            Container(
+              color: Colors.white,
+              width: buttonWidth,
+              height: buttonHeight,
+              child: OutlinedButton(
+                onPressed: () {
+                  print("click 짜증");
+                },
+                style: OutlinedButton.styleFrom(
+                    backgroundColor: const Color(0xffF4F4F4),
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10))
+                    ),
+                    shadowColor: Colors.black,
+                    elevation: 5
+                ),
+                child: const Text(
+                    "짜증",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold
+                    )
+                ),
+              ),
+            ),
           ],
         ),
         const SizedBox(
@@ -106,134 +220,62 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            OutlinedButton(
-              onPressed: () {
-                print("click 기쁨");
-              },
-              style: OutlinedButton.styleFrom(
-                  backgroundColor: const Color(0xffF4F4F4),
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10))
-                  ),
-                  shadowColor: Colors.black,
-                  elevation: 5
-              ),
-              child: const Text(
-                  "기쁨",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold
-                  )
-              ),
-            ),
-            OutlinedButton(
-              onPressed: () {
-                print("click 행복");
-              },
-              style: OutlinedButton.styleFrom(
-                  backgroundColor: const Color(0xffF4F4F4),
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10))
-                  ),
-                  shadowColor: Colors.black,
-                  elevation: 5
-              ),
-              child: const Text(
-                  "행복",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold
-                  )
+            Container(
+              color: Colors.white,
+              width: 85,
+              height: buttonHeight,
+              child: OutlinedButton(
+                onPressed: () {
+                  print("click 스트레스");
+                },
+                style: OutlinedButton.styleFrom(
+                    backgroundColor: const Color(0xffF4F4F4),
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10))
+                    ),
+                    shadowColor: Colors.black,
+                    elevation: 5
+                ),
+                child: const Text(
+                    "스트레스",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold
+                    )
+                ),
               ),
             ),
-            OutlinedButton(
-              onPressed: () {
-                print("click 우울");
-              },
-              style: OutlinedButton.styleFrom(
-                  backgroundColor: const Color(0xffF4F4F4),
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10))
-                  ),
-                  shadowColor: Colors.black,
-                  elevation: 5
-              ),
-              child: const Text(
-                  "우울",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold
-                  )
-              ),
-            ),
-            OutlinedButton(
-              onPressed: () {
-                print("click 짜증");
-              },
-              style: OutlinedButton.styleFrom(
-                  backgroundColor: const Color(0xffF4F4F4),
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10))
-                  ),
-                  shadowColor: Colors.black,
-                  elevation: 5
-              ),
-              child: const Text(
-                  "짜증",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold
-                  )
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 0,
-        ),
-        Row(
-          children: [
             const SizedBox(
-              width: 30,
+              width: 70,
             ),
-            OutlinedButton(
-              onPressed: () {
-                print("click 스트레스");
-              },
-              style: OutlinedButton.styleFrom(
-                  backgroundColor: const Color(0xffF4F4F4),
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10))
-                  ),
-                  shadowColor: Colors.black,
-                  elevation: 5
-              ),
-              child: const Text(
-                  "스트레스",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold
-                  )
-              ),
+            const SizedBox(
+              width: 70,
+            ),
+            const SizedBox(
+              width: 50,
             ),
           ],
         ),
         const SizedBox(
           height: 40,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: const [
-            SizedBox(
-              width: 40,
-            ),
-            Text(
-                "날씨",
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold
-                ))
-          ],
+        Container(
+          width: double.infinity, // 넓이가 화면에 꽉 차도록
+          decoration: const BoxDecoration(),
+          child: Row(
+            children: const [
+              SizedBox(
+                width: 30,
+              ),
+              Text(
+                  "날씨",
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 2.0
+                  ))
+            ],
+          ),
         ),
         const SizedBox(
           height: 20,
@@ -241,134 +283,107 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            OutlinedButton(
-              onPressed: () {
-                print("click 더움");
-              },
-              style: OutlinedButton.styleFrom(
-                  backgroundColor: const Color(0xffF4F4F4),
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10))
-                  ),
-                  shadowColor: Colors.black,
-                  elevation: 5
-              ),
-              child: const Text(
-                  "더움",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold
-                  )
-              ),
-            ),
-            OutlinedButton(
-              onPressed: () {
-                print("click 추움");
-              },
-              style: OutlinedButton.styleFrom(
-                  backgroundColor: const Color(0xffF4F4F4),
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10))
-                  ),
-                  shadowColor: Colors.black,
-                  elevation: 5
-              ),
-              child: const Text(
-                  "추움",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold
-                  )
+            Container(
+              color: Colors.white,
+              width: buttonWidth,
+              height: buttonHeight,
+              child: OutlinedButton(
+                onPressed: () {
+                  print("click 더움");
+                },
+                style: OutlinedButton.styleFrom(
+                    backgroundColor: const Color(0xffF4F4F4),
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10))
+                    ),
+                    shadowColor: Colors.black,
+                    elevation: 5
+                ),
+                child: const Text(
+                    "더움",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold
+                    )
+                ),
               ),
             ),
-            OutlinedButton(
-              onPressed: () {
-                print("click 비");
-              },
-              style: OutlinedButton.styleFrom(
-                  backgroundColor: const Color(0xffF4F4F4),
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10))
-                  ),
-                  shadowColor: Colors.black,
-                  elevation: 5
+            Container(
+              color: Colors.white,
+              width: buttonWidth,
+              height: buttonHeight,
+              child: OutlinedButton(
+                onPressed: () {
+                  print("click 추움");
+                },
+                style: OutlinedButton.styleFrom(
+                    backgroundColor: const Color(0xffF4F4F4),
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10))
+                    ),
+                    shadowColor: Colors.black,
+                    elevation: 5
+                ),
+                child: const Text(
+                    "추움",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold
+                    )
+                ),
               ),
-              child: const Text(
-                  "비",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold
-                  )
+            ),
+            Container(
+              color: Colors.white,
+              width: buttonWidth,
+              height: buttonHeight,
+              child: OutlinedButton(
+                onPressed: () {
+                  print("click 비");
+                },
+                style: OutlinedButton.styleFrom(
+                    backgroundColor: const Color(0xffF4F4F4),
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10))
+                    ),
+                    shadowColor: Colors.black,
+                    elevation: 5
+                ),
+                child: const Text(
+                    "비",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold
+                    )
+                ),
               ),
             ),
             const SizedBox(
-              width: 60,
+              width: 70,
             )
           ],
         ),
         const SizedBox(
           height: 40,
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: const [
-            SizedBox(
-              width: 40,
-            ),
-            Text(
-                "해장",
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold
-                ))
-          ],
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        Row(
-          children: [
-            const SizedBox(
-              width: 30,
-            ),
-            OutlinedButton(
-              onPressed: () {
-                print("click 필요");
-              },
-              style: OutlinedButton.styleFrom(
-                  backgroundColor: const Color(0xffF4F4F4),
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10))
-                  ),
-                  shadowColor: Colors.black,
-                  elevation: 5
+        Container(
+          width: double.infinity, // 넓이가 화면에 꽉 차도록
+          decoration: const BoxDecoration(),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: const [
+              SizedBox(
+                width: 30,
               ),
-              child: const Text(
-                  "필요",
+              Text(
+                  "해장",
                   style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold
-                  )
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 40,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: const [
-            SizedBox(
-              width: 40,
-            ),
-            Text(
-                "시간적 여유",
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold
-                ))
-          ],
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 2.0
+                  ))
+            ],
+          ),
         ),
         const SizedBox(
           height: 20,
@@ -376,44 +391,117 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            OutlinedButton(
-              onPressed: () {
-                print("click 여유 없음");
-              },
-              style: OutlinedButton.styleFrom(
-                  backgroundColor: const Color(0xffF4F4F4),
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10))
-                  ),
-                  shadowColor: Colors.black,
-                  elevation: 5
-              ),
-              child: const Text(
-                  "여유 없음",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold
-                  )
+            Container(
+              color: Colors.white,
+              width: buttonWidth,
+              height: buttonHeight,
+              child: OutlinedButton(
+                onPressed: () {
+                  print("click 필요");
+                },
+                style: OutlinedButton.styleFrom(
+                    backgroundColor: const Color(0xffF4F4F4),
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10))
+                    ),
+                    shadowColor: Colors.black,
+                    elevation: 5
+                ),
+                child: const Text(
+                    "필요",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold
+                    )
+                ),
               ),
             ),
-            OutlinedButton(
-              onPressed: () {
-                print("click 여유 있음");
-              },
-              style: OutlinedButton.styleFrom(
-                  backgroundColor: const Color(0xffF4F4F4),
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10))
-                  ),
-                  shadowColor: Colors.black,
-                  elevation: 5
+            const SizedBox(
+              width: 70,
+            ),
+            const SizedBox(
+              width: 70,
+            ),
+            const SizedBox(
+              width: 70,
+            )
+          ],
+        ),
+        const SizedBox(
+          height: 40,
+        ),
+        Container(
+          width: double.infinity, // 넓이가 화면에 꽉 차도록
+          decoration: const BoxDecoration(),
+          child: Row(
+            children: const [
+              SizedBox(
+                width: 30,
               ),
-              child: const Text(
-                  "여유 있음",
+              Text(
+                  "시간적 여유",
                   style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold
-                  )
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 2.0
+                  ))
+            ],
+          ),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Container(
+              color: Colors.white,
+              width: 100,
+              height: buttonHeight,
+              child: OutlinedButton(
+                onPressed: () {
+                  print("click 여유 없음");
+                },
+                style: OutlinedButton.styleFrom(
+                    backgroundColor: const Color(0xffF4F4F4),
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10))
+                    ),
+                    shadowColor: Colors.black,
+                    elevation: 5
+                ),
+                child: const Text(
+                    "여유 없음",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold
+                    )
+                ),
+              ),
+            ),
+            Container(
+              color: Colors.white,
+              width: 100,
+              height: buttonHeight,
+              child: OutlinedButton(
+                onPressed: () {
+                  print("click 여유 있음");
+                },
+                style: OutlinedButton.styleFrom(
+                    backgroundColor: const Color(0xffF4F4F4),
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10))
+                    ),
+                    shadowColor: Colors.black,
+                    elevation: 5
+                ),
+                child: const Text(
+                    "여유 있음",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold
+                    )
+                ),
               ),
             ),
             const SizedBox(
@@ -428,16 +516,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           height: 40,
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget> [
             const SizedBox(
-              width: 40,
+              width: 30,
             ),
             const Text(
                 "피로도",
                 style: TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.bold
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 2.0
                 )
             ),
             const Spacer(),
@@ -446,7 +534,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               style: const TextStyle(
                 fontSize: 20.0,
               ),
-
             ),
             const Text(
                 "%",
@@ -455,7 +542,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 )
             ),
             const SizedBox(
-              width: 40,
+              width: 30,
             ),
           ],
         ),
@@ -464,32 +551,33 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         ),
         Container(
           margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-          child: Column(
-            children: [
-              SliderTheme(
-                  data: const SliderThemeData(
-                    activeTrackColor: Color(0xffffd864),
-                    thumbColor: Colors.amber,
-                    valueIndicatorColor: Colors.amber,
-                    trackHeight: 20,
-                    thumbShape:
-                    RoundSliderThumbShape(enabledThumbRadius: 2.0, elevation: 1.0),
-                    valueIndicatorShape: PaddleSliderValueIndicatorShape(),
-                  ),
-                  child: Slider(
-                    value: sliderVal1,
-                    min: 0,
-                    max: 100,
-                    divisions: 10,
-                    label: sliderVal1.round().toString(),
-                    onChanged: (double value) {
-                      setState(() {
-                        sliderVal1 = value;
-                      });
-                    },
-                  )
+          child: SliderTheme(
+              data: const SliderThemeData(
+                activeTrackColor: Color(0xffffd864),
+                inactiveTrackColor: Color(0xffEEEEEE),
+                activeTickMarkColor: Color(0xffffd864),
+                inactiveTickMarkColor: Color(0xffEEEEEE),
+                thumbColor: Colors.amber,
+                disabledThumbColor: Colors.amber,
+                valueIndicatorColor: Colors.amber,
+                trackShape: RoundedRectSliderTrackShape(),
+                trackHeight: 20,
+                thumbShape: RoundSliderThumbShape(
+                    pressedElevation: 0, disabledThumbRadius: 10 ,enabledThumbRadius: 0, elevation: 0),
+                valueIndicatorShape: PaddleSliderValueIndicatorShape(),
               ),
-            ],
+              child: Slider(
+                value: sliderVal1,
+                min: 0,
+                max: 100,
+                divisions: 10,
+                // label: sliderVal1.round().toString(),
+                onChanged: (double value) {
+                  setState(() {
+                    sliderVal1 = value;
+                  });
+                },
+              )
           ),
         ),
         Container(
@@ -506,16 +594,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           height: 40,
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             const SizedBox(
-              width: 40,
+              width: 30,
             ),
             const Text(
                 "배고픔의 정도",
                 style: TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.bold
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 2.0
                 )
             ),
             const Spacer(),
@@ -533,7 +621,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 )
             ),
             const SizedBox(
-              width: 40,
+              width: 30,
             ),
           ],
         ),
@@ -545,12 +633,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           child: SliderTheme(
               data: const SliderThemeData(
                 activeTrackColor: Color(0xffffd864),
+                inactiveTrackColor: Color(0xffEEEEEE),
+                activeTickMarkColor: Color(0xffffd864),
+                inactiveTickMarkColor: Color(0xffEEEEEE),
                 thumbColor: Colors.amber,
+                disabledThumbColor: Colors.amber,
                 valueIndicatorColor: Colors.amber,
-                trackShape: RectangularSliderTrackShape(),
+                trackShape: RoundedRectSliderTrackShape(),
                 trackHeight: 20,
-                thumbShape:
-                RoundSliderThumbShape(enabledThumbRadius: 2.0, elevation: 1.0),
+                thumbShape: RoundSliderThumbShape(
+                    pressedElevation: 0, disabledThumbRadius: 10 ,enabledThumbRadius: 0, elevation: 0),
                 valueIndicatorShape: PaddleSliderValueIndicatorShape(),
               ),
               child: Slider(
@@ -558,7 +650,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 min: 0,
                 max: 100,
                 divisions: 10,
-                label: sliderVal2.round().toString(),
+                // label: sliderVal2.round().toString(),
                 onChanged: (double value) {
                   setState(() {
                     sliderVal2 = value;
@@ -583,13 +675,14 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             const SizedBox(
-              width: 40,
+              width: 30,
             ),
             const Text(
                 "식사 소요 시간",
                 style: TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.bold
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 2.0
                 )
             ),
             const Spacer(),
@@ -628,7 +721,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               )
             ,
             const SizedBox(
-              width: 40,
+              width: 30,
             ),
           ],
         ),
@@ -640,12 +733,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           child: SliderTheme(
               data: const SliderThemeData(
                 activeTrackColor: Color(0xffffd864),
+                inactiveTrackColor: Color(0xffEEEEEE),
+                activeTickMarkColor: Color(0xffffd864),
+                inactiveTickMarkColor: Color(0xffEEEEEE),
                 thumbColor: Colors.amber,
+                disabledThumbColor: Colors.amber,
                 valueIndicatorColor: Colors.amber,
-                trackShape: RectangularSliderTrackShape(),
+                trackShape: RoundedRectSliderTrackShape(),
                 trackHeight: 20,
-                thumbShape:
-                RoundSliderThumbShape(enabledThumbRadius: 2.0, elevation: 1.0),
+                thumbShape: RoundSliderThumbShape(
+                    pressedElevation: 0, disabledThumbRadius: 10 ,enabledThumbRadius: 0, elevation: 0),
                 valueIndicatorShape: PaddleSliderValueIndicatorShape(),
               ),
               child: Slider(
@@ -653,7 +750,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 min: 10,
                 max: 60,
                 divisions: 5,
-                label: sliderVal3.round().toString(),
+                // label: sliderVal3.round().toString(),
                 onChanged: (double value) {
                   setState(() {
                     sliderVal3 = value;
@@ -679,13 +776,14 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget> [
             const SizedBox(
-              width: 40,
+              width: 30,
             ),
             const Text(
                 "식사 인원",
                 style: TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.bold
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 2.0
                 )
             ),
             const Spacer(),
@@ -720,10 +818,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                       fontSize: 20
                   )
               )
-
             ,
             const SizedBox(
-              width: 40,
+              width: 30,
             ),
           ],
         ),
@@ -735,12 +832,16 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           child: SliderTheme(
               data: const SliderThemeData(
                 activeTrackColor: Color(0xffffd864),
+                inactiveTrackColor: Color(0xffEEEEEE),
+                activeTickMarkColor: Color(0xffffd864),
+                inactiveTickMarkColor: Color(0xffEEEEEE),
                 thumbColor: Colors.amber,
+                disabledThumbColor: Colors.amber,
                 valueIndicatorColor: Colors.amber,
-                trackShape: RectangularSliderTrackShape(),
+                trackShape: RoundedRectSliderTrackShape(),
                 trackHeight: 20,
-                thumbShape:
-                RoundSliderThumbShape(enabledThumbRadius: 2.0, elevation: 1.0),
+                thumbShape: RoundSliderThumbShape(
+                    pressedElevation: 0, disabledThumbRadius: 10 ,enabledThumbRadius: 0, elevation: 0),
                 valueIndicatorShape: PaddleSliderValueIndicatorShape(),
               ),
               child: Slider(
@@ -748,7 +849,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 min: 1,
                 max: 4,
                 divisions: 3,
-                label: sliderVal4.round().toString(),
+                // label: sliderVal4.round().toString(),
                 onChanged: (double value) {
                   setState(() {
                     sliderVal4 = value;

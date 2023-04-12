@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'menuResult.dart';
 
+double buttonHeight = 40;
+double buttonWidth = 70;
+
 class ClassificationScreen extends StatelessWidget {
   const ClassificationScreen({Key? key}) : super(key: key);
 
@@ -65,18 +68,105 @@ class ClassificationScreen extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
+                Container(
+                  width: double.infinity,
+                  decoration: const BoxDecoration(),
+                  child: Row(
+                    children: const [
+                      SizedBox(
+                        width: 30,
+                      ),
+                      Text(
+                          "원하는 음식 분류",
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 2.0
+                          ))
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: const [
-                    SizedBox(
-                      width: 40,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      color: Colors.white, // 컨테이너 범위 확인 색깔
+                      width: 100, // 버튼 상하크기조절
+                      height: buttonHeight, // 버튼 좌우크기조절
+                      child: OutlinedButton(
+                        onPressed: () {
+                          print("click 한식 요리");
+                        },
+                        style: OutlinedButton.styleFrom(
+                            backgroundColor: const Color(0xffF4F4F4),
+                            shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(10))
+                            ),
+                            shadowColor: Colors.black,
+                            elevation: 5
+                        ),
+                        child: const Text(
+                            "한식 요리",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold
+                            )
+                        ),
+                      ),
                     ),
-                    Text(
-                        "원하는 음식 분류",
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold
-                        ))
+                    Container(
+                      color: Colors.white, // 컨테이너 범위 확인 색깔
+                      width: 100, // 버튼 상하크기조절
+                      height: buttonHeight, // 버튼 좌우크기조절
+                      child: OutlinedButton(
+                        onPressed: () {
+                          print("click 일식 요리");
+                        },
+                        style: OutlinedButton.styleFrom(
+                            backgroundColor: const Color(0xffF4F4F4),
+                            shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(10))
+                            ),
+                            shadowColor: Colors.black,
+                            elevation: 5
+                        ),
+                        child: const Text(
+                            "일식 요리",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold
+                            )
+                        ),
+                      ),
+                    ),
+                    Container(
+                      color: Colors.white, // 컨테이너 범위 확인 색깔
+                      width: 100, // 버튼 상하크기조절
+                      height: buttonHeight, // 버튼 좌우크기조절
+                      child: OutlinedButton(
+                        onPressed: () {
+                          print("click 중국집 요리");
+                        },
+                        style: OutlinedButton.styleFrom(
+                            backgroundColor: const Color(0xffF4F4F4),
+                            shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(10))
+                            ),
+                            shadowColor: Colors.black,
+                            elevation: 5
+                        ),
+                        child: const Text(
+                            "중국집 요리",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold
+                            )
+                        ),
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(
@@ -85,132 +175,79 @@ class ClassificationScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    OutlinedButton(
-                      onPressed: () {
-                        print("click 한식 요리");
-                      },
-                      style: OutlinedButton.styleFrom(
-                          backgroundColor: const Color(0xffF4F4F4),
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10))
-                          ),
-                          shadowColor: Colors.black,
-                          elevation: 5
-                      ),
-                      child: const Text(
-                          "한식 요리",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold
-                          )
-                      ),
-                    ),
-                    OutlinedButton(
-                      onPressed: () {
-                        print("click 일식 요리");
-                      },
-                      style: OutlinedButton.styleFrom(
-                          backgroundColor: const Color(0xffF4F4F4),
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10))
-                          ),
-                          shadowColor: Colors.black,
-                          elevation: 5
-                      ),
-                      child: const Text(
-                          "일식 요리",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold
-                          )
+                    Container(
+                      color: Colors.white, // 컨테이너 범위 확인 색깔
+                      width: 100, // 버튼 상하크기조절
+                      height: buttonHeight, // 버튼 좌우크기조절
+                      child: OutlinedButton(
+                        onPressed: () {
+                          print("click 양식 요리");
+                        },
+                        style: OutlinedButton.styleFrom(
+                            backgroundColor: const Color(0xffF4F4F4),
+                            shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(10))
+                            ),
+                            shadowColor: Colors.black,
+                            elevation: 5
+                        ),
+                        child: const Text(
+                            "양식 요리",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold
+                            )
+                        ),
                       ),
                     ),
-                    OutlinedButton(
-                      onPressed: () {
-                        print("click 중국집 요리");
-                      },
-                      style: OutlinedButton.styleFrom(
-                          backgroundColor: const Color(0xffF4F4F4),
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10))
-                          ),
-                          shadowColor: Colors.black,
-                          elevation: 5
-                      ),
-                      child: const Text(
-                          "중국집 요리",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold
-                          )
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    OutlinedButton(
-                      onPressed: () {
-                        print("click 양식 요리");
-                      },
-                      style: OutlinedButton.styleFrom(
-                          backgroundColor: const Color(0xffF4F4F4),
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10))
-                          ),
-                          shadowColor: Colors.black,
-                          elevation: 5
-                      ),
-                      child: const Text(
-                          "양식 요리",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold
-                          )
+                    Container(
+                      color: Colors.white, // 컨테이너 범위 확인 색깔
+                      width: 100, // 버튼 상하크기조절
+                      height: buttonHeight, // 버튼 좌우크기조절
+                      child: OutlinedButton(
+                        onPressed: () {
+                          print("click 분식 요리");
+                        },
+                        style: OutlinedButton.styleFrom(
+                            backgroundColor: const Color(0xffF4F4F4),
+                            shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(10))
+                            ),
+                            shadowColor: Colors.black,
+                            elevation: 5
+                        ),
+                        child: const Text(
+                            "분식 요리",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold
+                            )
+                        ),
                       ),
                     ),
-                    OutlinedButton(
-                      onPressed: () {
-                        print("click 분식 요리");
-                      },
-                      style: OutlinedButton.styleFrom(
-                          backgroundColor: const Color(0xffF4F4F4),
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10))
-                          ),
-                          shadowColor: Colors.black,
-                          elevation: 5
-                      ),
-                      child: const Text(
-                          "분식 요리",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold
-                          )
-                      ),
-                    ),
-                    OutlinedButton(
-                      onPressed: () {
-                        print("click 아시안 요리");
-                      },
-                      style: OutlinedButton.styleFrom(
-                          backgroundColor: const Color(0xffF4F4F4),
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10))
-                          ),
-                          shadowColor: Colors.black,
-                          elevation: 5
-                      ),
-                      child: const Text(
-                          "아시안 요리",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold
-                          )
+                    Container(
+                      color: Colors.white, // 컨테이너 범위 확인 색깔
+                      width: 100, // 버튼 상하크기조절
+                      height: buttonHeight, // 버튼 좌우크기조절
+                      child: OutlinedButton(
+                        onPressed: () {
+                          print("click 아시안 요리");
+                        },
+                        style: OutlinedButton.styleFrom(
+                            backgroundColor: const Color(0xffF4F4F4),
+                            shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(10))
+                            ),
+                            shadowColor: Colors.black,
+                            elevation: 5
+                        ),
+                        child: const Text(
+                            "아시안 요리",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold
+                            )
+                        ),
                       ),
                     ),
                   ],
@@ -223,6 +260,9 @@ class ClassificationScreen extends StatelessWidget {
                   children: [
                     Container(
                       margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                      color: Colors.white, // 컨테이너 범위 확인 색깔
+                      width: buttonWidth, // 버튼 상하크기조절
+                      height: buttonHeight, // 버튼 좌우크기조절
                       child: OutlinedButton(
                         onPressed: () {
                           print("click 치킨");
@@ -244,48 +284,61 @@ class ClassificationScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    OutlinedButton(
-                      onPressed: () {
-                        print("click 피자");
-                      },
-                      style: OutlinedButton.styleFrom(
-                          backgroundColor: const Color(0xffF4F4F4),
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10))
-                          ),
-                          shadowColor: Colors.black,
-                          elevation: 5
-                      ),
-                      child: const Text(
-                          "피자",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold
-                          )
+                    Container(
+                      color: Colors.white, // 컨테이너 범위 확인 색깔
+                      width: buttonWidth, // 버튼 상하크기조절
+                      height: buttonHeight, // 버튼 좌우크기조절
+                      child: OutlinedButton(
+                        onPressed: () {
+                          print("click 피자");
+                        },
+                        style: OutlinedButton.styleFrom(
+                            backgroundColor: const Color(0xffF4F4F4),
+                            shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(10))
+                            ),
+                            shadowColor: Colors.black,
+                            elevation: 5
+                        ),
+                        child: const Text(
+                            "피자",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold
+                            )
+                        ),
                       ),
                     ),
-                    OutlinedButton(
-                      onPressed: () {
-                        print("click 버거");
-                      },
-                      style: OutlinedButton.styleFrom(
-                          backgroundColor: const Color(0xffF4F4F4),
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10))
-                          ),
-                          shadowColor: Colors.black,
-                          elevation: 5
-                      ),
-                      child: const Text(
-                          "버거",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold
-                          )
+                    Container(
+                      color: Colors.white, // 컨테이너 범위 확인 색깔
+                      width: buttonWidth, // 버튼 상하크기조절
+                      height: buttonHeight, // 버튼 좌우크기조절
+                      child: OutlinedButton(
+                        onPressed: () {
+                          print("click 버거");
+                        },
+                        style: OutlinedButton.styleFrom(
+                            backgroundColor: const Color(0xffF4F4F4),
+                            shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(10))
+                            ),
+                            shadowColor: Colors.black,
+                            elevation: 5
+                        ),
+                        child: const Text(
+                            "버거",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold
+                            )
+                        ),
                       ),
                     ),
                     Container(
                       margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                      color: Colors.white, // 컨테이너 범위 확인 색깔
+                      width: 90, // 버튼 상하크기조절
+                      height: buttonHeight, // 버튼 좌우크기조절
                       child: OutlinedButton(
                         onPressed: () {
                           print("click 샌드위치");
@@ -317,6 +370,9 @@ class ClassificationScreen extends StatelessWidget {
                   children: [
                     Container(
                       margin: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                      color: Colors.white, // 컨테이너 범위 확인 색깔
+                      width: 115, // 버튼 상하크기조절
+                      height: buttonHeight, // 버튼 좌우크기조절
                       child: OutlinedButton(
                         onPressed: () {
                           print("click 카페 / 디저트");
@@ -338,28 +394,36 @@ class ClassificationScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    OutlinedButton(
-                      onPressed: () {
-                        print("click 고기 / 구이");
-                      },
-                      style: OutlinedButton.styleFrom(
-                          backgroundColor: const Color(0xffF4F4F4),
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(10))
-                          ),
-                          shadowColor: Colors.black,
-                          elevation: 5
-                      ),
-                      child: const Text(
-                          "고기 / 구이",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold
-                          )
+                    Container(
+                      color: Colors.white, // 컨테이너 범위 확인 색깔
+                      width: 105, // 버튼 상하크기조절
+                      height: buttonHeight, // 버튼 좌우크기조절
+                      child: OutlinedButton(
+                        onPressed: () {
+                          print("click 고기 / 구이");
+                        },
+                        style: OutlinedButton.styleFrom(
+                            backgroundColor: const Color(0xffF4F4F4),
+                            shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(10))
+                            ),
+                            shadowColor: Colors.black,
+                            elevation: 5
+                        ),
+                        child: const Text(
+                            "고기 / 구이",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold
+                            )
+                        ),
                       ),
                     ),
                     Container(
                       margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                      color: Colors.white, // 컨테이너 범위 확인 색깔
+                      width: 100, // 버튼 상하크기조절
+                      height: buttonHeight, // 버튼 좌우크기조절
                       child: OutlinedButton(
                         onPressed: () {
                           print("click 도시락 / 죽");
