@@ -13,13 +13,13 @@ final statefulScreenList = <StatefulWidget>[
   const CostScreen(),
   const RestrictionsScreen(),
   MenuResultScreen("랜덤"),
+  const ClassificationScreen(),
 ];
 
 // stateless 화면 list
 final statelessScreenList = <StatelessWidget>[
   const PreferenceScreen(),
   const SituationScreen(),
-  const ClassificationScreen(),
 ];
 
 void main() {
@@ -221,7 +221,7 @@ class MainScreen extends StatelessWidget {
             MyCard("랜덤", "운세를 보라", "assets/shuffle.png", 2),
             MyCard("개인 선호도", "뭐가 좋니?", "assets/like.png", 0),
             MyCard("개인 상황", "렛츠고 피크닉", "assets/sun.png", 1),
-            MyCard("음식 분류", "한식 중식 일식?", "assets/dish.png", 2),
+            MyCard("음식 분류", "한식 중식 일식?", "assets/dish.png", 3),
           ],
         ),
       ),
@@ -251,7 +251,7 @@ class MyCard extends StatelessWidget {
         ),
         child: InkWell(
           onTap: () {
-            if (title == "비용" || title == "식단 제약" || title == "랜덤") {
+            if (title == "비용" || title == "식단 제약" || title == "랜덤" || title =="음식 분류") {
               Navigator.push(
                 context,
                 MaterialPageRoute(
