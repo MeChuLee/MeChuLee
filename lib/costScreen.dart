@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'menuResult.dart';
 
 class CostScreen extends StatefulWidget {
