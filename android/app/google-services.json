@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "327791367100",
+    "project_id": "mechulee-53d7f",
+    "storage_bucket": "mechulee-53d7f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:327791367100:android:7c14729606c274304cd1b9",
+        "android_client_info": {
+          "package_name": "com.mechulee.mechulee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "327791367100-i9t0oj1p8tv1rrrvltifnohkeoeh02vd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFGD7bFadF13n55VagQZKxuvAgg1BXtCU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "327791367100-i9t0oj1p8tv1rrrvltifnohkeoeh02vd.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "327791367100-qpr8jvqun7afstasfot90cui1ui2c1u3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mechulee.mechulee"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
