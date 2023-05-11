@@ -80,8 +80,8 @@ class MenuResultScreenState extends State<MenuResultScreen> {
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                         image: isBack
-                                            ? AssetImage("assets/jajangmyeon.png")
-                                            : AssetImage("assets/jajangmyeonInfo.png")),
+                                            ? AssetImage("assets/images/jajangmyeon.png")
+                                            : AssetImage("assets/images/jajangmyeonInfo.png")),
                                   ),
                                 ),
                               );
@@ -122,7 +122,7 @@ class MenuResultScreenState extends State<MenuResultScreen> {
                     },
                     iconSize: 70,
                     icon: Image.asset(
-                      "assets/restaurantIcon.png",
+                      "assets/images/restaurantIcon.png",
                       fit: BoxFit.fill,
                     ),
                   ),

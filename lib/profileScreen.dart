@@ -21,7 +21,7 @@ class ProfileScreen extends StatelessWidget {
           title: const Text("회원 정보", style: TextStyle(color: Colors.black)),
           actions: [
             IconButton(
-              icon: Image.asset("assets/homeIcon.png"),
+              icon: Image.asset("assets/images/homeIcon.png"),
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -50,7 +50,7 @@ class ProfileScreen extends StatelessWidget {
                       foregroundColor: Colors.yellow,
                     ),
                     // icon of the button
-                    child: Image.asset("assets/profile.png"),
+                    child: Image.asset("assets/images/profile.png"),
                   ),
                   const Text(
                     "나는 나야",

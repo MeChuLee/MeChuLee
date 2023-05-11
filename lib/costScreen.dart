@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mechulee/recommender.dart';
 import 'menuResult.dart';
 
 class CostScreen extends StatefulWidget {
@@ -110,8 +111,6 @@ class _CostScreenState extends State<CostScreen> {
                     _sliderRangeLabels = RangeLabels(
                         '${value.start.round()}만원', '${value.end.round()}만원');
                   });
-                  print(_sliderRangeValues.start);
-                  print(_sliderRangeValues.end);
                 },
               )
             ], // children
@@ -139,6 +138,10 @@ class _CostScreenState extends State<CostScreen> {
               Expanded(
                   child: InkWell(
                       onTap: () {
+                        var recommender = Recommender();
+                        var menuId = recommender.recommendedAtCost(_sliderRangeValues.start.round() * 10000, _sliderRangeValues.end.round() * 10000);
+                        print(menuId);
+
                         Navigator.push(
                             context,
                             MaterialPageRoute(

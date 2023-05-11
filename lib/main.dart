@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mechulee/classificationScreen.dart';
 import 'package:mechulee/costScreen.dart';
 import 'package:mechulee/preferenceScreen.dart';
 import 'package:mechulee/profileScreen.dart';
+import 'package:mechulee/recommender.dart';
 import 'package:mechulee/restrictionsScreen.dart';
 import 'package:mechulee/situationScreen.dart';
 import 'menuResult.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'firebaseTest.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -62,7 +63,7 @@ class MainScreen extends StatelessWidget {
         title: const Text("메추리", style: TextStyle(color: Colors.black)),
         actions: [
           IconButton(
-            icon: Image.asset("assets/logo.png"),
+            icon: Image.asset("assets/images/logo.png"),
             onPressed: () {
               Navigator.push(
                 context,
@@ -79,7 +80,7 @@ class MainScreen extends StatelessWidget {
           children: [
             UserAccountsDrawerHeader(
               currentAccountPicture: const CircleAvatar(
-                backgroundImage: AssetImage('assets/profile.png'),
+                backgroundImage: AssetImage('assets/images/profile.png'),
               ),
               accountName: const Text(
                 '나는 나야',
@@ -224,12 +225,12 @@ class MainScreen extends StatelessWidget {
           crossAxisSpacing: 10,
           childAspectRatio: 1 / 1,
           children: const <Widget>[
-            MyCard("비용", "돈 아껴야 돼~", "assets/money.png", 0),
-            MyCard("식단 제약", "편식 ㄱㄱ", "assets/salad.png", 1),
-            MyCard("랜덤", "운세를 보라", "assets/shuffle.png", 2),
-            MyCard("개인 선호도", "뭐가 좋니?", "assets/like.png", 0),
-            MyCard("개인 상황", "렛츠고 피크닉", "assets/sun.png", 1),
-            MyCard("음식 분류", "한식 중식 일식?", "assets/dish.png", 3),
+            MyCard("비용", "돈 아껴야 돼~", "assets/images/money.png", 0),
+            MyCard("식단 제약", "편식 ㄱㄱ", "assets/images/salad.png", 1),
+            MyCard("랜덤", "운세를 보라", "assets/images/shuffle.png", 2),
+            MyCard("개인 선호도", "뭐가 좋니?", "assets/images/like.png", 0),
+            MyCard("개인 상황", "렛츠고 피크닉", "assets/images/sun.png", 1),
+            MyCard("음식 분류", "한식 중식 일식?", "assets/images/dish.png", 3),
           ],
         ),
       ),
@@ -259,11 +260,23 @@ class MyCard extends StatelessWidget {
         ),
         child: InkWell(
           onTap: () {
-            if (title == "비용" || title == "식단 제약" || title == "랜덤" || title =="음식 분류") {
+            if (title == "비용" || title == "식단 제약" || title == "음식 분류") {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => statefulScreenList[idx],
+                ),
+              );
+            } else if (title == "랜덤") {
+              // 랜덤으로 추천
+              var recommender = Recommender();
+              var menu = recommender.recommendedAtRandom();
+              print(menu);
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MenuResultScreen("menu"),
                 ),
               );
             } else {
