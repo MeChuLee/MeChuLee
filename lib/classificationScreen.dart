@@ -1,8 +1,13 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mechulee/recommender.dart';
 import 'menuResult.dart';
 
-
+// index 설정하는 부분을 제대로 설정해야 한다.
+// 단순 count로 index 설정해주면 안된다. 수정 필요 **
 
 class ClassificationScreen extends StatefulWidget {
   const ClassificationScreen({Key? key}) : super(key: key);
@@ -12,10 +17,11 @@ class ClassificationScreen extends StatefulWidget {
 }
 
 class _ClassificationScreen extends State<ClassificationScreen> {
+  int selectedCount = 0;
+
   double buttonHeight = 40;
   double buttonWidth = 70;
-  bool selected = false;
-  int clickedIndex = 99;
+  var selectedCheckList = List<bool>.filled(13, false);
 
   Color beforeButtonColor = const Color(0xffF4F4F4);
   Color clickedButtonColor = const Color(0xfffff7de);
@@ -62,11 +68,18 @@ class _ClassificationScreen extends State<ClassificationScreen> {
                   Expanded(
                       child: InkWell(
                           onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        MenuResultScreen("음식 분류")));
+                            List lst = showBooleanList(selectedCheckList);
+
+                            var recommender = Recommender();
+                            var menuId = recommender.recommendedAtClassification(lst[0],lst[1],lst[2]);
+                            print(menuId);
+                            print("테스트");
+
+                            // Navigator.push(
+                            //     context,
+                            //     MaterialPageRoute(
+                            //         builder: (context) =>
+                            //             MenuResultScreen("음식 분류")));
                           },
                           child: Container(
                             height: 60,
@@ -113,15 +126,20 @@ class _ClassificationScreen extends State<ClassificationScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
-                            if(!selected) {
-                              selected = true;
+                            if(selectedCheckList[0] == true) { // 이미 눌려져 있던 상황
+                              buttonColors[0] = beforeButtonColor; // 버튼색 원래대로 돌림
+                              selectedCheckList[0] = false; // 선택되었음을 나타내는 리스트 수정
+                              selectedCount--;
                             }else {
-                              buttonColors[clickedIndex] = beforeButtonColor;
+                              if(selectedCount != 3) {
+                                buttonColors[0] = clickedButtonColor; // 클릭한 색상으로 변경
+                                selectedCheckList[0] = true; // 선택되었음을 나타내는 리스트 수정
+                                selectedCount++; // 선택된 횟수 증가시키기
+                              }else {
+                                showToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
+                              }
                             }
-                            clickedIndex = 0;
-                            buttonColors[clickedIndex] = clickedButtonColor;
                           });
-                          print("click 한식 요리");
                         },
                         style: OutlinedButton.styleFrom(
                             backgroundColor: buttonColors[0],
@@ -147,15 +165,20 @@ class _ClassificationScreen extends State<ClassificationScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
-                            if(!selected) {
-                              selected = true;
+                            if(selectedCheckList[1] == true) { // 이미 눌려져 있던 상황
+                              buttonColors[1] = beforeButtonColor; // 버튼색 원래대로 돌림
+                              selectedCheckList[1] = false; // 선택되었음을 나타내는 리스트 수정
+                              selectedCount--;
                             }else {
-                              buttonColors[clickedIndex] = beforeButtonColor;
+                              if(selectedCount != 3) {
+                                buttonColors[1] = clickedButtonColor; // 클릭한 색상으로 변경
+                                selectedCheckList[1] = true; // 선택되었음을 나타내는 리스트 수정
+                                selectedCount++; // 선택된 횟수 증가시키기
+                              }else {
+                                showToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
+                              }
                             }
-                            clickedIndex = 1;
-                            buttonColors[clickedIndex] = clickedButtonColor;
                           });
-                          print("click 일식 요리");
                         },
                         style: OutlinedButton.styleFrom(
                             backgroundColor: buttonColors[1],
@@ -181,15 +204,20 @@ class _ClassificationScreen extends State<ClassificationScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
-                            if(!selected) {
-                              selected = true;
+                            if(selectedCheckList[2] == true) { // 이미 눌려져 있던 상황
+                              buttonColors[2] = beforeButtonColor; // 버튼색 원래대로 돌림
+                              selectedCheckList[2] = false; // 선택되었음을 나타내는 리스트 수정
+                              selectedCount--;
                             }else {
-                              buttonColors[clickedIndex] = beforeButtonColor;
+                              if(selectedCount != 3) {
+                                buttonColors[2] = clickedButtonColor; // 클릭한 색상으로 변경
+                                selectedCheckList[2] = true; // 선택되었음을 나타내는 리스트 수정
+                                selectedCount++; // 선택된 횟수 증가시키기
+                              }else {
+                                showToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
+                              }
                             }
-                            clickedIndex = 2;
-                            buttonColors[clickedIndex] = clickedButtonColor;
                           });
-                          print("click 중국집 요리");
                         },
                         style: OutlinedButton.styleFrom(
                             backgroundColor: buttonColors[2],
@@ -200,7 +228,7 @@ class _ClassificationScreen extends State<ClassificationScreen> {
                             elevation: 5
                         ),
                         child: const Text(
-                            "중국집 요리",
+                            "중식 요리",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold
@@ -223,15 +251,20 @@ class _ClassificationScreen extends State<ClassificationScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
-                            if(!selected) {
-                              selected = true;
+                            if(selectedCheckList[3] == true) { // 이미 눌려져 있던 상황
+                              buttonColors[3] = beforeButtonColor; // 버튼색 원래대로 돌림
+                              selectedCheckList[3] = false; // 선택되었음을 나타내는 리스트 수정
+                              selectedCount--;
                             }else {
-                              buttonColors[clickedIndex] = beforeButtonColor;
+                              if(selectedCount != 3) {
+                                buttonColors[3] = clickedButtonColor; // 클릭한 색상으로 변경
+                                selectedCheckList[3] = true; // 선택되었음을 나타내는 리스트 수정
+                                selectedCount++; // 선택된 횟수 증가시키기
+                              }else {
+                                showToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
+                              }
                             }
-                            clickedIndex = 3;
-                            buttonColors[clickedIndex] = clickedButtonColor;
                           });
-                          print("click 양식 요리");
                         },
                         style: OutlinedButton.styleFrom(
                             backgroundColor: buttonColors[3],
@@ -257,15 +290,20 @@ class _ClassificationScreen extends State<ClassificationScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
-                            if(!selected) {
-                              selected = true;
+                            if(selectedCheckList[4] == true) { // 이미 눌려져 있던 상황
+                              buttonColors[4] = beforeButtonColor; // 버튼색 원래대로 돌림
+                              selectedCheckList[4] = false; // 선택되었음을 나타내는 리스트 수정
+                              selectedCount--;
                             }else {
-                              buttonColors[clickedIndex] = beforeButtonColor;
+                              if(selectedCount != 3) {
+                                buttonColors[4] = clickedButtonColor; // 클릭한 색상으로 변경
+                                selectedCheckList[4] = true; // 선택되었음을 나타내는 리스트 수정
+                                selectedCount++; // 선택된 횟수 증가시키기
+                              }else {
+                                showToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
+                              }
                             }
-                            clickedIndex = 4;
-                            buttonColors[clickedIndex] = clickedButtonColor;
                           });
-                          print("click 분식 요리");
                         },
                         style: OutlinedButton.styleFrom(
                             backgroundColor: buttonColors[4],
@@ -291,15 +329,20 @@ class _ClassificationScreen extends State<ClassificationScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
-                            if(!selected) {
-                              selected = true;
+                            if(selectedCheckList[5] == true) { // 이미 눌려져 있던 상황
+                              buttonColors[5] = beforeButtonColor; // 버튼색 원래대로 돌림
+                              selectedCheckList[5] = false; // 선택되었음을 나타내는 리스트 수정
+                              selectedCount--;
                             }else {
-                              buttonColors[clickedIndex] = beforeButtonColor;
+                              if(selectedCount != 3) {
+                                buttonColors[5] = clickedButtonColor; // 클릭한 색상으로 변경
+                                selectedCheckList[5] = true; // 선택되었음을 나타내는 리스트 수정
+                                selectedCount++; // 선택된 횟수 증가시키기
+                              }else {
+                                showToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
+                              }
                             }
-                            clickedIndex = 5;
-                            buttonColors[clickedIndex] = clickedButtonColor;
                           });
-                          print("click 아시안 요리");
                         },
                         style: OutlinedButton.styleFrom(
                             backgroundColor: buttonColors[5],
@@ -334,15 +377,20 @@ class _ClassificationScreen extends State<ClassificationScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
-                            if(!selected) {
-                              selected = true;
+                            if(selectedCheckList[6] == true) { // 이미 눌려져 있던 상황
+                              buttonColors[6] = beforeButtonColor; // 버튼색 원래대로 돌림
+                              selectedCheckList[6] = false; // 선택되었음을 나타내는 리스트 수정
+                              selectedCount--;
                             }else {
-                              buttonColors[clickedIndex] = beforeButtonColor;
+                              if(selectedCount != 3) {
+                                buttonColors[6] = clickedButtonColor; // 클릭한 색상으로 변경
+                                selectedCheckList[6] = true; // 선택되었음을 나타내는 리스트 수정
+                                selectedCount++; // 선택된 횟수 증가시키기
+                              }else {
+                                showToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
+                              }
                             }
-                            clickedIndex = 6;
-                            buttonColors[clickedIndex] = clickedButtonColor;
                           });
-                          print("click 치킨");
                         },
                         style: OutlinedButton.styleFrom(
                             backgroundColor: buttonColors[6],
@@ -368,15 +416,20 @@ class _ClassificationScreen extends State<ClassificationScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
-                            if(!selected) {
-                              selected = true;
+                            if(selectedCheckList[7] == true) { // 이미 눌려져 있던 상황
+                              buttonColors[7] = beforeButtonColor; // 버튼색 원래대로 돌림
+                              selectedCheckList[7] = false; // 선택되었음을 나타내는 리스트 수정
+                              selectedCount--;
                             }else {
-                              buttonColors[clickedIndex] = beforeButtonColor;
+                              if(selectedCount != 3) {
+                                buttonColors[7] = clickedButtonColor; // 클릭한 색상으로 변경
+                                selectedCheckList[7] = true; // 선택되었음을 나타내는 리스트 수정
+                                selectedCount++; // 선택된 횟수 증가시키기
+                              }else {
+                                showToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
+                              }
                             }
-                            clickedIndex = 7;
-                            buttonColors[clickedIndex] = clickedButtonColor;
                           });
-                          print("click 피자");
                         },
                         style: OutlinedButton.styleFrom(
                             backgroundColor: buttonColors[7],
@@ -402,15 +455,20 @@ class _ClassificationScreen extends State<ClassificationScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
-                            if(!selected) {
-                              selected = true;
+                            if(selectedCheckList[8] == true) { // 이미 눌려져 있던 상황
+                              buttonColors[8] = beforeButtonColor; // 버튼색 원래대로 돌림
+                              selectedCheckList[8] = false; // 선택되었음을 나타내는 리스트 수정
+                              selectedCount--;
                             }else {
-                              buttonColors[clickedIndex] = beforeButtonColor;
+                              if(selectedCount != 3) {
+                                buttonColors[8] = clickedButtonColor; // 클릭한 색상으로 변경
+                                selectedCheckList[8] = true; // 선택되었음을 나타내는 리스트 수정
+                                selectedCount++; // 선택된 횟수 증가시키기
+                              }else {
+                                showToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
+                              }
                             }
-                            clickedIndex = 8;
-                            buttonColors[clickedIndex] = clickedButtonColor;
                           });
-                          print("click 버거");
                         },
                         style: OutlinedButton.styleFrom(
                             backgroundColor: buttonColors[8],
@@ -437,15 +495,20 @@ class _ClassificationScreen extends State<ClassificationScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
-                            if(!selected) {
-                              selected = true;
+                            if(selectedCheckList[9] == true) { // 이미 눌려져 있던 상황
+                              buttonColors[9] = beforeButtonColor; // 버튼색 원래대로 돌림
+                              selectedCheckList[9] = false; // 선택되었음을 나타내는 리스트 수정
+                              selectedCount--;
                             }else {
-                              buttonColors[clickedIndex] = beforeButtonColor;
+                              if(selectedCount != 3) {
+                                buttonColors[9] = clickedButtonColor; // 클릭한 색상으로 변경
+                                selectedCheckList[9] = true; // 선택되었음을 나타내는 리스트 수정
+                                selectedCount++; // 선택된 횟수 증가시키기
+                              }else {
+                                showToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
+                              }
                             }
-                            clickedIndex = 9;
-                            buttonColors[clickedIndex] = clickedButtonColor;
                           });
-                          print("click 샌드위치");
                         },
                         style: OutlinedButton.styleFrom(
                             backgroundColor: buttonColors[9],
@@ -480,15 +543,20 @@ class _ClassificationScreen extends State<ClassificationScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
-                            if(!selected) {
-                              selected = true;
+                            if(selectedCheckList[10] == true) { // 이미 눌려져 있던 상황
+                              buttonColors[10] = beforeButtonColor; // 버튼색 원래대로 돌림
+                              selectedCheckList[10] = false; // 선택되었음을 나타내는 리스트 수정
+                              selectedCount--;
                             }else {
-                              buttonColors[clickedIndex] = beforeButtonColor;
+                              if(selectedCount != 3) {
+                                buttonColors[10] = clickedButtonColor; // 클릭한 색상으로 변경
+                                selectedCheckList[10] = true; // 선택되었음을 나타내는 리스트 수정
+                                selectedCount++; // 선택된 횟수 증가시키기
+                              }else {
+                                showToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
+                              }
                             }
-                            clickedIndex = 10;
-                            buttonColors[clickedIndex] = clickedButtonColor;
                           });
-                          print("click 카페 / 디저트");
                         },
                         style: OutlinedButton.styleFrom(
                             backgroundColor: buttonColors[10],
@@ -514,15 +582,20 @@ class _ClassificationScreen extends State<ClassificationScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
-                            if(!selected) {
-                              selected = true;
+                            if(selectedCheckList[11] == true) { // 이미 눌려져 있던 상황
+                              buttonColors[11] = beforeButtonColor; // 버튼색 원래대로 돌림
+                              selectedCheckList[11] = false; // 선택되었음을 나타내는 리스트 수정
+                              selectedCount--;
                             }else {
-                              buttonColors[clickedIndex] = beforeButtonColor;
+                              if(selectedCount != 3) {
+                                buttonColors[11] = clickedButtonColor; // 클릭한 색상으로 변경
+                                selectedCheckList[11] = true; // 선택되었음을 나타내는 리스트 수정
+                                selectedCount++; // 선택된 횟수 증가시키기
+                              }else {
+                                showToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
+                              }
                             }
-                            clickedIndex = 11;
-                            buttonColors[clickedIndex] = clickedButtonColor;
                           });
-                          print("click 고기 / 구이");
                         },
                         style: OutlinedButton.styleFrom(
                             backgroundColor: buttonColors[11],
@@ -549,15 +622,20 @@ class _ClassificationScreen extends State<ClassificationScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
-                            if(!selected) {
-                              selected = true;
+                            if(selectedCheckList[12] == true) { // 이미 눌려져 있던 상황
+                              buttonColors[12] = beforeButtonColor; // 버튼색 원래대로 돌림
+                              selectedCheckList[12] = false; // 선택되었음을 나타내는 리스트 수정
+                              selectedCount--;
                             }else {
-                              buttonColors[clickedIndex] = beforeButtonColor;
+                              if(selectedCount != 3) {
+                                buttonColors[12] = clickedButtonColor; // 클릭한 색상으로 변경
+                                selectedCheckList[12] = true; // 선택되었음을 나타내는 리스트 수정
+                                selectedCount++; // 선택된 횟수 증가시키기
+                              }else {
+                                showToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
+                              }
                             }
-                            clickedIndex = 12;
-                            buttonColors[clickedIndex] = clickedButtonColor;
                           });
-                          print("click 도시락 / 죽");
                         },
                         style: OutlinedButton.styleFrom(
                             backgroundColor: buttonColors[12],
@@ -581,4 +659,28 @@ class _ClassificationScreen extends State<ClassificationScreen> {
               ],
             )));
   }
+}
+
+void showToastMsg() {
+  Fluttertoast.showToast(
+    msg: "3개를 넘는 선택은 할 수 없습니다.",
+    gravity: ToastGravity.BOTTOM,
+    backgroundColor: Colors.white,
+    fontSize: 20,
+    textColor: Colors.white,
+    toastLength: Toast.LENGTH_SHORT,
+  );
+}
+
+List showBooleanList(List<bool> lst) {
+  var classificationList = ["한식", "일식", "중식", "양식", "분식", "아시안",
+    "치킨", "피자", "버거", "샌드위치", "카페/디저트", "고기/구이", "도시락/죽"];
+  var selectedList = ["", "", ""];
+  int selectedIndex = 0;
+  for(int i = 0; i < classificationList.length; i++) {
+    if(lst[i] == true) {
+      selectedList[selectedIndex++] = classificationList[i];
+    }
+  }
+  return selectedList;
 }

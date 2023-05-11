@@ -271,8 +271,7 @@ class MyCard extends StatelessWidget {
               // 랜덤으로 추천
               var recommender = Recommender();
               var menu = recommender.recommendedAtRandom();
-              print(menu.runtimeType);
-              print(menu['name']);
+              print(menu);
 
               Navigator.push(
                 context,
