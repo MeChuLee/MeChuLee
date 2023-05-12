@@ -815,7 +815,7 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      MenuResultScreen("식단 제약")));
+                                      MenuResultScreen(1)));
                         },
                         child: Container(
                           height: 60,

@@ -145,7 +145,7 @@ class _CostScreenState extends State<CostScreen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => MenuResultScreen("비용")));
+                                builder: (context) => MenuResultScreen(1)));
                       },
                       child: Container(
                         height: 60,

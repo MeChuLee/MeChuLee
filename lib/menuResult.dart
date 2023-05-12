@@ -1,21 +1,32 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:mechulee/recommender.dart';
 
 // https://totally-developer.tistory.com/79
 /// 메뉴 결과 화면
 class MenuResultScreen extends StatefulWidget {
-  String title;
+  final int id;
 
   @override
   MenuResultScreenState createState() => MenuResultScreenState();
 
-  MenuResultScreen(this.title, {Key? key}) : super(key: key);
+  const MenuResultScreen(this.id, {Key? key}) : super(key: key);
 }
 
 class MenuResultScreenState extends State<MenuResultScreen> {
   bool isBack = true;
   double angle = 0;
+
+  var recommender = Recommender();
+
+  @override
+  void initState() {
+    super.initState();
+    print(recommender.menuList[widget.id - 1]['id']);
+    print(recommender.menuList[widget.id - 1]['name']);
+    print("");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -105,11 +116,11 @@ class MenuResultScreenState extends State<MenuResultScreen> {
                 ),
               ),
             ),
-            const Flexible(
+            Flexible(
               flex: 1,
               child: Text(
-                "김치찌개",
-                style: TextStyle(fontSize: 30),
+                recommender.menuList[widget.id - 1]['name'],
+                style: const TextStyle(fontSize: 30),
               ),
             ),
             Container(

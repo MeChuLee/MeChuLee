@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+import 'package:mechulee/preferenceScreen.dart';
 
 /// 싱글톤 패턴으로 구성
 /// 6가지 기준들을 반영하여 메뉴 추천 기능
@@ -25,17 +26,11 @@ class Recommender {
   }
 
   int recommendedAtRandom() {
-    getMenuList();
-
     var randomList = menuList..shuffle();
-
-    // 메뉴 한 개 추천
     return randomList[0]['id'];
   }
 
   int recommendedAtClassification(String str1, String str2, String str3) {
-    getMenuList();
-
     List<int> selectedId = [];
 
     if (str1 != "") {
@@ -67,11 +62,10 @@ class Recommender {
   }
 
   int recommendedAtCost(minPrice, maxPrice) {
-    getMenuList();
-
     // 선택된 메뉴 리스트
     List selectedMenuList = [];
 
+    //@TODO selectedMenuList.add(a) 처럼 index를 추가하는 것이 아니라 id 를 추가해야 할 듯
     for (int a = 0; a < menuList.length; a++) {
       //json에 있는 파일 개수만큼 반복문 돌려줌
       int price = menuList[a]["price"];
@@ -83,5 +77,43 @@ class Recommender {
     selectedMenuList.shuffle();
 
     return selectedMenuList[0];
+  }
+
+  int recommendedAtPreference(List<int> sexCheckList, double sliderVal) {
+    getMenuList();
+
+    List ageMapIdx = ['0', '10', '2030', '40'];
+
+    List selectedIdx = [];
+    List selectedId = [];
+
+    // 성별 확인
+    for (int i = 0; i < menuList.length; i++) {
+      if ((sexCheckList[PreferenceScreenState.SEX_MALE] == 0 &&
+              sexCheckList[PreferenceScreenState.SEX_FEMALE] == 0) ||
+          (sexCheckList[PreferenceScreenState.SEX_MALE] == 1 &&
+              sexCheckList[PreferenceScreenState.SEX_FEMALE] == 1)) {
+        // 남성 여성 체크 o or 남성 여성 체크 x
+        selectedIdx.add(i);
+      } else if (sexCheckList[PreferenceScreenState.SEX_MALE] == 1 &&
+          menuList[i]['sex']['m']) {
+        // 남성 체크 o, 여성 체크 x
+        selectedIdx.add(i);
+      } else if (sexCheckList[PreferenceScreenState.SEX_FEMALE] == 1 &&
+          menuList[i]['sex']['f']) {
+        // 남성 체크 x, 여성 체크 o
+        selectedIdx.add(i);
+      }
+    }
+
+    // 성별 확인 된 것들 중에 나이 확인
+    for (int i = 0; i < selectedIdx.length; i++) {
+      if (menuList[selectedIdx[i]]['age'][ageMapIdx[sliderVal.toInt()]]) {
+        selectedId.add(menuList[selectedIdx[i]]['id']);
+      }
+    }
+
+    selectedId.shuffle();
+    return selectedId[0];
   }
 }
