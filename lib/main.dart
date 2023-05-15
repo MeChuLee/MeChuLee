@@ -17,20 +17,22 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const MyApp());
+  // 앱 실행 시 json 파일 한 번 읽고 난 후 runApp 실행
+  var recommender = Recommender();
+  recommender.getMenuList().then((value) => runApp(const MyApp()));
 }
 
 // stateful 화면 list
 final statefulScreenList = <StatefulWidget>[
   const CostScreen(),
   const RestrictionsScreen(),
-  MenuResultScreen("랜덤"),
+  MenuResultScreen(0),
+  const PreferenceScreen(),
   const ClassificationScreen(),
 ];
 
 // stateless 화면 list
 final statelessScreenList = <StatelessWidget>[
-  const PreferenceScreen(),
   const SituationScreen(),
 ];
 
@@ -55,6 +57,9 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var recommender = Recommender();
+    recommender.getMenuList().then((value) => {});
+    
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -228,9 +233,9 @@ class MainScreen extends StatelessWidget {
             MyCard("비용", "돈 아껴야 돼~", "assets/images/money.png", 0),
             MyCard("식단 제약", "편식 ㄱㄱ", "assets/images/salad.png", 1),
             MyCard("랜덤", "운세를 보라", "assets/images/shuffle.png", 2),
-            MyCard("개인 선호도", "뭐가 좋니?", "assets/images/like.png", 0),
-            MyCard("개인 상황", "렛츠고 피크닉", "assets/images/sun.png", 1),
-            MyCard("음식 분류", "한식 중식 일식?", "assets/images/dish.png", 3),
+            MyCard("개인 선호도", "뭐가 좋니?", "assets/images/like.png", 3),
+            MyCard("개인 상황", "렛츠고 피크닉", "assets/images/sun.png", 0),
+            MyCard("음식 분류", "한식 중식 일식?", "assets/images/dish.png", 4),
           ],
         ),
       ),
@@ -260,7 +265,7 @@ class MyCard extends StatelessWidget {
         ),
         child: InkWell(
           onTap: () {
-            if (title == "비용" || title == "식단 제약" || title == "음식 분류") {
+            if (title == "비용" || title == "식단 제약" || title == "음식 분류" || title == "개인 선호도") {
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -270,13 +275,11 @@ class MyCard extends StatelessWidget {
             } else if (title == "랜덤") {
               // 랜덤으로 추천
               var recommender = Recommender();
-              var menu = recommender.recommendedAtRandom();
-              print(menu);
 
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MenuResultScreen("menu"),
+                  builder: (context) => MenuResultScreen(recommender.recommendedAtRandom()),
                 ),
               );
             } else {

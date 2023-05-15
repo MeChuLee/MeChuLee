@@ -47,7 +47,7 @@ class SituationScreen extends StatelessWidget {
                     child: InkWell(
                         onTap: () {
                           Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => MenuResultScreen("개인 상황")));
+                              MaterialPageRoute(builder: (context) => MenuResultScreen(1)));
                         },
                         child: Container(
                           height: 60,
