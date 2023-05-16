@@ -28,14 +28,9 @@ final statefulScreenList = <StatefulWidget>[
   const RestrictionsScreen(),
   MenuResultScreen(0),
   const PreferenceScreen(),
+  const SituationScreen(),
   const ClassificationScreen(),
 ];
-
-// stateless 화면 list
-final statelessScreenList = <StatelessWidget>[
-  const SituationScreen(),
-];
-
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -143,7 +138,7 @@ class MainScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => statelessScreenList[0],
+                    builder: (context) => statefulScreenList[1],
                   ),
                 );
               },
@@ -158,7 +153,7 @@ class MainScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => statefulScreenList[1],
+                    builder: (context) => statefulScreenList[2],
                   ),
                 );
               },
@@ -173,7 +168,7 @@ class MainScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => statelessScreenList[1],
+                    builder: (context) => statefulScreenList[3],
                   ),
                 );
               },
@@ -188,7 +183,7 @@ class MainScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => statelessScreenList[2],
+                    builder: (context) => statefulScreenList[4],
                   ),
                 );
               },
@@ -203,7 +198,7 @@ class MainScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => statelessScreenList[3],
+                    builder: (context) => statefulScreenList[5],
                   ),
                 );
               },
@@ -234,8 +229,8 @@ class MainScreen extends StatelessWidget {
             MyCard("식단 제약", "편식 ㄱㄱ", "assets/images/salad.png", 1),
             MyCard("랜덤", "운세를 보라", "assets/images/shuffle.png", 2),
             MyCard("개인 선호도", "뭐가 좋니?", "assets/images/like.png", 3),
-            MyCard("개인 상황", "렛츠고 피크닉", "assets/images/sun.png", 0),
-            MyCard("음식 분류", "한식 중식 일식?", "assets/images/dish.png", 4),
+            MyCard("개인 상황", "렛츠고 피크닉", "assets/images/sun.png", 4),
+            MyCard("음식 분류", "한식 중식 일식?", "assets/images/dish.png", 5),
           ],
         ),
       ),
@@ -265,14 +260,7 @@ class MyCard extends StatelessWidget {
         ),
         child: InkWell(
           onTap: () {
-            if (title == "비용" || title == "식단 제약" || title == "음식 분류" || title == "개인 선호도") {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => statefulScreenList[idx],
-                ),
-              );
-            } else if (title == "랜덤") {
+            if (title == "랜덤") {
               // 랜덤으로 추천
               var recommender = Recommender();
 
@@ -286,10 +274,10 @@ class MyCard extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => statelessScreenList[idx],
+                  builder: (context) => statefulScreenList[idx],
                 ),
               );
-            }
+            } 
           },
           child: Padding(
             padding: const EdgeInsets.fromLTRB(18, 18, 0, 0),
