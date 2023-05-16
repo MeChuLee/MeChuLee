@@ -1,6 +1,11 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
+import 'package:mechulee/preferenceScreen.dart';
+
+import 'database/dbHelper.dart';
 
 /// 싱글톤 패턴으로 구성
 /// 6가지 기준들을 반영하여 메뉴 추천 기능
@@ -26,13 +31,10 @@ class Recommender {
 
   int recommendedAtRandom() {
     var randomList = menuList..shuffle();
-
-    // 메뉴 한 개 추천
     return randomList[0]['id'];
   }
 
   int recommendedAtClassification(String str1, String str2, String str3) {
-    getMenuList();
     List<int> selectedId = [];
 
     if (str1 != "") {
@@ -67,6 +69,7 @@ class Recommender {
     // 선택된 메뉴 리스트
     List selectedMenuList = [];
 
+    //@TODO selectedMenuList.add(a) 처럼 index를 추가하는 것이 아니라 id 를 추가해야 할 듯
     for (int a = 0; a < menuList.length; a++) {
       //json에 있는 파일 개수만큼 반복문 돌려줌
       int price = menuList[a]["price"];
@@ -82,8 +85,6 @@ class Recommender {
 
   int recommendedAtSituation(List<bool> moodList, List<bool> weatherList, bool hangover,
       bool freeTime, int fatigue, int hungry, int people) {
-    getMenuList();
-
     List<Map> selectedId = [];
     List<Map> tempList = [];
     tempList = [...menuList];
@@ -204,8 +205,89 @@ class Recommender {
       print("식사 인원 계산 후 출력할 값이 없습니다.");
       return -1;
     }
-    print("제대로 출력");
     selectedId.shuffle();
     return selectedId[0]['id'];
+
+  Future<int> recommendedAtPreference(List<int> sexCheckList, double sliderVal, List<int> selectCheckList) async {
+    List ageMapIdx = ['0', '10', '2030', '40'];
+
+    List selectedIdx = [];
+    List tmpIdx = [];
+
+    // 성별 확인
+    for (int i = 0; i < menuList.length; i++) {
+      if ((sexCheckList[PreferenceScreenState.SEX_MALE] == 0 &&
+              sexCheckList[PreferenceScreenState.SEX_FEMALE] == 0) ||
+          (sexCheckList[PreferenceScreenState.SEX_MALE] == 1 &&
+              sexCheckList[PreferenceScreenState.SEX_FEMALE] == 1)) {
+        // 남성 여성 체크 o or 남성 여성 체크 x
+        selectedIdx.add(i);
+      } else if (sexCheckList[PreferenceScreenState.SEX_MALE] == 1 &&
+          menuList[i]['sex']['m']) {
+        // 남성 체크 o, 여성 체크 x
+        selectedIdx.add(i);
+      } else if (sexCheckList[PreferenceScreenState.SEX_FEMALE] == 1 &&
+          menuList[i]['sex']['f']) {
+        // 남성 체크 x, 여성 체크 o
+        selectedIdx.add(i);
+      }
+    }
+
+    List selectedId = [];
+
+    // 임시 if 처리
+    if (selectCheckList[1] == 1) {
+      // 성별 확인 된 것들 중에 나이 확인
+      for (int i = 0; i < selectedIdx.length; i++) {
+        if (menuList[selectedIdx[i]]['age'][ageMapIdx[sliderVal.toInt()]]) {
+          tmpIdx.add(i);
+        }
+      }
+      selectedIdx = tmpIdx.toList();
+
+      selectedId = await checkRecentDB(selectedIdx);
+      selectedId.shuffle();
+    } else {
+      for (int i = 0; i < selectedIdx.length; i++) {
+        selectedId.add(menuList[selectedIdx[i]]['id']);
+      }
+    }
+
+    return selectedId[0];
+  }
+
+  Future<List> checkRecentDB(List selectIdx) async {
+    // DB 출력하여 확인하기
+    Set resultId = {};
+    DBHelper dbHelper = DBHelper();
+
+    DateTime dt = DateTime.now();
+    String startDate = "${dt.year}/${dt.month}/${dt.day}";
+
+    await dbHelper.getAllRecord().then((value) => value.forEach((element) {
+      for (int i = 0; i < selectIdx.length; i++) {
+        // id 가 같으면
+        if (element.menuId == menuList[selectIdx[i]]['id']) {
+          print(element.menuId);
+          Duration difference = calculateDateDifference(startDate, element.date);
+          // 5일 이후로 지난 것들만 추가하기
+          if (difference.inDays > 5) {
+            resultId.add(element.menuId);
+          }
+        }
+      }
+    }));
+
+    List selectedId = resultId.toList();
+    return selectedId;
+  }
+
+  Duration calculateDateDifference(String startDate, String endDate) {
+    DateFormat dateFormat = DateFormat('yyyy/MM/dd');
+
+    DateTime startDateTime = dateFormat.parse(startDate);
+    DateTime endDateTime = dateFormat.parse(endDate);
+
+    return endDateTime.difference(startDateTime);
   }
 }

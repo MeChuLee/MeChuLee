@@ -76,7 +76,7 @@ class _ClassificationScreen extends State<ClassificationScreen> {
                             //     context,
                             //     MaterialPageRoute(
                             //         builder: (context) =>
-                            //             MenuResultScreen("음식 분류")));
+                            //             MenuResultScreen("1")));
                           },
                           child: Container(
                             height: 60,
