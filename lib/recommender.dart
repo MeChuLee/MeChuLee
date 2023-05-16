@@ -83,78 +83,36 @@ class Recommender {
     return selectedMenuList[0];
   }
 
-  int recommendedAtSituation(List<bool> moodList, List<bool> weatherList, bool hangover,
-      bool freeTime, int fatigue, int hungry, int people) {
+  int recommendedAtSituation(List<bool> moodList, List<bool> weatherList,
+      bool hangover, bool freeTime, int fatigue, int hungry, int people) {
     List<Map> selectedId = [];
     List<Map> tempList = [];
     tempList = [...menuList];
-    // 기분
-    List<String> moodValues = ['pleasure', 'happiness', 'depression', 'annoyance', "stress"];
-    for (int i = 0; i < tempList.length; i++) {
-      for (int j = 0; j < 5; j++) {
-        if (moodList[j] == true) {
-          if (tempList[i]['mood'][moodValues[j]] == true) {
-            selectedId.add(tempList[i]);
-            print("기분쪽 출력입니다.");
-            continue;
-          }
-        }
-      }
-    }
-    if(selectedId.length == 0) {
-      print("기분 계산 후 출력할 값이 없습니다.");
-      return -1;
-    }
-    tempList.clear();
-    tempList = [...selectedId];
-    selectedId.clear();
-
-    // 날씨
-    List<String> weatherValues = ['heat', 'cold', 'rain'];
-    for (int i = 0; i < tempList.length; i++) {
-      for (int j = 0; j < 3; j++) {
-        if (weatherList[j] == true) {
-          if (tempList[i]['weather'][weatherValues[j]] == true) {
-            selectedId.add(tempList[i]);
-            print("날씨쪽 출력입니다.");
-            continue;
-          }
-        }
-      }
-    }
-    if(selectedId.length == 0) {
-      print("날씨 계산 후 출력할 값이 없습니다.");
-      return -1;
-    }
-    tempList.clear();
-    tempList = [...selectedId];
-    selectedId.clear();
-
-    // 해장
-    for (int i = 0; i < tempList.length; i++) {
-      if(tempList[i]['hangover'] == hangover) {
-        selectedId.add(tempList[i]);
-        print("해장쪽 출력입니다.");
-      }
-    }
-    if(selectedId.length == 0) {
-      print("해장 계산 후 출력할 값이 없습니다.");
-      return -1;
-    }
-    tempList.clear();
-    tempList = [...selectedId];
-    selectedId.clear();
-
-    // 시간적 여유
-    if(freeTime == false) {
+    // 기분과 날씨에 대한 bool list를 모두 false인 경우 고려하지 않도록
+    if (moodList[0] == true ||
+        moodList[1] == true ||
+        moodList[2] == true ||
+        moodList[3] == true ||
+        moodList[4] == true) {
+      // 기분
+      List<String> moodValues = [
+        'pleasure',
+        'happiness',
+        'depression',
+        'annoyance',
+        "stress"
+      ];
       for (int i = 0; i < tempList.length; i++) {
-        if(tempList[i]['freeTime'] == freeTime) {
-          selectedId.add(tempList[i]);
-          print("시간적 여유쪽 출력입니다.");
+        for (int j = 0; j < 5; j++) {
+          if (moodList[j] == true) {
+            if (tempList[i]['mood'][moodValues[j]] == true) {
+              selectedId.add(tempList[i]);
+              continue;
+            }
+          }
         }
       }
-      if(selectedId.length == 0) {
-        print("시간적 여유 계산 후 출력할 값이 없습니다.");
+      if (selectedId.length == 0) {
         return -1;
       }
       tempList.clear();
@@ -162,17 +120,63 @@ class Recommender {
       selectedId.clear();
     }
 
+    if (weatherList[0] == true ||
+        weatherList[1] == true ||
+        weatherList[2] == true) {
+      // 날씨
+      List<String> weatherValues = ['heat', 'cold', 'rain'];
+      for (int i = 0; i < tempList.length; i++) {
+        for (int j = 0; j < 3; j++) {
+          if (weatherList[j] == true) {
+            if (tempList[i]['weather'][weatherValues[j]] == true) {
+              selectedId.add(tempList[i]);
+              continue;
+            }
+          }
+        }
+      }
+      if (selectedId.length == 0) {
+        return -1;
+      }
+      tempList.clear();
+      tempList = [...selectedId];
+      selectedId.clear();
+    }
+    // 해장
+    for (int i = 0; i < tempList.length; i++) {
+      if (tempList[i]['hangover'] == hangover) {
+        selectedId.add(tempList[i]);
+      }
+    }
+    if (selectedId.length == 0) {
+      return -1;
+    }
+    tempList.clear();
+    tempList = [...selectedId];
+    selectedId.clear();
 
+    // 시간적 여유
+    if (freeTime == false) {
+      for (int i = 0; i < tempList.length; i++) {
+        if (tempList[i]['freeTime'] == freeTime) {
+          selectedId.add(tempList[i]);
+        }
+      }
+      if (selectedId.length == 0) {
+        return -1;
+      }
+      tempList.clear();
+      tempList = [...selectedId];
+      selectedId.clear();
+    }
 
     // 피로도
     for (int i = 0; i < tempList.length; i++) {
-      if(tempList[i]['fatigue'] == fatigue) {
+      if (tempList[i]['fatigue'] == fatigue) {
         selectedId.add(tempList[i]);
-        print("피로도쪽 출력입니다.");
       }
     }
-    if(selectedId.length == 0) {
-      print("피로도 계산 후 출력할 값이 없습니다.");
+    if (selectedId.length == 0) {
       return -1;
     }
     tempList.clear();
@@ -181,13 +185,11 @@ class Recommender {
 
     // 배고픔의 정도
     for (int i = 0; i < tempList.length; i++) {
-      if(tempList[i]['hungry'] == hungry) {
+      if (tempList[i]['hungry'] == hungry) {
         selectedId.add(tempList[i]);
-        print("배고픔의 정도쪽 출력입니다.");
       }
     }
-    if(selectedId.length == 0) {
-      print("배고픔의 정도 계산 후 출력할 값이 없습니다.");
+    if (selectedId.length == 0) {
       return -1;
     }
     tempList.clear();
@@ -196,19 +198,19 @@ class Recommender {
 
     // 식사 인원
     for (int i = 0; i < tempList.length; i++) {
-      if(tempList[i]['people'] <= hungry) {
+      if (tempList[i]['people'] <= hungry) {
         selectedId.add(tempList[i]);
-        print("식사 인원쪽 출력입니다.");
       }
     }
-    if(selectedId.length == 0) {
-      print("식사 인원 계산 후 출력할 값이 없습니다.");
+    if (selectedId.length == 0) {
       return -1;
     }
     selectedId.shuffle();
     return selectedId[0]['id'];
+  }
 
-  Future<int> recommendedAtPreference(List<int> sexCheckList, double sliderVal, List<int> selectCheckList) async {
+  Future<int> recommendedAtPreference(List<int> sexCheckList, double sliderVal,
+      List<int> selectCheckList) async {
     List ageMapIdx = ['0', '10', '2030', '40'];
 
     List selectedIdx = [];
@@ -265,18 +267,19 @@ class Recommender {
     String startDate = "${dt.year}/${dt.month}/${dt.day}";
 
     await dbHelper.getAllRecord().then((value) => value.forEach((element) {
-      for (int i = 0; i < selectIdx.length; i++) {
-        // id 가 같으면
-        if (element.menuId == menuList[selectIdx[i]]['id']) {
-          print(element.menuId);
-          Duration difference = calculateDateDifference(startDate, element.date);
-          // 5일 이후로 지난 것들만 추가하기
-          if (difference.inDays > 5) {
-            resultId.add(element.menuId);
+          for (int i = 0; i < selectIdx.length; i++) {
+            // id 가 같으면
+            if (element.menuId == menuList[selectIdx[i]]['id']) {
+              print(element.menuId);
+              Duration difference =
+                  calculateDateDifference(startDate, element.date);
+              // 5일 이후로 지난 것들만 추가하기
+              if (difference.inDays > 5) {
+                resultId.add(element.menuId);
+              }
+            }
           }
-        }
-      }
-    }));
+        }));
 
     List selectedId = resultId.toList();
     return selectedId;
