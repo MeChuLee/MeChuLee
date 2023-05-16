@@ -77,12 +77,15 @@ class PreferenceScreenState extends State<PreferenceScreen> {
                   onTap: () {
                     // 개인 선호도 기반 추천
                     var recommender = Recommender();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MenuResultScreen(recommender.recommendedAtPreference(sexCheckList, sliderVal)),
-                      ),
-                    );
+                    recommender.recommendedAtPreference(sexCheckList, sliderVal, selectCheckList)
+                        .then((id) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MenuResultScreen(id),
+                        ),
+                      );
+                    });
                   },
                   child: Container(
                     height: 60,

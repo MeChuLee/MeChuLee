@@ -3,6 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:mechulee/recommender.dart';
 
+import 'database/dbHelper.dart';
+import 'database/record.dart';
+
 // https://totally-developer.tistory.com/79
 /// 메뉴 결과 화면
 class MenuResultScreen extends StatefulWidget {
@@ -21,14 +24,6 @@ class MenuResultScreenState extends State<MenuResultScreen> {
   var recommender = Recommender();
 
   @override
-  void initState() {
-    super.initState();
-    print(recommender.menuList[widget.id - 1]['id']);
-    print(recommender.menuList[widget.id - 1]['name']);
-    print("");
-  }
-
-  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -43,7 +38,7 @@ class MenuResultScreenState extends State<MenuResultScreen> {
             },
             icon: const Icon(Icons.arrow_back, color: Colors.black),
           ),
-          title: Text("결과", style: const TextStyle(color: Colors.black)),
+          title: const Text("결과", style: TextStyle(color: Colors.black)),
         ),
         body: Column(
           children: [
@@ -91,8 +86,10 @@ class MenuResultScreenState extends State<MenuResultScreen> {
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                         image: isBack
-                                            ? AssetImage("assets/images/jajangmyeon.png")
-                                            : AssetImage("assets/images/jajangmyeonInfo.png")),
+                                            ? AssetImage(
+                                                "assets/images/jajangmyeon.png")
+                                            : AssetImage(
+                                                "assets/images/jajangmyeonInfo.png")),
                                   ),
                                 ),
                               );
@@ -147,8 +144,29 @@ class MenuResultScreenState extends State<MenuResultScreen> {
             Flexible(
               flex: 1,
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   //@TODO 결정하기 기능
+                  // 현재 날짜 확인
+                  DateTime dt = DateTime.now();
+                  String date = "${dt.year}/${dt.month}/${dt.day}";
+
+                  // Local DB 에 현재 날짜와 선택한 메뉴 추가
+                  DBHelper dbHelper = DBHelper();
+
+                  dbHelper
+                      .insertRecord(Record(date: date, menuId: widget.id))
+                      .then((value) => {
+                            Navigator.of(context)
+                                .popUntil((route) => route.isFirst)
+                          });
+
+                  // DB 출력하여 확인하기
+                  dbHelper
+                      .getAllRecord()
+                      .then((value) => value.forEach((element) {
+                            print(
+                                "id: ${element.id}\ndate: ${element.date}\nmenuId: ${element.menuId}");
+                          }));
                 },
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
