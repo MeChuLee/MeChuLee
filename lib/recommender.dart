@@ -1,7 +1,11 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:mechulee/preferenceScreen.dart';
+
+import 'database/dbHelper.dart';
 
 /// 싱글톤 패턴으로 구성
 /// 6가지 기준들을 반영하여 메뉴 추천 기능
@@ -80,13 +84,138 @@ class Recommender {
     return selectedMenuList[0];
   }
 
-  int recommendedAtPreference(List<int> sexCheckList, double sliderVal) {
-    getMenuList();
+  int recommendedAtSituation(List<bool> moodList, List<bool> weatherList,
+      bool hangover, bool freeTime, int fatigue, int hungry, int people) {
+    List<Map> selectedId = [];
+    List<Map> tempList = [];
+    tempList = [...menuList];
+    // 기분과 날씨에 대한 bool list를 모두 false인 경우 고려하지 않도록
+    if (moodList[0] == true ||
+        moodList[1] == true ||
+        moodList[2] == true ||
+        moodList[3] == true ||
+        moodList[4] == true) {
+      // 기분
+      List<String> moodValues = [
+        'pleasure',
+        'happiness',
+        'depression',
+        'annoyance',
+        "stress"
+      ];
+      for (int i = 0; i < tempList.length; i++) {
+        for (int j = 0; j < 5; j++) {
+          if (moodList[j] == true) {
+            if (tempList[i]['mood'][moodValues[j]] == true) {
+              selectedId.add(tempList[i]);
+              continue;
+            }
+          }
+        }
+      }
+      if (selectedId.length == 0) {
+        return -1;
+      }
+      tempList.clear();
+      tempList = [...selectedId];
+      selectedId.clear();
+    }
 
+    if (weatherList[0] == true ||
+        weatherList[1] == true ||
+        weatherList[2] == true) {
+      // 날씨
+      List<String> weatherValues = ['heat', 'cold', 'rain'];
+      for (int i = 0; i < tempList.length; i++) {
+        for (int j = 0; j < 3; j++) {
+          if (weatherList[j] == true) {
+            if (tempList[i]['weather'][weatherValues[j]] == true) {
+              selectedId.add(tempList[i]);
+              continue;
+            }
+          }
+        }
+      }
+      if (selectedId.length == 0) {
+        return -1;
+      }
+      tempList.clear();
+      tempList = [...selectedId];
+      selectedId.clear();
+    }
+    // 해장
+    for (int i = 0; i < tempList.length; i++) {
+      if (tempList[i]['hangover'] == hangover) {
+        selectedId.add(tempList[i]);
+      }
+    }
+    if (selectedId.length == 0) {
+      return -1;
+    }
+    tempList.clear();
+    tempList = [...selectedId];
+    selectedId.clear();
+
+    // 시간적 여유
+    if (freeTime == false) {
+      for (int i = 0; i < tempList.length; i++) {
+        if (tempList[i]['freeTime'] == freeTime) {
+          selectedId.add(tempList[i]);
+        }
+      }
+      if (selectedId.length == 0) {
+        return -1;
+      }
+      tempList.clear();
+      tempList = [...selectedId];
+      selectedId.clear();
+    }
+
+    // 피로도
+    for (int i = 0; i < tempList.length; i++) {
+      if (tempList[i]['fatigue'] == fatigue) {
+        selectedId.add(tempList[i]);
+      }
+    }
+    if (selectedId.length == 0) {
+      return -1;
+    }
+    tempList.clear();
+    tempList = [...selectedId];
+    selectedId.clear();
+
+    // 배고픔의 정도
+    for (int i = 0; i < tempList.length; i++) {
+      if (tempList[i]['hungry'] == hungry) {
+        selectedId.add(tempList[i]);
+      }
+    }
+    if (selectedId.length == 0) {
+      return -1;
+    }
+    tempList.clear();
+    tempList = [...selectedId];
+    selectedId.clear();
+
+    // 식사 인원
+    for (int i = 0; i < tempList.length; i++) {
+      if (tempList[i]['people'] <= hungry) {
+        selectedId.add(tempList[i]);
+      }
+    }
+    if (selectedId.length == 0) {
+      return -1;
+    }
+    selectedId.shuffle();
+    return selectedId[0]['id'];
+  }
+
+  Future<int> recommendedAtPreference(List<int> sexCheckList, double sliderVal,
+      List<int> selectCheckList) async {
     List ageMapIdx = ['0', '10', '2030', '40'];
 
     List selectedIdx = [];
-    List selectedId = [];
+    List tmpIdx = [];
 
     // 성별 확인
     for (int i = 0; i < menuList.length; i++) {
@@ -107,16 +236,29 @@ class Recommender {
       }
     }
 
-    // 성별 확인 된 것들 중에 나이 확인
-    for (int i = 0; i < selectedIdx.length; i++) {
-      if (menuList[selectedIdx[i]]['age'][ageMapIdx[sliderVal.toInt()]]) {
+    List selectedId = [];
+
+    // 임시 if 처리
+    if (selectCheckList[1] == 1) {
+      // 성별 확인 된 것들 중에 나이 확인
+      for (int i = 0; i < selectedIdx.length; i++) {
+        if (menuList[selectedIdx[i]]['age'][ageMapIdx[sliderVal.toInt()]]) {
+          tmpIdx.add(i);
+        }
+      }
+      selectedIdx = tmpIdx.toList();
+
+      selectedId = await checkRecentDB(selectedIdx);
+      selectedId.shuffle();
+    } else {
+      for (int i = 0; i < selectedIdx.length; i++) {
         selectedId.add(menuList[selectedIdx[i]]['id']);
       }
     }
 
-    selectedId.shuffle();
     return selectedId[0];
   }
+
 
   int recommendedAsRestriction(List selectedBoolList, var selectedCalorie) {
     // 식단제약 추천
@@ -211,5 +353,41 @@ class Recommender {
       newMenuList.shuffle();
       return newMenuList[0]["id"];
     }
+  }
+
+  Future<List> checkRecentDB(List selectIdx) async {
+    // DB 출력하여 확인하기
+    Set resultId = {};
+    DBHelper dbHelper = DBHelper();
+
+    DateTime dt = DateTime.now();
+    String startDate = "${dt.year}/${dt.month}/${dt.day}";
+
+    await dbHelper.getAllRecord().then((value) => value.forEach((element) {
+          for (int i = 0; i < selectIdx.length; i++) {
+            // id 가 같으면
+            if (element.menuId == menuList[selectIdx[i]]['id']) {
+              print(element.menuId);
+              Duration difference =
+                  calculateDateDifference(startDate, element.date);
+              // 5일 이후로 지난 것들만 추가하기
+              if (difference.inDays > 5) {
+                resultId.add(element.menuId);
+              }
+            }
+          }
+        }));
+
+    List selectedId = resultId.toList();
+    return selectedId;
+  }
+
+  Duration calculateDateDifference(String startDate, String endDate) {
+    DateFormat dateFormat = DateFormat('yyyy/MM/dd');
+
+    DateTime startDateTime = dateFormat.parse(startDate);
+    DateTime endDateTime = dateFormat.parse(endDate);
+
+    return endDateTime.difference(startDateTime);
   }
 }
