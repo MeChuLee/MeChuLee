@@ -83,20 +83,15 @@ class _SituationScreen extends State<SituationScreen> {
                           int fatigue = sliderVal1.toInt();
                           int hungry = sliderVal2.toInt();
                           int people = sliderVal3.toInt();
-                          print("기분 리스트" + moodBoolList.toString());
-                          print("날씨 리스트" + weatherBoolList.toString());
-                          print("해장 부분" + hangover.toString());
-                          print("시간적 여유 부분" + haveFreeTime.toString());
-                          print("피로도 부분" + fatigue.toString());
-                          print("배고픔의 정도 부분" + hungry.toString());
-                          print("식사인원 부분" + people.toString() + "명");
-
                           var recommender = Recommender();
 
-
-                          int num = recommender.recommendedAtSituation(moodBoolList, weatherBoolList, hangover, haveFreeTime,
+                          int menuId = recommender.recommendedAtSituation(moodBoolList, weatherBoolList, hangover, haveFreeTime,
                               fatigue, hungry, people);
-                          print("결과는"+num.toString());
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      MenuResultScreen(menuId)));
 
                           // // 결과 출력 바꾸기
                           // Navigator.push(context,
