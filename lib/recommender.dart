@@ -25,8 +25,6 @@ class Recommender {
   }
 
   int recommendedAtRandom() {
-    getMenuList();
-
     var randomList = menuList..shuffle();
 
     // 메뉴 한 개 추천
@@ -35,7 +33,6 @@ class Recommender {
 
   int recommendedAtClassification(String str1, String str2, String str3) {
     getMenuList();
-
     List<int> selectedId = [];
 
     if (str1 != "") {
@@ -67,8 +64,6 @@ class Recommender {
   }
 
   int recommendedAtCost(minPrice, maxPrice) {
-    getMenuList();
-
     // 선택된 메뉴 리스트
     List selectedMenuList = [];
 
@@ -83,5 +78,134 @@ class Recommender {
     selectedMenuList.shuffle();
 
     return selectedMenuList[0];
+  }
+
+  int recommendedAtSituation(List<bool> moodList, List<bool> weatherList, bool hangover,
+      bool freeTime, int fatigue, int hungry, int people) {
+    getMenuList();
+
+    List<Map> selectedId = [];
+    List<Map> tempList = [];
+    tempList = [...menuList];
+    // 기분
+    List<String> moodValues = ['pleasure', 'happiness', 'depression', 'annoyance', "stress"];
+    for (int i = 0; i < tempList.length; i++) {
+      for (int j = 0; j < 5; j++) {
+        if (moodList[j] == true) {
+          if (tempList[i]['mood'][moodValues[j]] == true) {
+            selectedId.add(tempList[i]);
+            print("기분쪽 출력입니다.");
+            continue;
+          }
+        }
+      }
+    }
+    if(selectedId.length == 0) {
+      print("기분 계산 후 출력할 값이 없습니다.");
+      return -1;
+    }
+    tempList.clear();
+    tempList = [...selectedId];
+    selectedId.clear();
+
+    // 날씨
+    List<String> weatherValues = ['heat', 'cold', 'rain'];
+    for (int i = 0; i < tempList.length; i++) {
+      for (int j = 0; j < 3; j++) {
+        if (weatherList[j] == true) {
+          if (tempList[i]['weather'][weatherValues[j]] == true) {
+            selectedId.add(tempList[i]);
+            print("날씨쪽 출력입니다.");
+            continue;
+          }
+        }
+      }
+    }
+    if(selectedId.length == 0) {
+      print("날씨 계산 후 출력할 값이 없습니다.");
+      return -1;
+    }
+    tempList.clear();
+    tempList = [...selectedId];
+    selectedId.clear();
+
+    // 해장
+    for (int i = 0; i < tempList.length; i++) {
+      if(tempList[i]['hangover'] == hangover) {
+        selectedId.add(tempList[i]);
+        print("해장쪽 출력입니다.");
+      }
+    }
+    if(selectedId.length == 0) {
+      print("해장 계산 후 출력할 값이 없습니다.");
+      return -1;
+    }
+    tempList.clear();
+    tempList = [...selectedId];
+    selectedId.clear();
+
+    // 시간적 여유
+    if(freeTime == false) {
+      for (int i = 0; i < tempList.length; i++) {
+        if(tempList[i]['freeTime'] == freeTime) {
+          selectedId.add(tempList[i]);
+          print("시간적 여유쪽 출력입니다.");
+        }
+      }
+      if(selectedId.length == 0) {
+        print("시간적 여유 계산 후 출력할 값이 없습니다.");
+        return -1;
+      }
+      tempList.clear();
+      tempList = [...selectedId];
+      selectedId.clear();
+    }
+
+
+
+    // 피로도
+    for (int i = 0; i < tempList.length; i++) {
+      if(tempList[i]['fatigue'] == fatigue) {
+        selectedId.add(tempList[i]);
+        print("피로도쪽 출력입니다.");
+      }
+    }
+    if(selectedId.length == 0) {
+      print("피로도 계산 후 출력할 값이 없습니다.");
+      return -1;
+    }
+    tempList.clear();
+    tempList = [...selectedId];
+    selectedId.clear();
+
+    // 배고픔의 정도
+    for (int i = 0; i < tempList.length; i++) {
+      if(tempList[i]['hungry'] == hungry) {
+        selectedId.add(tempList[i]);
+        print("배고픔의 정도쪽 출력입니다.");
+      }
+    }
+    if(selectedId.length == 0) {
+      print("배고픔의 정도 계산 후 출력할 값이 없습니다.");
+      return -1;
+    }
+    tempList.clear();
+    tempList = [...selectedId];
+    selectedId.clear();
+
+    // 식사 인원
+    for (int i = 0; i < tempList.length; i++) {
+      if(tempList[i]['people'] <= hungry) {
+        selectedId.add(tempList[i]);
+        print("식사 인원쪽 출력입니다.");
+      }
+    }
+    if(selectedId.length == 0) {
+      print("식사 인원 계산 후 출력할 값이 없습니다.");
+      return -1;
+    }
+    print("제대로 출력");
+    selectedId.shuffle();
+    return selectedId[0]['id'];
   }
 }

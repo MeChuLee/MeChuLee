@@ -1,13 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mechulee/recommender.dart';
 import 'menuResult.dart';
 
-// index 설정하는 부분을 제대로 설정해야 한다.
-// 단순 count로 index 설정해주면 안된다. 수정 필요 **
 
 class ClassificationScreen extends StatefulWidget {
   const ClassificationScreen({Key? key}) : super(key: key);
