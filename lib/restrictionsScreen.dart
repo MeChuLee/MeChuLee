@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mechulee/recommender.dart';
 
 import 'menuResult.dart';
 
@@ -15,7 +16,7 @@ class RestrictionsScreen extends StatefulWidget {
 class _RestrictionsScreen extends State<RestrictionsScreen> {
   double buttonHeight = 40;
   double buttonWidth = 70;
-  double sliderVal4 = 100; // 변수 선언을 build밖에다가 해주어야 slider가 잘 동작한다!!!
+  double sliderVal4 = 500; // 변수 선언을 build밖에다가 해주어야 slider가 잘 동작한다!!!
   List<Color> buttonColors = [
     Color(0xffF4F4F4), // 0 - 달걀
     Color(0xffF4F4F4), // 1 - 우유
@@ -33,6 +34,8 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
     Color(0xffF4F4F4), // 13 - 단맛
     Color(0xffF4F4F4), // 14 - 느끼한맛
   ]; // 15개
+  List selectedBoolList = [false, false, false, false, false, false, false,
+  false, false, false, false, false, false, false, false];
   Color beforeButtonColor = Color(0xffF4F4F4); // 이전 버튼 색깔
   Color buttonColor = Color(0xffF4F4F4); // 이전 버튼 색깔
   // 다른 방법이 있을까요???... 헤헷 ㅋㅋㅋ
@@ -102,6 +105,11 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
+                            if(selectedBoolList[0] == false){
+                              selectedBoolList[0] = true;
+                            } else {
+                              selectedBoolList[0] = true;
+                            }
                             if (buttonColors[0] != beforeButtonColor) {
                               buttonColors[0] = beforeButtonColor;
                             } else {
@@ -109,7 +117,6 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                                   Color(0xfffff7de); // 버튼 클릭시 변하는 색깔
                             }
                           });
-                          print("click 달걀");
                         },
                         style: OutlinedButton.styleFrom(
                             // 버튼 스타일 설정
@@ -135,6 +142,11 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
+                            if(selectedBoolList[1] == false){
+                              selectedBoolList[1] = true;
+                            } else {
+                              selectedBoolList[1] = true;
+                            }
                             if (buttonColors[1] != beforeButtonColor) {
                               buttonColors[1] = beforeButtonColor;
                             } else {
@@ -142,7 +154,6 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                                   const Color(0xfffff7de); // 버튼 클릭시 변하는 색깔
                             }
                           });
-                          print("click 우유");
                         },
                         style: OutlinedButton.styleFrom(
                             // 버튼 스타일 설정
@@ -168,6 +179,11 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
+                            if(selectedBoolList[2] == false){
+                              selectedBoolList[2] = true;
+                            } else {
+                              selectedBoolList[2] = true;
+                            }
                             if (buttonColors[2] != beforeButtonColor) {
                               buttonColors[2] = beforeButtonColor;
                             } else {
@@ -175,7 +191,6 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                                   const Color(0xfffff7de); // 버튼 클릭시 변하는 색깔
                             }
                           });
-                          print("click 밀");
                         },
                         style: OutlinedButton.styleFrom(
                             // 버튼 스타일 설정
@@ -201,6 +216,11 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
+                            if(selectedBoolList[3] == false){
+                              selectedBoolList[3] = true;
+                            } else {
+                              selectedBoolList[3] = true;
+                            }
                             if (buttonColors[3] != beforeButtonColor) {
                               buttonColors[3] = beforeButtonColor;
                             } else {
@@ -208,7 +228,6 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                                   const Color(0xfffff7de); // 버튼 클릭시 변하는 색깔
                             }
                           });
-                          print("click 행복");
                         },
                         style: OutlinedButton.styleFrom(
                             // 버튼 스타일 설정
@@ -243,6 +262,11 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
+                            if(selectedBoolList[4] == false){
+                              selectedBoolList[4] = true;
+                            } else {
+                              selectedBoolList[4] = true;
+                            }
                             if (buttonColors[4] != beforeButtonColor) {
                               buttonColors[4] = beforeButtonColor;
                             } else {
@@ -250,7 +274,6 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                                   const Color(0xfffff7de); // 버튼 클릭시 변하는 색깔
                             }
                           });
-                          print("click 밤");
                         },
                         style: OutlinedButton.styleFrom(
                             // 버튼 스타일 설정
@@ -276,6 +299,11 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
+                            if(selectedBoolList[0] == false){
+                              selectedBoolList[0] = true;
+                            } else {
+                              selectedBoolList[0] = true;
+                            }
                             if (buttonColors[5] != beforeButtonColor) {
                               buttonColors[5] = beforeButtonColor;
                             } else {
@@ -283,7 +311,6 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                                   const Color(0xfffff7de); // 버튼 클릭시 변하는 색깔
                             }
                           });
-                          print("click 생선");
                         },
                         style: OutlinedButton.styleFrom(
                             // 버튼 스타일 설정
@@ -309,6 +336,11 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
+                            if(selectedBoolList[6] == false){
+                              selectedBoolList[6] = true;
+                            } else {
+                              selectedBoolList[6] = true;
+                            }
                             if (buttonColors[6] != beforeButtonColor) {
                               buttonColors[6] = beforeButtonColor;
                             } else {
@@ -316,7 +348,6 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                                   const Color(0xfffff7de); // 버튼 클릭시 변하는 색깔
                             }
                           });
-                          print("click 행복");
                         },
                         style: OutlinedButton.styleFrom(
                             // 버튼 스타일 설정
@@ -390,6 +421,11 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
+                            if(selectedBoolList[7] == false){
+                              selectedBoolList[7] = true;
+                            } else {
+                              selectedBoolList[7] = true;
+                            }
                             if (buttonColors[7] != beforeButtonColor) {
                               buttonColors[7] = beforeButtonColor;
                             } else {
@@ -397,7 +433,6 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                                   const Color(0xfffff7de); // 버튼 클릭시 변하는 색깔
                             }
                           });
-                          print("click 행복");
                         },
                         style: OutlinedButton.styleFrom(
                             // 버튼 스타일 설정
@@ -423,6 +458,11 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
+                            if(selectedBoolList[8] == false){
+                              selectedBoolList[8] = true;
+                            } else {
+                              selectedBoolList[8] = true;
+                            }
                             if (buttonColors[8] != beforeButtonColor) {
                               buttonColors[8] = beforeButtonColor;
                             } else {
@@ -430,7 +470,6 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                                   const Color(0xfffff7de); // 버튼 클릭시 변하는 색깔
                             }
                           });
-                          print("click 행복");
                         },
                         style: OutlinedButton.styleFrom(
                             // 버튼 스타일 설정
@@ -456,6 +495,11 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
+                            if(selectedBoolList[9] == false){
+                              selectedBoolList[9] = true;
+                            } else {
+                              selectedBoolList[9] = true;
+                            }
                             if (buttonColors[9] != beforeButtonColor) {
                               buttonColors[9] = beforeButtonColor;
                             } else {
@@ -463,7 +507,6 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                                   const Color(0xfffff7de); // 버튼 클릭시 변하는 색깔
                             }
                           });
-                          print("click 행복");
                         },
                         style: OutlinedButton.styleFrom(
                             // 버튼 스타일 설정
@@ -493,6 +536,11 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
+                            if(selectedBoolList[10] == false){
+                              selectedBoolList[10] = true;
+                            } else {
+                              selectedBoolList[10] = true;
+                            }
                             if (buttonColors[10] != beforeButtonColor) {
                               buttonColors[10] = beforeButtonColor;
                             } else {
@@ -500,7 +548,6 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                                   const Color(0xfffff7de); // 버튼 클릭시 변하는 색깔
                             }
                           });
-                          print("click 행복");
                         },
                         style: OutlinedButton.styleFrom(
                             // 버튼 스타일 설정
@@ -569,6 +616,11 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
+                            if(selectedBoolList[11] == false){
+                              selectedBoolList[11] = true;
+                            } else {
+                              selectedBoolList[11] = true;
+                            }
                             if (buttonColors[11] != beforeButtonColor) {
                               buttonColors[11] = beforeButtonColor;
                             } else {
@@ -576,7 +628,6 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                                   const Color(0xfffff7de); // 버튼 클릭시 변하는 색깔
                             }
                           });
-                          print("click 행복");
                         },
                         style: OutlinedButton.styleFrom(
                             // 버튼 스타일 설정
@@ -602,6 +653,11 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
+                            if(selectedBoolList[12] == false){
+                              selectedBoolList[12] = true;
+                            } else {
+                              selectedBoolList[12] = true;
+                            }
                             if (buttonColors[12] != beforeButtonColor) {
                               buttonColors[12] = beforeButtonColor;
                             } else {
@@ -609,7 +665,6 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                                   const Color(0xfffff7de); // 버튼 클릭시 변하는 색깔
                             }
                           });
-                          print("click 행복");
                         },
                         style: OutlinedButton.styleFrom(
                             // 버튼 스타일 설정
@@ -635,6 +690,11 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
+                            if(selectedBoolList[13] == false){
+                              selectedBoolList[13] = true;
+                            } else {
+                              selectedBoolList[13] = true;
+                            }
                             if (buttonColors[13] != beforeButtonColor) {
                               buttonColors[13] = beforeButtonColor;
                             } else {
@@ -642,7 +702,6 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                                   const Color(0xfffff7de); // 버튼 클릭시 변하는 색깔
                             }
                           });
-                          print("click 행복");
                         },
                         style: OutlinedButton.styleFrom(
                             // 버튼 스타일 설정
@@ -672,6 +731,11 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
+                            if(selectedBoolList[14] == false){
+                              selectedBoolList[14] = true;
+                            } else {
+                              selectedBoolList[14] = true;
+                            }
                             if (buttonColors[14] != beforeButtonColor) {
                               buttonColors[14] = beforeButtonColor;
                             } else {
@@ -679,7 +743,6 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                                   const Color(0xfffff7de); // 버튼 클릭시 변하는 색깔
                             }
                           });
-                          print("click 행복");
                         },
                         style: OutlinedButton.styleFrom(
                             // 버튼 스타일 설정
@@ -798,6 +861,7 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                 Expanded(
                     child: InkWell(
                         onTap: () {
+
                           Navigator.pop(context);
                         },
                         child: Container(
@@ -811,11 +875,13 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                 Expanded(
                     child: InkWell(
                         onTap: () {
+                          Recommender recommender = Recommender();
+                          print(recommender.recommendedAsRestriction(selectedBoolList ,sliderVal4.round()));
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      MenuResultScreen(1)));
+                                      MenuResultScreen(recommender.recommendedAsRestriction(selectedBoolList ,sliderVal4.round()))));
                         },
                         child: Container(
                           height: 60,
