@@ -80,8 +80,6 @@ class Recommender {
   }
 
   int recommendedAtPreference(List<int> sexCheckList, double sliderVal) {
-    getMenuList();
-
     List ageMapIdx = ['0', '10', '2030', '40'];
 
     List selectedIdx = [];
