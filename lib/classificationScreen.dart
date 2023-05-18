@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mechulee/recommender.dart';
@@ -65,16 +63,20 @@ class _ClassificationScreen extends State<ClassificationScreen> {
                           onTap: () {
                             List lst = showBooleanList(selectedCheckList);
 
-                            var recommender = Recommender();
-                            var menuId =
-                                recommender.recommendedAtClassification(
-                                    lst[0], lst[1], lst[2]);
+                            if (lst[0] == "") {
+                              showNotSelectedToastMsg();
+                            } else {
+                              var recommender = Recommender();
+                              var menuId =
+                                  recommender.recommendedAtClassification(
+                                      lst[0], lst[1], lst[2]);
 
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        MenuResultScreen(menuId)));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          MenuResultScreen(menuId)));
+                            }
                           },
                           child: Container(
                             height: 60,
@@ -134,7 +136,7 @@ class _ClassificationScreen extends State<ClassificationScreen> {
                                     true; // 선택되었음을 나타내는 리스트 수정
                                 selectedCount++; // 선택된 횟수 증가시키기
                               } else {
-                                showToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
+                                showWrongSelectToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
                               }
                             }
                           });
@@ -174,7 +176,7 @@ class _ClassificationScreen extends State<ClassificationScreen> {
                                     true; // 선택되었음을 나타내는 리스트 수정
                                 selectedCount++; // 선택된 횟수 증가시키기
                               } else {
-                                showToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
+                                showWrongSelectToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
                               }
                             }
                           });
@@ -214,7 +216,7 @@ class _ClassificationScreen extends State<ClassificationScreen> {
                                     true; // 선택되었음을 나타내는 리스트 수정
                                 selectedCount++; // 선택된 횟수 증가시키기
                               } else {
-                                showToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
+                                showWrongSelectToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
                               }
                             }
                           });
@@ -262,7 +264,7 @@ class _ClassificationScreen extends State<ClassificationScreen> {
                                     true; // 선택되었음을 나타내는 리스트 수정
                                 selectedCount++; // 선택된 횟수 증가시키기
                               } else {
-                                showToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
+                                showWrongSelectToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
                               }
                             }
                           });
@@ -302,7 +304,7 @@ class _ClassificationScreen extends State<ClassificationScreen> {
                                     true; // 선택되었음을 나타내는 리스트 수정
                                 selectedCount++; // 선택된 횟수 증가시키기
                               } else {
-                                showToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
+                                showWrongSelectToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
                               }
                             }
                           });
@@ -342,7 +344,7 @@ class _ClassificationScreen extends State<ClassificationScreen> {
                                     true; // 선택되었음을 나타내는 리스트 수정
                                 selectedCount++; // 선택된 횟수 증가시키기
                               } else {
-                                showToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
+                                showWrongSelectToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
                               }
                             }
                           });
@@ -394,7 +396,7 @@ class _ClassificationScreen extends State<ClassificationScreen> {
                                     true; // 선택되었음을 나타내는 리스트 수정
                                 selectedCount++; // 선택된 횟수 증가시키기
                               } else {
-                                showToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
+                                showWrongSelectToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
                               }
                             }
                           });
@@ -434,7 +436,7 @@ class _ClassificationScreen extends State<ClassificationScreen> {
                                     true; // 선택되었음을 나타내는 리스트 수정
                                 selectedCount++; // 선택된 횟수 증가시키기
                               } else {
-                                showToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
+                                showWrongSelectToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
                               }
                             }
                           });
@@ -474,7 +476,7 @@ class _ClassificationScreen extends State<ClassificationScreen> {
                                     true; // 선택되었음을 나타내는 리스트 수정
                                 selectedCount++; // 선택된 횟수 증가시키기
                               } else {
-                                showToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
+                                showWrongSelectToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
                               }
                             }
                           });
@@ -518,7 +520,7 @@ class _ClassificationScreen extends State<ClassificationScreen> {
                                     true; // 선택되었음을 나타내는 리스트 수정
                                 selectedCount++; // 선택된 횟수 증가시키기
                               } else {
-                                showToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
+                                showWrongSelectToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
                               }
                             }
                           });
@@ -570,7 +572,7 @@ class _ClassificationScreen extends State<ClassificationScreen> {
                                     true; // 선택되었음을 나타내는 리스트 수정
                                 selectedCount++; // 선택된 횟수 증가시키기
                               } else {
-                                showToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
+                                showWrongSelectToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
                               }
                             }
                           });
@@ -610,7 +612,7 @@ class _ClassificationScreen extends State<ClassificationScreen> {
                                     true; // 선택되었음을 나타내는 리스트 수정
                                 selectedCount++; // 선택된 횟수 증가시키기
                               } else {
-                                showToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
+                                showWrongSelectToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
                               }
                             }
                           });
@@ -654,7 +656,7 @@ class _ClassificationScreen extends State<ClassificationScreen> {
                                     true; // 선택되었음을 나타내는 리스트 수정
                                 selectedCount++; // 선택된 횟수 증가시키기
                               } else {
-                                showToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
+                                showWrongSelectToastMsg(); // 더 누를수 없기 때문에 토스트 메시지 출력
                               }
                             }
                           });
@@ -679,9 +681,20 @@ class _ClassificationScreen extends State<ClassificationScreen> {
   }
 }
 
-void showToastMsg() {
+void showWrongSelectToastMsg() {
   Fluttertoast.showToast(
-    msg: "3개를 넘는 선택은 할 수 없습니다.",
+    msg: "3개를 넘는 설정은 할 수 없습니다.",
+    gravity: ToastGravity.BOTTOM,
+    backgroundColor: Colors.white,
+    fontSize: 20,
+    textColor: Colors.white,
+    toastLength: Toast.LENGTH_SHORT,
+  );
+}
+
+void showNotSelectedToastMsg() {
+  Fluttertoast.showToast(
+    msg: "분류를 설정하고 선택을 눌러주세요.",
     gravity: ToastGravity.BOTTOM,
     backgroundColor: Colors.white,
     fontSize: 20,
