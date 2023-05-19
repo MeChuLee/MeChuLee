@@ -1,10 +1,8 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:mechulee/recommender.dart';
-
 import 'menuResult.dart';
-
-// 여백 전부 20인데 나머지는 40으로 하기
-// 칼로리바 radius 적용하기
 
 class RestrictionsScreen extends StatefulWidget {
   const RestrictionsScreen({Key? key}) : super(key: key);
@@ -16,30 +14,61 @@ class RestrictionsScreen extends StatefulWidget {
 class _RestrictionsScreen extends State<RestrictionsScreen> {
   double buttonHeight = 40;
   double buttonWidth = 70;
-  double sliderVal4 = 500; // 변수 선언을 build밖에다가 해주어야 slider가 잘 동작한다!!!
-  List<Color> buttonColors = [
-    Color(0xffF4F4F4), // 0 - 달걀
-    Color(0xffF4F4F4), // 1 - 우유
-    Color(0xffF4F4F4), // 2 - 밀
-    Color(0xffF4F4F4), // 3 - 땅콩
-    Color(0xffF4F4F4), // 4 - 밤
-    Color(0xffF4F4F4), // 5 - 생선
-    Color(0xffF4F4F4), // 6 - 조개
-    Color(0xffF4F4F4), // 7 - 비건
-    Color(0xffF4F4F4), // 8 - 폴로
-    Color(0xffF4F4F4), // 9 - 오보
-    Color(0xffF4F4F4), // 10 - 락토오보
-    Color(0xffF4F4F4), // 11 - 매운맛
-    Color(0xffF4F4F4), // 12 - 짠맛
-    Color(0xffF4F4F4), // 13 - 단맛
-    Color(0xffF4F4F4), // 14 - 느끼한맛
-  ]; // 15개
-  List selectedBoolList = [false, false, false, false, false, false, false,
-  false, false, false, false, false, false, false, false];
-  Color beforeButtonColor = Color(0xffF4F4F4); // 이전 버튼 색깔
-  Color buttonColor = Color(0xffF4F4F4); // 이전 버튼 색깔
-  // 다른 방법이 있을까요???... 헤헷 ㅋㅋㅋ
-  // 버튼 class만들어서 버튼 클릭상태 정보 저장하는 멤버변수 만들어야함. -> 저장해서 결과도출할때.
+  double sliderVal4 = 500; // slider의 초기값 설정
+
+  List<Color> buttonColors = List.filled(15, const Color(0xffF4F4F4));
+  Color beforeButtonColor = const Color(0xffF4F4F4); // 이전 버튼 색깔
+  Color clickedButtonColor = const Color(0xfffff7de); // 클릭한 버튼 색깔
+
+  List<bool> selectedBoolList =
+      List.filled(15, false); // false -> 버튼이 눌리지 않은 경우를 나타냄
+
+  bool beforeClickedVegButton = false;
+  final queue = Queue<int>();
+
+  void vegButtonClick(int buttonIndex) {
+    // 채식주의 버튼 클릭 함수
+    if (beforeClickedVegButton == false &&
+        selectedBoolList[buttonIndex] == false) {
+      queue.add(buttonIndex);
+      buttonColors[buttonIndex] = clickedButtonColor;
+      selectedBoolList[buttonIndex] = true;
+      beforeClickedVegButton = true;
+    } else if (beforeClickedVegButton == true &&
+        selectedBoolList[buttonIndex] == true) {
+      queue.removeFirst();
+      selectedBoolList[buttonIndex] = false;
+      buttonColors[buttonIndex] = beforeButtonColor;
+      beforeClickedVegButton = false;
+    } else if (beforeClickedVegButton == true &&
+        selectedBoolList[buttonIndex] == false) {
+      int beforeClickedVegButtonIndex = queue.removeFirst();
+      selectedBoolList[beforeClickedVegButtonIndex] = false;
+      buttonColors[beforeClickedVegButtonIndex] = beforeButtonColor;
+
+      queue.add(buttonIndex);
+      buttonColors[buttonIndex] = clickedButtonColor;
+      selectedBoolList[buttonIndex] = true;
+      beforeClickedVegButton = true;
+    }
+    print("$selectedBoolList  $sliderVal4");
+  }
+
+  void buttonClick(buttonIndex) {
+    // 알러지, 맛 버튼 클릭 함수
+    if (selectedBoolList[buttonIndex] == false) {
+      selectedBoolList[buttonIndex] = true;
+    } else {
+      selectedBoolList[buttonIndex] = false;
+    }
+
+    if (buttonColors[buttonIndex] != beforeButtonColor) {
+      buttonColors[buttonIndex] = beforeButtonColor;
+    } else {
+      buttonColors[buttonIndex] = clickedButtonColor; // 버튼 클릭시 변하는 색깔
+    }
+    print("$selectedBoolList  $sliderVal4");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +93,7 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
             child: Column(
               children: [
                 // 알러지 기준나열 시작부분 ------------------------------------------------
-                SizedBox(
+                const SizedBox(
                   // 기준 제목 위쪽 여백 조정
                   height: 20,
                 ),
@@ -90,7 +119,7 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Row(
@@ -105,17 +134,7 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
-                            if(selectedBoolList[0] == false){
-                              selectedBoolList[0] = true;
-                            } else {
-                              selectedBoolList[0] = true;
-                            }
-                            if (buttonColors[0] != beforeButtonColor) {
-                              buttonColors[0] = beforeButtonColor;
-                            } else {
-                              buttonColors[0] =
-                                  Color(0xfffff7de); // 버튼 클릭시 변하는 색깔
-                            }
+                            buttonClick(0);
                           });
                         },
                         style: OutlinedButton.styleFrom(
@@ -142,17 +161,7 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
-                            if(selectedBoolList[1] == false){
-                              selectedBoolList[1] = true;
-                            } else {
-                              selectedBoolList[1] = true;
-                            }
-                            if (buttonColors[1] != beforeButtonColor) {
-                              buttonColors[1] = beforeButtonColor;
-                            } else {
-                              buttonColors[1] =
-                                  const Color(0xfffff7de); // 버튼 클릭시 변하는 색깔
-                            }
+                            buttonClick(1);
                           });
                         },
                         style: OutlinedButton.styleFrom(
@@ -179,17 +188,7 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
-                            if(selectedBoolList[2] == false){
-                              selectedBoolList[2] = true;
-                            } else {
-                              selectedBoolList[2] = true;
-                            }
-                            if (buttonColors[2] != beforeButtonColor) {
-                              buttonColors[2] = beforeButtonColor;
-                            } else {
-                              buttonColors[2] =
-                                  const Color(0xfffff7de); // 버튼 클릭시 변하는 색깔
-                            }
+                            buttonClick(2);
                           });
                         },
                         style: OutlinedButton.styleFrom(
@@ -216,17 +215,7 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
-                            if(selectedBoolList[3] == false){
-                              selectedBoolList[3] = true;
-                            } else {
-                              selectedBoolList[3] = true;
-                            }
-                            if (buttonColors[3] != beforeButtonColor) {
-                              buttonColors[3] = beforeButtonColor;
-                            } else {
-                              buttonColors[3] =
-                                  const Color(0xfffff7de); // 버튼 클릭시 변하는 색깔
-                            }
+                            buttonClick(3);
                           });
                         },
                         style: OutlinedButton.styleFrom(
@@ -247,7 +236,7 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                     ),
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Row(
@@ -262,17 +251,7 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
-                            if(selectedBoolList[4] == false){
-                              selectedBoolList[4] = true;
-                            } else {
-                              selectedBoolList[4] = true;
-                            }
-                            if (buttonColors[4] != beforeButtonColor) {
-                              buttonColors[4] = beforeButtonColor;
-                            } else {
-                              buttonColors[4] =
-                                  const Color(0xfffff7de); // 버튼 클릭시 변하는 색깔
-                            }
+                            buttonClick(4);
                           });
                         },
                         style: OutlinedButton.styleFrom(
@@ -299,17 +278,7 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
-                            if(selectedBoolList[0] == false){
-                              selectedBoolList[0] = true;
-                            } else {
-                              selectedBoolList[0] = true;
-                            }
-                            if (buttonColors[5] != beforeButtonColor) {
-                              buttonColors[5] = beforeButtonColor;
-                            } else {
-                              buttonColors[5] =
-                                  const Color(0xfffff7de); // 버튼 클릭시 변하는 색깔
-                            }
+                            buttonClick(5);
                           });
                         },
                         style: OutlinedButton.styleFrom(
@@ -336,17 +305,7 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
-                            if(selectedBoolList[6] == false){
-                              selectedBoolList[6] = true;
-                            } else {
-                              selectedBoolList[6] = true;
-                            }
-                            if (buttonColors[6] != beforeButtonColor) {
-                              buttonColors[6] = beforeButtonColor;
-                            } else {
-                              buttonColors[6] =
-                                  const Color(0xfffff7de); // 버튼 클릭시 변하는 색깔
-                            }
+                            buttonClick(6);
                           });
                         },
                         style: OutlinedButton.styleFrom(
@@ -374,7 +333,7 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                 // 알러지 기준나열 끝부분 ------------------------------------------------
 
                 // 채식주의 기준나열 시작부분 ------------------------------------------------
-                SizedBox(
+                const SizedBox(
                   // 기준 제목 위쪽 여백 조정
                   height: 40,
                 ),
@@ -402,7 +361,7 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Row(
@@ -411,7 +370,7 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                   children: [
                     Container(
                       // 1번 기준 container
-                      margin: EdgeInsets.fromLTRB(7, 0, 0, 0),
+                      margin: const EdgeInsets.fromLTRB(7, 0, 0, 0),
                       color: Colors.white,
                       // 컨테이너 범위 확인 색깔
                       width: buttonWidth,
@@ -421,17 +380,7 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
-                            if(selectedBoolList[7] == false){
-                              selectedBoolList[7] = true;
-                            } else {
-                              selectedBoolList[7] = true;
-                            }
-                            if (buttonColors[7] != beforeButtonColor) {
-                              buttonColors[7] = beforeButtonColor;
-                            } else {
-                              buttonColors[7] =
-                                  const Color(0xfffff7de); // 버튼 클릭시 변하는 색깔
-                            }
+                            vegButtonClick(7);
                           });
                         },
                         style: OutlinedButton.styleFrom(
@@ -458,17 +407,7 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
-                            if(selectedBoolList[8] == false){
-                              selectedBoolList[8] = true;
-                            } else {
-                              selectedBoolList[8] = true;
-                            }
-                            if (buttonColors[8] != beforeButtonColor) {
-                              buttonColors[8] = beforeButtonColor;
-                            } else {
-                              buttonColors[8] =
-                                  const Color(0xfffff7de); // 버튼 클릭시 변하는 색깔
-                            }
+                            vegButtonClick(8);
                           });
                         },
                         style: OutlinedButton.styleFrom(
@@ -490,22 +429,12 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                     Container(
                       // 1번 기준 container
                       color: Colors.white, // 컨테이너 범위 확인 색깔
-                      width: buttonWidth, // 버튼 상하크기조절
+                      width: 75, // 버튼 상하크기조절
                       height: buttonHeight, // 버튼 좌우크기조절
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
-                            if(selectedBoolList[9] == false){
-                              selectedBoolList[9] = true;
-                            } else {
-                              selectedBoolList[9] = true;
-                            }
-                            if (buttonColors[9] != beforeButtonColor) {
-                              buttonColors[9] = beforeButtonColor;
-                            } else {
-                              buttonColors[9] =
-                                  const Color(0xfffff7de); // 버튼 클릭시 변하는 색깔
-                            }
+                            vegButtonClick(9);
                           });
                         },
                         style: OutlinedButton.styleFrom(
@@ -518,7 +447,7 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                             elevation: 5),
                         child: const Text(
                             // 버튼 text 설정
-                            "오보",
+                            "페스코",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold)),
@@ -526,7 +455,7 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                     ),
                     Container(
                       // 1번 기준 container
-                      margin: EdgeInsets.fromLTRB(0, 0, 8, 0),
+                      margin: const EdgeInsets.fromLTRB(0, 0, 8, 0),
                       color: Colors.white,
                       // 컨테이너 범위 확인 색깔
                       width: 85,
@@ -536,17 +465,7 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
-                            if(selectedBoolList[10] == false){
-                              selectedBoolList[10] = true;
-                            } else {
-                              selectedBoolList[10] = true;
-                            }
-                            if (buttonColors[10] != beforeButtonColor) {
-                              buttonColors[10] = beforeButtonColor;
-                            } else {
-                              buttonColors[10] =
-                                  const Color(0xfffff7de); // 버튼 클릭시 변하는 색깔
-                            }
+                            vegButtonClick(10);
                           });
                         },
                         style: OutlinedButton.styleFrom(
@@ -570,7 +489,7 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                 // 채식주의 기준나열 끝부분 ---------------------------------------------
 
                 // 맛 기준나열 시작부분 ------------------------------------------------
-                SizedBox(
+                const SizedBox(
                   // 기준 제목 위쪽 여백 조정
                   height: 40,
                 ),
@@ -596,7 +515,7 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   // 기준 제목 위쪽 여백 조정
                   height: 20,
                 ),
@@ -606,7 +525,7 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                   children: [
                     Container(
                       // 1번 기준 container
-                      margin: EdgeInsets.fromLTRB(9, 0, 0, 0),
+                      margin: const EdgeInsets.fromLTRB(9, 0, 0, 0),
                       color: Colors.white,
                       // 컨테이너 범위 확인 색깔
                       width: 80,
@@ -616,17 +535,7 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
-                            if(selectedBoolList[11] == false){
-                              selectedBoolList[11] = true;
-                            } else {
-                              selectedBoolList[11] = true;
-                            }
-                            if (buttonColors[11] != beforeButtonColor) {
-                              buttonColors[11] = beforeButtonColor;
-                            } else {
-                              buttonColors[11] =
-                                  const Color(0xfffff7de); // 버튼 클릭시 변하는 색깔
-                            }
+                            buttonClick(11);
                           });
                         },
                         style: OutlinedButton.styleFrom(
@@ -653,17 +562,7 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
-                            if(selectedBoolList[12] == false){
-                              selectedBoolList[12] = true;
-                            } else {
-                              selectedBoolList[12] = true;
-                            }
-                            if (buttonColors[12] != beforeButtonColor) {
-                              buttonColors[12] = beforeButtonColor;
-                            } else {
-                              buttonColors[12] =
-                                  const Color(0xfffff7de); // 버튼 클릭시 변하는 색깔
-                            }
+                            buttonClick(12);
                           });
                         },
                         style: OutlinedButton.styleFrom(
@@ -690,17 +589,7 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
-                            if(selectedBoolList[13] == false){
-                              selectedBoolList[13] = true;
-                            } else {
-                              selectedBoolList[13] = true;
-                            }
-                            if (buttonColors[13] != beforeButtonColor) {
-                              buttonColors[13] = beforeButtonColor;
-                            } else {
-                              buttonColors[13] =
-                                  const Color(0xfffff7de); // 버튼 클릭시 변하는 색깔
-                            }
+                            buttonClick(13);
                           });
                         },
                         style: OutlinedButton.styleFrom(
@@ -721,7 +610,7 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                     ),
                     Container(
                       // 1번 기준 container
-                      margin: EdgeInsets.fromLTRB(0, 0, 9, 0),
+                      margin: const EdgeInsets.fromLTRB(0, 0, 9, 0),
                       color: Colors.white,
                       // 컨테이너 범위 확인 색깔
                       width: 85,
@@ -731,17 +620,7 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
-                            if(selectedBoolList[14] == false){
-                              selectedBoolList[14] = true;
-                            } else {
-                              selectedBoolList[14] = true;
-                            }
-                            if (buttonColors[14] != beforeButtonColor) {
-                              buttonColors[14] = beforeButtonColor;
-                            } else {
-                              buttonColors[14] =
-                                  const Color(0xfffff7de); // 버튼 클릭시 변하는 색깔
-                            }
+                            buttonClick(14);
                           });
                         },
                         style: OutlinedButton.styleFrom(
@@ -765,7 +644,7 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                 // 맛 기준나열 끝 부분 ------------------------------------------------
                 // 칼로리 기준 시작 부분 ------------------------------------------------
 
-                SizedBox(
+                const SizedBox(
                   // 기준 제목 위쪽 여백 조정
                   height: 40,
                 ),
@@ -830,12 +709,15 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                         value: sliderVal4,
                         // min: 5,
                         max: 1000,
-                        divisions: 10,
+                        divisions: 100,
                         // label: sliderVal4.round().toString(),
                         onChanged: (double newValue) {
                           setState(() {
                             sliderVal4 = newValue;
-                            //print(sliderVal4);
+                            if(sliderVal4 == 0 || sliderVal4 <= 150){
+                              sliderVal4 = 150;  // 칼로리 최소 부분 *******
+                            }
+                            print("$selectedBoolList  $sliderVal4");
                           });
                         },
                       )),
@@ -861,7 +743,6 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                 Expanded(
                     child: InkWell(
                         onTap: () {
-
                           Navigator.pop(context);
                         },
                         child: Container(
@@ -876,12 +757,14 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                     child: InkWell(
                         onTap: () {
                           Recommender recommender = Recommender();
-                          print(recommender.recommendedAsRestriction(selectedBoolList ,sliderVal4.round()));
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      MenuResultScreen(recommender.recommendedAsRestriction(selectedBoolList ,sliderVal4.round()))));
+                                  builder: (context) => MenuResultScreen(
+                                      recommender.recommendedAsRestriction(selectedBoolList, sliderVal4.round())
+                                  )
+                              )
+                          );
                         },
                         child: Container(
                           height: 60,
