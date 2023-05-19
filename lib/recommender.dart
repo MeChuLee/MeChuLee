@@ -66,22 +66,18 @@ class Recommender {
   }
 
   int recommendedAtCost(minPrice, maxPrice) {
-    // 선택된 메뉴 리스트
-    List selectedMenuList = [];
 
-    //@TODO selectedMenuList.add(a) 처럼 index를 추가하는 것이 아니라 id 를 추가해야 할 듯
-    // 수정완료
-    for (int a = 0; a < menuList.length; a++) {
-      //json에 있는 파일 개수만큼 반복문 돌려줌
+    List selectedMenuList = []; // 선택된 메뉴 리스트
+
+    for (int a = 0; a < menuList.length; a++) { //json에 있는 파일 개수만큼 반복문 돌려줌
       int price = menuList[a]["price"];
       if (price >= minPrice && price <= maxPrice) {
-        selectedMenuList.add(menuList[a]["id"]); // json파일의 id를 리스트에 넣는다.
+        selectedMenuList.add(menuList[a]);
       }
     }
 
     selectedMenuList.shuffle();
-
-    return selectedMenuList[0];
+    return selectedMenuList[0]["id"];
   }
 
   int recommendedAtSituation(List<bool> moodList, List<bool> weatherList,
@@ -270,29 +266,11 @@ class Recommender {
     // 채식주의는 1개만 가져오기
     // 알러지랑 채식주의 우선순위 생각해보기
 
-    // List<bool> selectedCheckList = [false,false,false,false,false,false,false,
-    //   true,true,true,true,true,true,false,false]; // 김치볶음밥
     List newMenuList = [...menuList]; // menuList 깊은 복사 deep copy
-    List restrictionList = [
-      "egg",
-      "milk",
-      "wheat",
-      "peanut",
-      "chestnut",
-      "fish",
-      "shellfish",
-      "vegan",
-      "pollo",
-      "pesco",
-      "lacto_ovo",
-      "spicy",
-      "salty",
-      "sweet",
-      "greasy"
-    ];
+    List restrictionList = ["egg", "milk", "wheat", "peanut", "chestnut", "fish", "shellfish",
+      "vegan", "pollo", "pesco", "lacto_ovo","spicy", "salty", "sweet", "greasy"];
 
-    List recursion(List newMenuList, int b) {
-      // allergy 재귀함수
+    List recursion(List newMenuList, int b) { // 식단제약 추천 재귀함수
       List collectedList = []; // 선택된 메뉴이름 리스트 -> 이미 값은 맞는 것만 골라온 상태
       if (b == 15) {
         return newMenuList;
@@ -300,9 +278,8 @@ class Recommender {
       if (b == 7 || b == 8 || b == 9 || b == 10) {
         for (int a = 0; a < newMenuList.length; a++) {
           if ((selectedBoolList[b] == true &&
-                  newMenuList[a]["vegetarianism"][restrictionList[b]] ==
-                      false) ||
-              selectedBoolList[b] == false) {
+                  newMenuList[a]["vegetarianism"][restrictionList[b]] == true) ||
+              selectedBoolList[b] == false) { // 이거 어떻게 할지 생각해보기
             collectedList.add(newMenuList[a]);
           }
         }
@@ -323,7 +300,6 @@ class Recommender {
           }
         }
       }
-      print(collectedList.length);
 
       newMenuList = [...collectedList];
       List godList = recursion(newMenuList, b + 1);
@@ -331,9 +307,6 @@ class Recommender {
     }
 
     newMenuList = [...recursion(newMenuList, 0)];
-
-    print(newMenuList.length);
-    print(newMenuList[0]["name"]);
 
     List collectedList = [];
     for (int a = 0; a < newMenuList.length; a++) {
@@ -344,13 +317,17 @@ class Recommender {
 
     newMenuList = [...collectedList];
 
-    print(newMenuList);
+    for(int a = 0; a < newMenuList.length; a++){
+     print(newMenuList[a]["name"]);
+    }
+    print("수집된 메뉴개수 ${newMenuList.length}");
 
     if (newMenuList == null) {
       print("조건에 맞는 메뉴가 없습니다.");
       return -1;
     } else {
       newMenuList.shuffle();
+      print("최종 메뉴 이름 ${newMenuList[0]["name"]} id: ${newMenuList[0]["id"]}");
       return newMenuList[0]["id"];
     }
   }
