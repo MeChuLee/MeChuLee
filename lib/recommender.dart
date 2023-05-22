@@ -232,26 +232,27 @@ class Recommender {
       }
     }
 
+    // 나이 확인
+    for (int i = 0; i < selectedIdx.length; i++) {
+      if (menuList[selectedIdx[i]]['age'][ageMapIdx[sliderVal.toInt()]]) {
+        tmpIdx.add(i);
+      }
+    }
+    selectedIdx = tmpIdx.toList();
+
     List selectedId = [];
 
-    // 임시 if 처리
     if (selectCheckList[1] == 1) {
-      // 성별 확인 된 것들 중에 나이 확인
-      for (int i = 0; i < selectedIdx.length; i++) {
-        if (menuList[selectedIdx[i]]['age'][ageMapIdx[sliderVal.toInt()]]) {
-          tmpIdx.add(i);
-        }
-      }
-      selectedIdx = tmpIdx.toList();
-
+      // 최근 먹은 음식 확인
       selectedId = await checkRecentDB(selectedIdx);
-      selectedId.shuffle();
     } else {
+      // 최근 먹은 음식 확인 하지 않음
       for (int i = 0; i < selectedIdx.length; i++) {
         selectedId.add(menuList[selectedIdx[i]]['id']);
       }
     }
 
+    selectedId.shuffle();
     return selectedId[0];
   }
 
@@ -333,27 +334,38 @@ class Recommender {
   }
 
   Future<List> checkRecentDB(List selectIdx) async {
-    // DB 출력하여 확인하기
+    // DB 확인
     Set resultId = {};
     DBHelper dbHelper = DBHelper();
 
     DateTime dt = DateTime.now();
     String startDate = "${dt.year}/${dt.month}/${dt.day}";
 
-    await dbHelper.getAllRecord().then((value) => value.forEach((element) {
-          for (int i = 0; i < selectIdx.length; i++) {
-            // id 가 같으면
-            if (element.menuId == menuList[selectIdx[i]]['id']) {
-              print(element.menuId);
-              Duration difference =
-                  calculateDateDifference(startDate, element.date);
-              // 5일 이후로 지난 것들만 추가하기
-              if (difference.inDays > 5) {
-                resultId.add(element.menuId);
-              }
-            }
+    List record = await dbHelper.getAllRecord();
+    for (int i = 0; i < selectIdx.length; i++) {
+      bool isTrue = false;
+
+      for (int j = 0; j < record.length; j++) {
+        if (menuList[selectIdx[i]]['id'] == record[j].menuId) {
+          // 최근 먹은 음식에 있다는 여부 체크
+          isTrue = true;
+
+          Duration difference =
+          calculateDateDifference(startDate, record[j].date);
+
+          if (difference.inDays > 5) {
+            // 5일 이후로 지난 것들만 추가하기
+            resultId.add(record[j].menuId);
+            break;
           }
-        }));
+        }
+      }
+
+      if (!isTrue) {
+        // 최근 먹은 음식에 없다면
+        resultId.add(menuList[selectIdx[i]]['id']);
+      }
+    }
 
     List selectedId = resultId.toList();
     return selectedId;
