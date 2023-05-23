@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -21,6 +20,7 @@ class Recommender {
     return _instance;
   }
 
+  // 앱 실행 시 사용될 함수 -> menu.json 파일 읽어서 저장
   Future<void> getMenuList() async {
     if (menuList == null) {
       var routeFromJsonFile =
@@ -29,6 +29,7 @@ class Recommender {
     }
   }
 
+  /// 랜덤으로 메뉴 추천
   int recommendedAtRandom() {
     var randomList = menuList..shuffle();
     return randomList[0]['id'];
@@ -66,10 +67,10 @@ class Recommender {
   }
 
   int recommendedAtCost(minPrice, maxPrice) {
-
     List selectedMenuList = []; // 선택된 메뉴 리스트
 
-    for (int a = 0; a < menuList.length; a++) { //json에 있는 파일 개수만큼 반복문 돌려줌
+    for (int a = 0; a < menuList.length; a++) {
+      //json에 있는 파일 개수만큼 반복문 돌려줌
       int price = menuList[a]["price"];
       if (price >= minPrice && price <= maxPrice) {
         selectedMenuList.add(menuList[a]);
@@ -206,14 +207,19 @@ class Recommender {
     return selectedId[0]['id'];
   }
 
+  /// 개인 선호도 기준 메뉴 추천 - local db 확인을 위한 async 사용 -> Future<int> return
   Future<int> recommendedAtPreference(List<int> sexCheckList, double sliderVal,
       List<int> selectCheckList) async {
+
+    // 나이대 idx 선언 (10대 미만, 10대, 20대~30대, 40대이상)
     List ageMapIdx = ['0', '10', '2030', '40'];
 
+    // 선택된 idx 를 저장할 변수
     List selectedIdx = [];
+    // 선택된 idx 를 임시로 저장할 변수
     List tmpIdx = [];
 
-    // 성별 확인
+    // 성별 확인 후 selectedIdx 에 저장
     for (int i = 0; i < menuList.length; i++) {
       if ((sexCheckList[PreferenceScreenState.SEX_MALE] == 0 &&
               sexCheckList[PreferenceScreenState.SEX_FEMALE] == 0) ||
@@ -232,7 +238,7 @@ class Recommender {
       }
     }
 
-    // 나이 확인
+    // 나이 확인 후 selectedIdx 에 저장
     for (int i = 0; i < selectedIdx.length; i++) {
       if (menuList[selectedIdx[i]]['age'][ageMapIdx[sliderVal.toInt()]]) {
         tmpIdx.add(i);
@@ -240,13 +246,19 @@ class Recommender {
     }
     selectedIdx = tmpIdx.toList();
 
+    if (selectCheckList[1] == 1) {
+      // 최근 먹은 음식 확인 후 idx 반영
+      selectedIdx = await checkRecentDB(selectedIdx);
+    }
+
+    // 최종 Id 를 저장할 변수
     List selectedId = [];
 
-    if (selectCheckList[1] == 1) {
-      // 최근 먹은 음식 확인
-      selectedId = await checkRecentDB(selectedIdx);
+    if (selectCheckList[0] == 1) {
+      // 자주 먹은 음식 확인 후 id 반영
+      selectedId = await checkFrequentDB(selectedIdx);
     } else {
-      // 최근 먹은 음식 확인 하지 않음
+      // 자주 먹은 음식 미선택 시, 현재 있는 Idx 값들을 Id 로 변환
       for (int i = 0; i < selectedIdx.length; i++) {
         selectedId.add(menuList[selectedIdx[i]]['id']);
       }
@@ -255,7 +267,6 @@ class Recommender {
     selectedId.shuffle();
     return selectedId[0];
   }
-
 
   int recommendedAsRestriction(List selectedBoolList, var selectedCalorie) {
     // 식단제약 추천
@@ -268,10 +279,26 @@ class Recommender {
     // 알러지랑 채식주의 우선순위 생각해보기
 
     List newMenuList = [...menuList]; // menuList 깊은 복사 deep copy
-    List restrictionList = ["egg", "milk", "wheat", "peanut", "chestnut", "fish", "shellfish",
-      "vegan", "pollo", "pesco", "lacto_ovo","spicy", "salty", "sweet", "greasy"];
+    List restrictionList = [
+      "egg",
+      "milk",
+      "wheat",
+      "peanut",
+      "chestnut",
+      "fish",
+      "shellfish",
+      "vegan",
+      "pollo",
+      "pesco",
+      "lacto_ovo",
+      "spicy",
+      "salty",
+      "sweet",
+      "greasy"
+    ];
 
-    List recursion(List newMenuList, int b) { // 식단제약 추천 재귀함수
+    List recursion(List newMenuList, int b) {
+      // 식단제약 추천 재귀함수
       List collectedList = []; // 선택된 메뉴이름 리스트 -> 이미 값은 맞는 것만 골라온 상태
       if (b == 15) {
         return newMenuList;
@@ -279,8 +306,10 @@ class Recommender {
       if (b == 7 || b == 8 || b == 9 || b == 10) {
         for (int a = 0; a < newMenuList.length; a++) {
           if ((selectedBoolList[b] == true &&
-                  newMenuList[a]["vegetarianism"][restrictionList[b]] == true) ||
-              selectedBoolList[b] == false) { // 이거 어떻게 할지 생각해보기
+                  newMenuList[a]["vegetarianism"][restrictionList[b]] ==
+                      true) ||
+              selectedBoolList[b] == false) {
+            // 이거 어떻게 할지 생각해보기
             collectedList.add(newMenuList[a]);
           }
         }
@@ -318,8 +347,8 @@ class Recommender {
 
     newMenuList = [...collectedList];
 
-    for(int a = 0; a < newMenuList.length; a++){
-     print(newMenuList[a]["name"]);
+    for (int a = 0; a < newMenuList.length; a++) {
+      print(newMenuList[a]["name"]);
     }
     print("수집된 메뉴개수 ${newMenuList.length}");
 
@@ -333,16 +362,24 @@ class Recommender {
     }
   }
 
+  /// local db (sqlite) 를 확인 후 최근 목록 확인 - idx return
   Future<List> checkRecentDB(List selectIdx) async {
-    // DB 확인
-    Set resultId = {};
+    // idx 를 저장, 중복 제거를 위해 set 선언
+    Set resultIdx = {};
+
+    // sqlite db 사용을 위한 helper
     DBHelper dbHelper = DBHelper();
 
+    // 현재 시간 계산 ( 연 / 월 / 일 )
     DateTime dt = DateTime.now();
     String startDate = "${dt.year}/${dt.month}/${dt.day}";
 
+    // sqlite 에서 모든 데이터 읽기
     List record = await dbHelper.getAllRecord();
+
+    // 선택된 idx 목록에 최근 먹은 음식이 있고, 5일 이후로 지난 것들이 있는지 판별
     for (int i = 0; i < selectIdx.length; i++) {
+      // 최근 먹은 음식에 있는지 확인을 위한 bool
       bool isTrue = false;
 
       for (int j = 0; j < record.length; j++) {
@@ -350,27 +387,28 @@ class Recommender {
           // 최근 먹은 음식에 있다는 여부 체크
           isTrue = true;
 
+          // 날짜 차이 계산
           Duration difference =
-          calculateDateDifference(startDate, record[j].date);
+              calculateDateDifference(startDate, record[j].date);
 
           if (difference.inDays > 5) {
-            // 5일 이후로 지난 것들만 추가하기
-            resultId.add(record[j].menuId);
+            // 날짜가 5일 이후로 지난 것들만 결과에 추가
+            resultIdx.add(selectIdx[i]);
             break;
           }
         }
       }
 
       if (!isTrue) {
-        // 최근 먹은 음식에 없다면
-        resultId.add(menuList[selectIdx[i]]['id']);
+        // 최근 먹은 음식에 없다면 결과에 추가
+        resultIdx.add(selectIdx[i]);
       }
     }
 
-    List selectedId = resultId.toList();
-    return selectedId;
+    return resultIdx.toList();
   }
 
+  /// 날짜의 차이를 계산
   Duration calculateDateDifference(String startDate, String endDate) {
     DateFormat dateFormat = DateFormat('yyyy/MM/dd');
 
@@ -378,5 +416,66 @@ class Recommender {
     DateTime endDateTime = dateFormat.parse(endDate);
 
     return endDateTime.difference(startDateTime);
+  }
+
+  /// local db (sqlite) 를 확인 후 자주 먹는 음식 확인 - id return
+  Future<List> checkFrequentDB(List selectIdx) async {
+    // 결과 id 저장할 변수
+    List selectedId = [];
+
+    // sqlite db 사용을 위한 helper
+    DBHelper dbHelper = DBHelper();
+
+    // sqlite 에 저장된 데이터 id 가 몇 개 있는지 세기 위해 선언된 map (id : 개수)
+    Map<int, int> records = {};
+
+    // 현재 시간 계산 ( 연 / 월 / 일 )
+    DateTime dt = DateTime.now();
+    String startDate = "${dt.year}/${dt.month}/${dt.day}";
+
+    // sqlite 에서 모든 데이터 읽기
+    List record = await dbHelper.getAllRecord();
+
+    // 몇 개 있는지 카운트
+    for (int i = 0; i < record.length; i++) {
+      // 날짜 차이 계산
+      Duration difference = calculateDateDifference(startDate, record[i].date);
+
+      if (difference.inDays < 30) {
+        // 한 달 안에 있다면
+        if (records.containsKey(record[i].menuId)) {
+          // 키 값이 있다면 숫자 증가
+          records[record[i].menuId] = records[record[i].menuId]! + 1;
+        } else {
+          // 키 값이 없다면 숫자 1로 생성
+          records[record[i].menuId] = 1;
+        }
+      }
+    }
+
+    // 최근 한 달동안 세 번 이상 먹은 음식일 경우 결과 값에 추가
+    for (int i = 0; i < selectIdx.length; i++) {
+      records.forEach((key, value) {
+        if (menuList[selectIdx[i]]['id'] == key && value >= 3) {
+          selectedId.add(key);
+        }
+      });
+    }
+
+    // count - 현재 Idx 목록의 80% 개수
+    var count = selectIdx.length * 80 ~/ 100;
+
+    // Idx 목록의 80% 만큼 자주 먹은 음식 id로 채우기
+    var idx = 0;
+    while (selectedId.length < count && selectedId.isNotEmpty) {
+      selectedId.add(selectedId[idx++]);
+    }
+
+    // Idx 에 있는 값들을 id 로 채우기
+    for (int i = 0; i < selectIdx.length; i++) {
+      selectedId.add(menuList[selectIdx[i]]['id']);
+    }
+
+    return selectedId;
   }
 }
