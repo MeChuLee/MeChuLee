@@ -1,19 +1,17 @@
 import 'dart:math';
-
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:mechulee/database/firebaseStorage.dart';
 import 'package:mechulee/recommender.dart';
-
 import 'database/dbHelper.dart';
 import 'database/record.dart';
 
-// https://totally-developer.tistory.com/79
 /// 메뉴 결과 화면
 class MenuResultScreen extends StatefulWidget {
   final int id;
 
   @override
   MenuResultScreenState createState() => MenuResultScreenState();
-
   const MenuResultScreen(this.id, {Key? key}) : super(key: key);
 }
 
@@ -21,10 +19,49 @@ class MenuResultScreenState extends State<MenuResultScreen> {
   bool isBack = true;
   double angle = 0;
 
+  late String imageUrl; //
+  late String imageUrl2;
+  final storage = FirebaseStorage.instance;
   var recommender = Recommender();
 
   @override
+  void initState() {
+    super.initState();
+
+    // Set the initial value of imageUrl to an empty string
+    imageUrl = '';
+    imageUrl2 = '';
+    getImageInfoUrl().then((value) => {getImageUrl()});
+    //메뉴상세정보를 미리 받아온 뒤 메뉴이미지 url 받아오기
+  }
+
+  Future<void> getImageUrl() async {
+    final ref = storage.ref().child('menu_photo/${widget.id}.jpg');
+    final url = await ref.getDownloadURL();
+    setState(() {
+      imageUrl = url;
+      print(imageUrl);
+    });
+  }
+
+  Future<void> getImageInfoUrl() async {
+    final ref = storage.ref().child('menu_info/${widget.id}.png');
+    final url = await ref.getDownloadURL();
+    setState(() {
+      imageUrl2 = url;
+      print(imageUrl);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    precacheImage(Image.network(imageUrl).image, context);
+    precacheImage(Image.network(imageUrl2).image, context);
+    // 캐시로 미리 받아서 이미지 로딩시간 줄이기
+
+    NetworkImage myImg1 = NetworkImage(imageUrl);
+    NetworkImage myImg2 = NetworkImage(imageUrl2);
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "MenuResultScreen",
@@ -42,6 +79,11 @@ class MenuResultScreenState extends State<MenuResultScreen> {
         ),
         body: Column(
           children: [
+            // SizedBox(
+            //   child: Image(image: myImg, height: 200,
+            //     width: 400,
+            //   ),
+            // ),
             Expanded(
               flex: 6,
               child: Container(
@@ -85,11 +127,13 @@ class MenuResultScreenState extends State<MenuResultScreen> {
                                   width: 250,
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
-                                        image: isBack
-                                            ? AssetImage(
-                                                "assets/images/jajangmyeon.png")
-                                            : AssetImage(
-                                                "assets/images/jajangmyeonInfo.png")),
+                                        image: isBack ? myImg1 : myImg2
+                                        // image: isBack
+                                        //     ? myImg
+                                        //     : AssetImage(
+                                        //         "assets/images/jajangmyeonInfo.png")
+                                        // 삼항연산자 -> 반환하는 타입이 같아야함
+                                        ),
                                   ),
                                 ),
                               );
