@@ -31,7 +31,7 @@ class Recommender {
 
   /// 랜덤으로 메뉴 추천
   int recommendedAtRandom() {
-    var randomList = menuList..shuffle();
+    var randomList = menuList.toList()..shuffle();
     return randomList[0]['id'];
   }
 
