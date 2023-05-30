@@ -21,7 +21,7 @@ class MenuResultScreenState extends State<MenuResultScreen> {
 
   bool isLoadResult = false;
 
-  late String imageUrl; //
+  late String imageUrl;
   late String imageUrl2;
   final storage = FirebaseStorage.instance;
   var recommender = Recommender();

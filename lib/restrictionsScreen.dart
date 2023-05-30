@@ -715,8 +715,8 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                         onChanged: (double newValue) {
                           setState(() {
                             sliderVal4 = newValue;
-                            if (sliderVal4 == 0 || sliderVal4 <= 150) {
-                              sliderVal4 = 150; // 칼로리 최소 부분 *******
+                            if (sliderVal4 == 0 || sliderVal4 <= 100) {
+                              sliderVal4 = 100; // 칼로리 최소 부분 *******
                             }
                             print("$selectedBoolList  $sliderVal4");
                           });

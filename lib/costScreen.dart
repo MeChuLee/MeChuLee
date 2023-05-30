@@ -9,11 +9,16 @@ class CostScreen extends StatefulWidget {
   _CostScreenState createState() => _CostScreenState();
 }
 
-RangeValues _sliderRangeValues = const RangeValues(5000, 30000);
+double startValue = 5000;
+double endValue = 30000;
+
+RangeValues _sliderRangeValues =  RangeValues(startValue, endValue);
 RangeLabels _sliderRangeLabels = const RangeLabels('5000', '30000');
 
 String minMaxValuesText = '최소 ${_sliderRangeValues.start.round()}원  '
     '최대 ${_sliderRangeValues.end.round()}원';
+
+
 
 //String minText = "";
 class _CostScreenState extends State<CostScreen> {
@@ -44,6 +49,10 @@ String endRangeVal = (_sliderRangeValues.end.round()).toString();
           backgroundColor: const Color(0xffffd864),
           leading: IconButton(
             onPressed: () {
+              setState(() {
+                startValue = 5000;
+                endValue = 30000;
+              });
               Navigator.pop(context);
             },
             icon: const Icon(Icons.arrow_back, color: Colors.black),
@@ -51,7 +60,7 @@ String endRangeVal = (_sliderRangeValues.end.round()).toString();
           title: const Text("비용", style: TextStyle(color: Colors.black)),
         ),
 
-        //RangeSlider부분 시작
+        // RangeSlider부분 시작
         // https://www.youtube.com/watch?v=bxNUmqMvbB4
         body: Center(
           child: Column(
