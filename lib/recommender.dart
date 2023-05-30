@@ -76,7 +76,9 @@ class Recommender {
         selectedMenuList.add(menuList[a]);
       }
     }
-
+    if (selectedMenuList.isEmpty) {
+      return -1;
+    }
     selectedMenuList.shuffle();
     return selectedMenuList[0]["id"];
   }
@@ -110,7 +112,7 @@ class Recommender {
           }
         }
       }
-      if (selectedId.length == 0) {
+      if (selectedId.isEmpty) {
         return -1;
       }
       tempList.clear();
@@ -133,7 +135,7 @@ class Recommender {
           }
         }
       }
-      if (selectedId.length == 0) {
+      if (selectedId.isEmpty) {
         return -1;
       }
       tempList.clear();
@@ -146,7 +148,7 @@ class Recommender {
         selectedId.add(tempList[i]);
       }
     }
-    if (selectedId.length == 0) {
+    if (selectedId.isEmpty) {
       return -1;
     }
     tempList.clear();
@@ -160,7 +162,7 @@ class Recommender {
           selectedId.add(tempList[i]);
         }
       }
-      if (selectedId.length == 0) {
+      if (selectedId.isEmpty) {
         return -1;
       }
       tempList.clear();
@@ -168,26 +170,13 @@ class Recommender {
       selectedId.clear();
     }
 
-    // 피로도
-    for (int i = 0; i < tempList.length; i++) {
-      if (tempList[i]['fatigue'] == fatigue) {
-        selectedId.add(tempList[i]);
-      }
-    }
-    if (selectedId.length == 0) {
-      return -1;
-    }
-    tempList.clear();
-    tempList = [...selectedId];
-    selectedId.clear();
-
     // 배고픔의 정도
     for (int i = 0; i < tempList.length; i++) {
       if (tempList[i]['hungry'] == hungry) {
         selectedId.add(tempList[i]);
       }
     }
-    if (selectedId.length == 0) {
+    if (selectedId.isEmpty) {
       return -1;
     }
     tempList.clear();
@@ -200,7 +189,7 @@ class Recommender {
         selectedId.add(tempList[i]);
       }
     }
-    if (selectedId.length == 0) {
+    if (selectedId.isEmpty) {
       return -1;
     }
     selectedId.shuffle();
@@ -210,7 +199,6 @@ class Recommender {
   /// 개인 선호도 기준 메뉴 추천 - local db 확인을 위한 async 사용 -> Future<int> return
   Future<int> recommendedAtPreference(List<int> sexCheckList, double sliderVal,
       List<int> selectCheckList) async {
-
     // 나이대 idx 선언 (10대 미만, 10대, 20대~30대, 40대이상)
     List ageMapIdx = ['0', '10', '2030', '40'];
 
@@ -263,7 +251,9 @@ class Recommender {
         selectedId.add(menuList[selectedIdx[i]]['id']);
       }
     }
-
+    if (selectedId.isEmpty) {
+      return -1;
+    }
     selectedId.shuffle();
     return selectedId[0];
   }
@@ -352,14 +342,11 @@ class Recommender {
     }
     print("수집된 메뉴개수 ${newMenuList.length}");
 
-    if (newMenuList == null) {
-      print("조건에 맞는 메뉴가 없습니다.");
+    if (newMenuList.isEmpty) {
       return -1;
-    } else {
-      newMenuList.shuffle();
-      print("최종 메뉴 이름 ${newMenuList[0]["name"]} id: ${newMenuList[0]["id"]}");
-      return newMenuList[0]["id"];
     }
+    newMenuList.shuffle();
+    return newMenuList[0]["id"];
   }
 
   /// local db (sqlite) 를 확인 후 최근 목록 확인 - idx return
