@@ -62,15 +62,13 @@ class _ClassificationScreen extends State<ClassificationScreen> {
                       child: InkWell(
                           onTap: () {
                             List lst = showBooleanList(selectedCheckList);
-
-                            if (lst[0] == "") {
+                            var recommender = Recommender();
+                            var menuId =
+                                recommender.recommendedAtClassification(
+                                    lst[0], lst[1], lst[2]);
+                            if (menuId == -1) {
                               showNotSelectedToastMsg();
                             } else {
-                              var recommender = Recommender();
-                              var menuId =
-                                  recommender.recommendedAtClassification(
-                                      lst[0], lst[1], lst[2]);
-
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(

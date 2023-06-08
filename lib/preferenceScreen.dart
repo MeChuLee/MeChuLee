@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mechulee/recommender.dart';
 
 import 'menuResultScreen.dart';
@@ -77,14 +78,20 @@ class PreferenceScreenState extends State<PreferenceScreen> {
                   onTap: () {
                     // 개인 선호도 기반 추천
                     var recommender = Recommender();
-                    recommender.recommendedAtPreference(sexCheckList, sliderVal, selectCheckList)
+                    recommender
+                        .recommendedAtPreference(
+                            sexCheckList, sliderVal, selectCheckList)
                         .then((id) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MenuResultScreen(id),
-                        ),
-                      );
+                      if (id == -1) {
+                        showNoRecommendedResults();
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MenuResultScreen(id),
+                          ),
+                        );
+                      }
                     });
                   },
                   child: Container(
@@ -391,4 +398,15 @@ class PreferenceScreenState extends State<PreferenceScreen> {
       ),
     );
   }
+}
+
+void showNoRecommendedResults() {
+  Fluttertoast.showToast(
+    msg: "추천 결과가 없습니다.",
+    gravity: ToastGravity.BOTTOM,
+    backgroundColor: Colors.white,
+    fontSize: 20,
+    textColor: Colors.white,
+    toastLength: Toast.LENGTH_SHORT,
+  );
 }
