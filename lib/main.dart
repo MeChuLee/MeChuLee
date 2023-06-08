@@ -1,18 +1,18 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:mechulee/classificationScreen.dart';
 import 'package:mechulee/costScreen.dart';
 import 'package:mechulee/preferenceScreen.dart';
-import 'package:mechulee/profileScreen.dart';
+import 'package:mechulee/recentMenuScreen.dart';
 import 'package:mechulee/recommender.dart';
 import 'package:mechulee/restrictionsScreen.dart';
 import 'package:mechulee/situationScreen.dart';
-import 'menuResult.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
+import 'firebase/firebase_options.dart';
+import 'menuResultScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -26,7 +26,7 @@ void main() async {
 final statefulScreenList = <StatefulWidget>[
   const CostScreen(),
   const RestrictionsScreen(),
-  MenuResultScreen(0),
+  const MenuResultScreen(0),
   const PreferenceScreen(),
   const SituationScreen(),
   const ClassificationScreen(),
@@ -54,7 +54,7 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var recommender = Recommender();
     recommender.getMenuList().then((value) => {});
-    
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -65,12 +65,7 @@ class MainScreen extends StatelessWidget {
           IconButton(
             icon: Image.asset("assets/images/logo.png"),
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const ProfileScreen(),
-                ),
-              );
+              // 메추리 아이콘 클릭 이벤트
             },
           )
         ],
@@ -83,11 +78,11 @@ class MainScreen extends StatelessWidget {
                 backgroundImage: AssetImage('assets/images/profile.png'),
               ),
               accountName: const Text(
-                '나는 나야',
+                'LV 1 병아리',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               accountEmail: const Text(
-                'example1234@naver.com',
+                '메뉴 추천 리스트',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               onDetailsPressed: () {},
@@ -100,92 +95,12 @@ class MainScreen extends StatelessWidget {
               ),
             ),
             ListTile(
-              leading: const Icon(Icons.person),
+              leading: const Icon(Icons.info_outline),
               iconColor: const Color(0xffffd864),
               focusColor: const Color(0xffffd864),
-              title: const Text('회원 정보'),
+              title: const Text('정보'),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ProfileScreen(),
-                  ),
-                );
-              },
-              trailing: const Icon(Icons.navigate_next),
-            ),
-            ListTile(
-              leading: const Icon(Icons.attach_money),
-              iconColor: const Color(0xffffd864),
-              focusColor: const Color(0xffffd864),
-              title: const Text('비용 기준 추천'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => statefulScreenList[0],
-                  ),
-                );
-              },
-              trailing: const Icon(Icons.navigate_next),
-            ),
-            ListTile(
-              leading: const Icon(Icons.sick_outlined),
-              iconColor: const Color(0xffffd864),
-              focusColor: const Color(0xffffd864),
-              title: const Text('식단 제약 기준 추천'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => statefulScreenList[1],
-                  ),
-                );
-              },
-              trailing: const Icon(Icons.navigate_next),
-            ),
-            ListTile(
-              leading: const Icon(Icons.shuffle),
-              iconColor: const Color(0xffffd864),
-              focusColor: const Color(0xffffd864),
-              title: const Text('랜덤 기준 추천'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => statefulScreenList[2],
-                  ),
-                );
-              },
-              trailing: const Icon(Icons.navigate_next),
-            ),
-            ListTile(
-              leading: const Icon(Icons.thumb_up),
-              iconColor: const Color(0xffffd864),
-              focusColor: const Color(0xffffd864),
-              title: const Text('개인 선호도 기준 추천'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => statefulScreenList[3],
-                  ),
-                );
-              },
-              trailing: const Icon(Icons.navigate_next),
-            ),
-            ListTile(
-              leading: const Icon(Icons.brightness_6),
-              iconColor: const Color(0xffffd864),
-              focusColor: const Color(0xffffd864),
-              title: const Text('개인 상황 기준 추천'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => statefulScreenList[4],
-                  ),
-                );
+                //@TODO 햄버거 정보 버튼 클릭 이벤트
               },
               trailing: const Icon(Icons.navigate_next),
             ),
@@ -193,12 +108,13 @@ class MainScreen extends StatelessWidget {
               leading: const Icon(Icons.list_alt_outlined),
               iconColor: const Color(0xffffd864),
               focusColor: const Color(0xffffd864),
-              title: const Text('음식 분류 기준 추천'),
+              title: const Text('결정 기록 리스트'),
               onTap: () {
+                // 최근 먹은 메뉴 화면으로 이동
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => statefulScreenList[5],
+                    builder: (context) => const RecentMenuScreen(),
                   ),
                 );
               },
@@ -267,7 +183,8 @@ class MyCard extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MenuResultScreen(recommender.recommendedAtRandom()),
+                  builder: (context) =>
+                      MenuResultScreen(recommender.recommendedAtRandom()),
                 ),
               );
             } else {
@@ -277,7 +194,7 @@ class MyCard extends StatelessWidget {
                   builder: (context) => statefulScreenList[idx],
                 ),
               );
-            } 
+            }
           },
           child: Padding(
             padding: const EdgeInsets.fromLTRB(18, 18, 0, 0),

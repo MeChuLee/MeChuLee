@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mechulee/recommender.dart';
-import 'menuResult.dart';
+import 'menuResultScreen.dart';
 
 class CostScreen extends StatefulWidget {
   const CostScreen({Key? key}) : super(key: key);
