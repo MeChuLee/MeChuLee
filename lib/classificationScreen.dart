@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mechulee/recommender.dart';
-import 'menuResult.dart';
+import 'menuResultScreen.dart';
 
 class ClassificationScreen extends StatefulWidget {
   const ClassificationScreen({Key? key}) : super(key: key);

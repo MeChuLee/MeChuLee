@@ -2,7 +2,7 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:mechulee/recommender.dart';
-import 'menuResult.dart';
+import 'menuResultScreen.dart';
 
 class RestrictionsScreen extends StatefulWidget {
   const RestrictionsScreen({Key? key}) : super(key: key);

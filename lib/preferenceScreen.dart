@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mechulee/recommender.dart';
 
-import 'menuResult.dart';
+import 'menuResultScreen.dart';
 
 class PreferenceScreen extends StatefulWidget {
   @override
