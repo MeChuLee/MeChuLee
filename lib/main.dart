@@ -7,6 +7,7 @@ import 'package:mechulee/recentMenuScreen.dart';
 import 'package:mechulee/recommender.dart';
 import 'package:mechulee/restrictionsScreen.dart';
 import 'package:mechulee/situationScreen.dart';
+import 'database/dbHelper.dart';
 import 'firebase/firebase_options.dart';
 import 'menuResultScreen.dart';
 
@@ -111,12 +112,19 @@ class MainScreen extends StatelessWidget {
               title: const Text('결정 기록 리스트'),
               onTap: () {
                 // 최근 먹은 메뉴 화면으로 이동
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const RecentMenuScreen(),
-                  ),
-                );
+                DBHelper dbHelper = DBHelper();
+                dbHelper
+                    .getAllRecord()
+                    .then(
+                      (value) => {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => RecentMenuScreen(value),
+                          ),
+                        )
+                      },
+                    );
               },
               trailing: const Icon(Icons.navigate_next),
             ),

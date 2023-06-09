@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:mechulee/recommender.dart';
 import 'database/dbHelper.dart';
 import 'database/record.dart';
@@ -208,13 +209,14 @@ class MenuResultScreenState extends State<MenuResultScreen> {
                       .popUntil((route) => route.isFirst)
                 });
 
-                // DB 출력하여 확인하기
-                dbHelper
-                    .getAllRecord()
-                    .then((value) => value.forEach((element) {
-                  print(
-                      "id: ${element.id}\ndate: ${element.date}\nmenuId: ${element.menuId}");
-                }));
+                Fluttertoast.showToast(
+                  msg: "메뉴가 기록되었습니다.",
+                  gravity: ToastGravity.BOTTOM,
+                  backgroundColor: Colors.white,
+                  fontSize: 20,
+                  textColor: Colors.white,
+                  toastLength: Toast.LENGTH_SHORT,
+                );
               },
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white,

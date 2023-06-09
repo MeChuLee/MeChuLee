@@ -245,6 +245,10 @@ class Recommender {
     if (selectCheckList[0] == 1) {
       // 자주 먹은 음식 확인 후 id 반영
       selectedId = await checkFrequentDB(selectedIdx);
+
+      for (int i = 0; i < selectedId.length; i++) {
+        print(selectedId[i]);
+      }
     } else {
       // 자주 먹은 음식 미선택 시, 현재 있는 Idx 값들을 Id 로 변환
       for (int i = 0; i < selectedIdx.length; i++) {
@@ -450,7 +454,7 @@ class Recommender {
     }
 
     // count - 현재 Idx 목록의 80% 개수
-    var count = selectIdx.length * 80 ~/ 100;
+    var count = selectIdx.length * 4;
 
     // Idx 목록의 80% 만큼 자주 먹은 음식 id로 채우기
     var idx = 0;
