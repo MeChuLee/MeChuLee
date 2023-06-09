@@ -659,22 +659,14 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                         // 기준 제목 왼쪽 여백 조정
                         width: 30,
                       ),
-                      const Text(
-                        '칼로리  ',
+                       Text(
+                        '${sliderVal4.round()}kcal 이하',
                         textAlign: TextAlign.left,
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.black,
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                             letterSpacing: 2.0),
-                      ),
-                      Text(
-                        '${sliderVal4.round()} kcal',
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
                       ),
                     ],
                   ),
