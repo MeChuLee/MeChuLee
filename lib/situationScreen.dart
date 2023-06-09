@@ -711,7 +711,7 @@ void showToastMsg() {
 
 void showNoRecommendedResults() {
   Fluttertoast.showToast(
-    msg: "추천 결과가 없습니다.",
+    msg: "조건을 만족하는 추천 결과가 없습니다.",
     gravity: ToastGravity.BOTTOM,
     backgroundColor: Colors.white,
     fontSize: 20,
