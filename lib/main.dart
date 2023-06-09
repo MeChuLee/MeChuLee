@@ -150,10 +150,10 @@ class MainScreen extends StatelessWidget {
           childAspectRatio: 1 / 1,
           children: const <Widget>[
             MyCard("비용", "돈 아껴야 돼~", "assets/images/money.png", 0),
-            MyCard("식단 제약", "편식 ㄱㄱ", "assets/images/salad.png", 1),
+            MyCard("식단 제약", "제약사항 확인해요!", "assets/images/salad.png", 1),
             MyCard("랜덤", "운세를 보라", "assets/images/shuffle.png", 2),
             MyCard("개인 선호도", "뭐가 좋니?", "assets/images/like.png", 3),
-            MyCard("개인 상황", "렛츠고 피크닉", "assets/images/sun.png", 4),
+            MyCard("개인 상황", "오늘 어때?", "assets/images/sun.png", 4),
             MyCard("음식 분류", "한식 중식 일식?", "assets/images/dish.png", 5),
           ],
         ),

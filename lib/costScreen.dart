@@ -9,25 +9,44 @@ class CostScreen extends StatefulWidget {
   _CostScreenState createState() => _CostScreenState();
 }
 
-double startValue = 5000;
-double endValue = 30000;
-
-RangeValues _sliderRangeValues =  RangeValues(startValue, endValue);
-RangeLabels _sliderRangeLabels = const RangeLabels('5000', '30000');
-
-String minMaxValuesText = '최소 ${_sliderRangeValues.start.round()}원  '
-    '최대 ${_sliderRangeValues.end.round()}원';
-
-
-
-//String minText = "";
 class _CostScreenState extends State<CostScreen> {
-String minText = "최소";
-String maxText = "최대";
-String minWonUpDown = "원";
-String maxWonUpDown = "원";
-String startRangeVal = (_sliderRangeValues.start.round()).toString();
-String endRangeVal = (_sliderRangeValues.end.round()).toString();
+  late double startValue;
+  late double endValue;
+  late RangeValues _sliderRangeValues;
+  late RangeLabels _sliderRangeLabels;
+  late String minWonUpDown;
+  late String maxWonUpDown;
+  late String startRangeVal;
+  late String endRangeVal;
+  late String range = "~";
+  late String minRange = "";
+  late String maxRange = "";
+
+  // late 키워드가 없는 변수 선언은 선언 시점에서 초기값을 제공하는 것,
+  // late 키워드를 사용하는 변수 선언은 초기화를 나중에 할 수 있도록 지원한다.
+  // 코드에서 초기값이 명시되어 있다면 late 키워드를 사용하지 않아도 변수를 선언하고 사용가능
+
+  @override
+  void initState() {
+    super.initState();
+    startValue = 5000;
+    endValue = 30000;
+    _sliderRangeValues = RangeValues(startValue, endValue);
+    _sliderRangeLabels = const RangeLabels('5000', '30000');
+    minWonUpDown = "원";
+    maxWonUpDown = "원";
+    startRangeVal = (_sliderRangeValues.start.round()).toString();
+    endRangeVal = (_sliderRangeValues.end.round()).toString();
+    range = " ~ ";
+    minRange = "  ";
+    maxRange = "  ";
+  }
+
+  // 클래스 멤버변수 초기화시점에 따른 이슈
+  // 클래스 멤버 변수는 클래스 생성자 호출 전에 초기화되는 것이 아니라
+  // 클래스 인스턴스화 후에 초기화되어야 합니다.
+  // 따라서 startValue와 endValue는 클래스 멤버 변수 초기화에 사용될 수 없습니다.
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -79,8 +98,7 @@ String endRangeVal = (_sliderRangeValues.end.round()).toString();
                   textBaseline: TextBaseline.alphabetic,
                   children: [
                     Text(
-                      "$minText $startRangeVal$minWonUpDown  "
-                          "$maxText $endRangeVal$maxWonUpDown",
+                      "$minRange$startRangeVal$minWonUpDown$range$endRangeVal$maxWonUpDown$maxRange",
                       style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -105,26 +123,29 @@ String endRangeVal = (_sliderRangeValues.end.round()).toString();
                         // 상태를 변경하는 것 2가지가 겹쳐서 동작하지 않음
 
                         _sliderRangeValues = value;
-                        startRangeVal = value.start.round().toString() ;
+                        startRangeVal = value.start.round().toString();
                         endRangeVal = value.end.round().toString();
 
                         if (value.start.round() == 30000) {
-                          minText = "";
-                          startRangeVal = "";
+                          startRangeVal = "  ";
                           minWonUpDown = "";
-                          maxText = "최소";
-                          maxWonUpDown = "원 이상  ";
+                          maxWonUpDown = "원 이상";
+                          minRange = "";
+                          range = "";
+                          maxRange = " ~ ";
                         } else if (value.end.round() == 5000) {
-                          minText = "  최소";
-                          minWonUpDown = "원 이하";
-                          maxText = "";
+                          minWonUpDown = "원 이하  ";
                           endRangeVal = "";
                           maxWonUpDown = "";
+                          minRange = " ~ ";
+                          range = "";
+                          maxRange = "";
                         } else {
-                          minText = "  최소";
-                          maxText = "최대";
                           minWonUpDown = "원";
-                          maxWonUpDown = "원  ";
+                          maxWonUpDown = "원";
+                          minRange = " ";
+                          range = " ~ ";
+                          maxRange = " ";
                         }
                         _sliderRangeLabels = RangeLabels(
                             '${value.start.round()}원', '${value.end.round()}원');
