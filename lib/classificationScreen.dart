@@ -19,7 +19,7 @@ class _ClassificationScreen extends State<ClassificationScreen> {
 
   Color beforeButtonColor = const Color(0xffF4F4F4);
   Color clickedButtonColor = const Color(0xfffff7de);
-  var buttonColors = List<Color>.filled(13, Color(0xffF4F4F4));
+  var buttonColors = List<Color>.filled(13, const Color(0xffF4F4F4));
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +37,20 @@ class _ClassificationScreen extends State<ClassificationScreen> {
                 icon: const Icon(Icons.arrow_back, color: Colors.black),
               ),
               title: const Text("음식 분류", style: TextStyle(color: Colors.black)),
+              actions: [
+                IconButton(
+                  icon: Image.asset("assets/images/resetIcon.png"),
+                  onPressed: () {
+                    // 설정한 값들 모두 리셋
+                    setState(() {
+                      buttonColors =
+                          List<Color>.filled(13, const Color(0xffF4F4F4));
+                      selectedCheckList = List<bool>.filled(13, false);
+                      selectedCount = 0;
+                    });
+                  },
+                )
+              ],
             ),
             bottomNavigationBar: Container(
               height: 60,

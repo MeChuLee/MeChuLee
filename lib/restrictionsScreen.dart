@@ -88,6 +88,22 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
               icon: const Icon(Icons.arrow_back, color: Colors.black),
             ),
             title: const Text("식단 제약", style: TextStyle(color: Colors.black)),
+            actions: [
+              IconButton(
+                icon: Image.asset("assets/images/resetIcon.png"),
+                onPressed: () {
+                  // 설정한 값들 모두 리셋
+                  setState(() {
+                    sliderVal4 = 500;
+                    buttonColors = List.filled(15, const Color(0xffF4F4F4));
+                    selectedBoolList = List.filled(15, false);
+
+                    beforeClickedVegButton = false;
+                    queue.clear();
+                  });
+                },
+              )
+            ],
           ),
           body: SingleChildScrollView(
             scrollDirection: Axis.vertical,
@@ -505,7 +521,7 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                         width: 30,
                       ),
                       Text(
-                        '맛',
+                        '맛 (제외)',
                         textAlign: TextAlign.left,
                         style: TextStyle(
                             color: Colors.black,
@@ -659,7 +675,7 @@ class _RestrictionsScreen extends State<RestrictionsScreen> {
                         // 기준 제목 왼쪽 여백 조정
                         width: 30,
                       ),
-                       Text(
+                      Text(
                         '${sliderVal4.round()}kcal 이하',
                         textAlign: TextAlign.left,
                         style: const TextStyle(

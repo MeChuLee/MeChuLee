@@ -77,6 +77,27 @@ class _CostScreenState extends State<CostScreen> {
             icon: const Icon(Icons.arrow_back, color: Colors.black),
           ),
           title: const Text("비용", style: TextStyle(color: Colors.black)),
+          actions: [
+            IconButton(
+              icon: Image.asset("assets/images/resetIcon.png"),
+              onPressed: () {
+                // 설정한 값들 모두 리셋
+                setState(() {
+                  startValue = 5000;
+                  endValue = 30000;
+                  _sliderRangeValues = RangeValues(startValue, endValue);
+                  _sliderRangeLabels = const RangeLabels('5000', '30000');
+                  minWonUpDown = "원";
+                  maxWonUpDown = "원";
+                  startRangeVal = (_sliderRangeValues.start.round()).toString();
+                  endRangeVal = (_sliderRangeValues.end.round()).toString();
+                  range = " ~ ";
+                  minRange = "  ";
+                  maxRange = "  ";
+                });
+              },
+            )
+          ],
         ),
 
         // RangeSlider부분 시작
