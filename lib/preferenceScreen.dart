@@ -47,6 +47,21 @@ class PreferenceScreenState extends State<PreferenceScreen> {
             icon: const Icon(Icons.arrow_back, color: Colors.black),
           ),
           title: const Text("개인 선호도", style: TextStyle(color: Colors.black)),
+          actions: [
+            IconButton(
+              icon: Image.asset("assets/images/resetIcon.png"),
+              onPressed: () {
+                // 설정한 값들 모두 리셋
+                setState(() {
+                  ageString = "10대";
+                  sliderVal = 1;
+
+                  sexCheckList = List<int>.filled(2, 0);
+                  selectCheckList = List<int>.filled(2, 0);
+                });
+              },
+            )
+          ],
         ),
         bottomNavigationBar: Container(
           height: 60,
