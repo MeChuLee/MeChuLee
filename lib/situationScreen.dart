@@ -17,7 +17,6 @@ class _SituationScreen extends State<SituationScreen> {
   double sliderVal2 = 2; // 배고픔 정도 초기 값
   double sliderVal3 = 1; // 식사 인원 수 초기 값
 
-  bool tmp = false;
   double buttonWidth = 70;
   double buttonHeight = 40;
 
@@ -29,6 +28,7 @@ class _SituationScreen extends State<SituationScreen> {
 
   var moodBoolList = List<bool>.filled(5, false);
   var weatherBoolList = List<bool>.filled(3, false);
+  int nowSelectedWeather = -1;
 
   bool hangover = false;
   bool haveFreeTime = true;
@@ -55,6 +55,34 @@ class _SituationScreen extends State<SituationScreen> {
               icon: const Icon(Icons.arrow_back, color: Colors.black),
             ),
             title: const Text("개인 상황", style: TextStyle(color: Colors.black)),
+            actions: [
+              IconButton(
+                icon: Image.asset("assets/images/resetIcon.png"),
+                onPressed: () {
+                  // 설정한 값들 모두 리셋
+                  setState(() {
+                    sliderVal1 = 2;
+                    sliderVal2 = 2;
+                    sliderVal3 = 1;
+
+                    moodButtonColors =
+                        List<Color>.filled(5, const Color(0xffF4F4F4));
+                    weatherButtonColors =
+                        List<Color>.filled(3, const Color(0xffF4F4F4));
+
+                    moodBoolList = List<bool>.filled(5, false);
+                    weatherBoolList = List<bool>.filled(3, false);
+                    nowSelectedWeather = -1;
+
+                    hangover = false;
+                    haveFreeTime = true;
+                    freeTimeButtonClicked = false;
+                    hangoverButtonColor = const Color(0xffF4F4F4);
+                    haveFreeTimeButtonColor = const Color(0xffF4F4F4);
+                  });
+                },
+              )
+            ],
           ),
           bottomNavigationBar: Container(
             height: 60,
@@ -82,6 +110,8 @@ class _SituationScreen extends State<SituationScreen> {
                           int hungry = sliderVal2.toInt();
                           int people = sliderVal3.toInt();
                           var recommender = Recommender();
+
+                          print(weatherBoolList);
 
                           int menuId = recommender.recommendedAtSituation(
                               moodBoolList,
@@ -334,12 +364,25 @@ class _SituationScreen extends State<SituationScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
-                            if (weatherBoolList[0] == false) {
-                              weatherBoolList[0] = true;
-                              weatherButtonColors[0] = clickedButtonColor;
+                            int nowIdx = 0;
+                            if (nowSelectedWeather == -1) {
+                              weatherBoolList[nowIdx] = true;
+                              weatherButtonColors[nowIdx] = clickedButtonColor;
+                              nowSelectedWeather = 0;
                             } else {
-                              weatherBoolList[0] = false;
-                              weatherButtonColors[0] = beforeButtonColor;
+                              if (nowSelectedWeather == nowIdx) {
+                                weatherBoolList[nowIdx] = false;
+                                weatherButtonColors[nowIdx] = beforeButtonColor;
+                                nowSelectedWeather = -1;
+                              } else {
+                                weatherBoolList[nowSelectedWeather] = false;
+                                weatherButtonColors[nowSelectedWeather] =
+                                    beforeButtonColor;
+                                nowSelectedWeather = 0;
+                                weatherBoolList[nowIdx] = true;
+                                weatherButtonColors[nowIdx] =
+                                    clickedButtonColor;
+                              }
                             }
                           });
                         },
@@ -363,12 +406,25 @@ class _SituationScreen extends State<SituationScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
-                            if (weatherBoolList[1] == false) {
-                              weatherBoolList[1] = true;
-                              weatherButtonColors[1] = clickedButtonColor;
+                            int nowIdx = 1;
+                            if (nowSelectedWeather == -1) {
+                              weatherBoolList[nowIdx] = true;
+                              weatherButtonColors[nowIdx] = clickedButtonColor;
+                              nowSelectedWeather = 1;
                             } else {
-                              weatherBoolList[1] = false;
-                              weatherButtonColors[1] = beforeButtonColor;
+                              if (nowSelectedWeather == nowIdx) {
+                                weatherBoolList[nowIdx] = false;
+                                weatherButtonColors[nowIdx] = beforeButtonColor;
+                                nowSelectedWeather = -1;
+                              } else {
+                                weatherBoolList[nowSelectedWeather] = false;
+                                weatherButtonColors[nowSelectedWeather] =
+                                    beforeButtonColor;
+                                nowSelectedWeather = 1;
+                                weatherBoolList[nowIdx] = true;
+                                weatherButtonColors[nowIdx] =
+                                    clickedButtonColor;
+                              }
                             }
                           });
                         },
@@ -392,12 +448,25 @@ class _SituationScreen extends State<SituationScreen> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
-                            if (weatherBoolList[2] == false) {
-                              weatherBoolList[2] = true;
-                              weatherButtonColors[2] = clickedButtonColor;
+                            int nowIdx = 2;
+                            if (nowSelectedWeather == -1) {
+                              weatherBoolList[nowIdx] = true;
+                              weatherButtonColors[nowIdx] = clickedButtonColor;
+                              nowSelectedWeather = 2;
                             } else {
-                              weatherBoolList[2] = false;
-                              weatherButtonColors[2] = beforeButtonColor;
+                              if (nowSelectedWeather == nowIdx) {
+                                weatherBoolList[nowIdx] = false;
+                                weatherButtonColors[nowIdx] = beforeButtonColor;
+                                nowSelectedWeather = -1;
+                              } else {
+                                weatherBoolList[nowSelectedWeather] = false;
+                                weatherButtonColors[nowSelectedWeather] =
+                                    beforeButtonColor;
+                                nowSelectedWeather = 2;
+                                weatherBoolList[nowIdx] = true;
+                                weatherButtonColors[nowIdx] =
+                                    clickedButtonColor;
+                              }
                             }
                           });
                         },
@@ -519,10 +588,10 @@ class _SituationScreen extends State<SituationScreen> {
                           setState(() {
                             if (haveFreeTime == true) {
                               haveFreeTime = false;
-                              haveFreeTimeButtonColor = beforeButtonColor;
+                              haveFreeTimeButtonColor = clickedButtonColor;
                             } else {
                               haveFreeTime = true;
-                              haveFreeTimeButtonColor = clickedButtonColor;
+                              haveFreeTimeButtonColor = beforeButtonColor;
                             }
                           });
                         },
