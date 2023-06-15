@@ -384,7 +384,7 @@ class Recommender {
           Duration difference =
               calculateDateDifference(startDate, record[j].date);
 
-          if (difference.inDays > 5) {
+          if (difference.inDays > 5 || difference.inDays < -5) {
             // 날짜가 5일 이후로 지난 것들만 결과에 추가
             resultIdx.add(selectIdx[i]);
             break;
