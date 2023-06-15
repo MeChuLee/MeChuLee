@@ -10,6 +10,8 @@ import 'package:mechulee/situationScreen.dart';
 import 'database/dbHelper.dart';
 import 'firebase/firebase_options.dart';
 import 'menuResultScreen.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -117,12 +119,16 @@ class MainScreen extends StatelessWidget {
                     .getAllRecord()
                     .then(
                       (value) => {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => RecentMenuScreen(value),
-                          ),
-                        )
+                        if(value.isEmpty) {
+                          showNoRecord()
+                        }else {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => RecentMenuScreen(value),
+                            ),
+                          )
+                        }
                       },
                     );
               },
@@ -237,4 +243,15 @@ class MyCard extends StatelessWidget {
       ),
     );
   }
+}
+
+void showNoRecord() {
+  Fluttertoast.showToast(
+    msg: "저장된 기록이 없습니다.",
+    gravity: ToastGravity.BOTTOM,
+    backgroundColor: Colors.white,
+    fontSize: 20,
+    textColor: Colors.white,
+    toastLength: Toast.LENGTH_SHORT,
+  );
 }
