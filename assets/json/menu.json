@@ -226,7 +226,7 @@
     "calorie" : 350,
     "price" : 9000,
     "ingredients" : ["멸치", "면", "마늘", "양파", "대파"],
-    "allergy" : {"egg" : false, "milk" : false, "wheat" : false, "peanut" : false, "chestnut" : false, "fish" : false, "shellfish" : false},
+    "allergy" : {"egg" : false, "milk" : false, "wheat" : false, "peanut" : false, "chestnut" : false, "fish" : true, "shellfish" : false},
     "vegetarianism" : {"vegan" : false, "pollo" : true, "pesco" : true, "lacto_ovo" : false},
     "taste" : {"spicy" : false, "salty" : true, "sweet" : false, "greasy" : true},
     "sex" : {"f" :  false, "m" :  true},

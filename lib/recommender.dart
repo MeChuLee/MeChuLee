@@ -219,6 +219,8 @@ class Recommender {
           menuList[i]['sex']['m']) {
         // 남성 체크 o, 여성 체크 x
         selectedIdx.add(i);
+        print('남성 체크 o');
+        print(menuList[i]['name']);
       } else if (sexCheckList[PreferenceScreenState.SEX_FEMALE] == 1 &&
           menuList[i]['sex']['f']) {
         // 남성 체크 x, 여성 체크 o
@@ -382,7 +384,7 @@ class Recommender {
           Duration difference =
               calculateDateDifference(startDate, record[j].date);
 
-          if (difference.inDays > 5) {
+          if (difference.inDays > 5 || difference.inDays < -5) {
             // 날짜가 5일 이후로 지난 것들만 결과에 추가
             resultIdx.add(selectIdx[i]);
             break;
