@@ -219,6 +219,8 @@ class Recommender {
           menuList[i]['sex']['m']) {
         // 남성 체크 o, 여성 체크 x
         selectedIdx.add(i);
+        print('남성 체크 o');
+        print(menuList[i]['name']);
       } else if (sexCheckList[PreferenceScreenState.SEX_FEMALE] == 1 &&
           menuList[i]['sex']['f']) {
         // 남성 체크 x, 여성 체크 o
